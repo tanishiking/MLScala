@@ -1,46 +1,56 @@
 package mlscala
 
+import exceptions.VariableNotBoundException
 import mlscala.Ast._
 import mlscala.Environment._
 
 object Eval {
-  def applyPrim(op: BinaryOp, arg1: Expr, arg2: Expr) = {
+  def applyPrim(op: BinaryOp, arg1: Expr, arg2: Expr): Either[Exception, Expr] = {
     (op, arg1, arg2) match {
-      case (Plus, ILit(i1), ILit(i2)) => ILit(i1 + i2)
-      case (Plus, _, _)               => sys.error("Both arguments must be integer: +")
-      case (Mult, ILit(i1), ILit(i2)) => ILit(i1 * i2)
-      case (Mult, _, _)               => sys.error("Both arguments must be integer: *")
-      case (Lt, ILit(i1), ILit(i2))   => BLit(i1 < i2)
-      case (Lt, _, _)                 => sys.error("Both arguments must be integer: <")
+      case (Plus, ILit(i1), ILit(i2)) => Right(ILit(i1 + i2))
+      case (Plus, _, _)               => Left(new RuntimeException("Both arguments must be integer: +"))
+      case (Mult, ILit(i1), ILit(i2)) => Right(ILit(i1 * i2))
+      case (Mult, _, _)               => Left(new RuntimeException("Both arguments must be integer: *"))
+      case (Lt, ILit(i1), ILit(i2))   => Right(BLit(i1 < i2))
+      case (Lt, _, _)                 => Left(new RuntimeException("Both arguments must be integer: <"))
     }
   }
 
-  def evalExp(env: Env, expr: Expr): Expr = {
+  def evalExp(env: Env, expr: Expr): Either[Exception, Expr] = {
     expr match {
       case Var(x) =>
         lookup(Var(x), env) match {
-          case Some(e) => e
-          case None    => sys.error("variable not bound: Var " + x)
+          case Some(e) => Right(e)
+          case None    => Left(new VariableNotBoundException("Variable " + x + " not bounded"))
         }
-      case ILit(i) => ILit(i)
-      case BLit(b) => BLit(b)
+      case ILit(i) => Right(ILit(i))
+      case BLit(b) => Right(BLit(b))
       case BinOp(op, e1, e2) => {
-        val arg1 = evalExp(env, e1)
-        val arg2 = evalExp(env, e2)
-        applyPrim(op, arg1, arg2)
+        for {
+          // どちらかがLeftならそのLeftが返る
+          arg1 <- evalExp(env, e1).right
+          arg2 <- evalExp(env, e2).right
+          res  <- applyPrim(op, arg1, arg2).right
+        } yield res
       }
       case IfExp(e1, e2, e3) =>
-        evalExp(env, e1) match {
+        // evalExp(env, e1) が Left(_) な場合は Left(_) が返る
+        evalExp(env, e1).right.flatMap {
           case BLit(true)  => evalExp(env, e2)
           case BLit(false) => evalExp(env, e3)
-          case _           => sys.error("if must be boolean")
+          case _           => Left(new RuntimeException("if expression must got boolean"))
         }
     }
   }
 
-  def evalDecl(env: Env, prog: Program) = {
+  def evalDecl(env: Env, prog: Program): Either[Exception, (String, Env, Expr)] = {
     prog match {
-      case Exp(e) => ("-", env, evalExp(env, e))
+      case Exp(e) => {
+        evalExp(env, e) match {
+          case Right(exp)      => Right(("-", env, exp))
+          case Left(exception) => Left(exception)
+        }
+      }
     }
   }
 

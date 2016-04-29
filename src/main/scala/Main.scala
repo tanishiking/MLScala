@@ -12,7 +12,7 @@ object Main {
   def readEvalPrint(env: Env): Unit = {
     val input: String = readLine("# ")
     val decl: Exp = parse(input).get
-    val (id, newEnv, exp) = evalDecl(env, decl)
+    val (id, newEnv, exp) = evalDecl(env, decl).right.get
     printf("val %s = ", id)
     print(getPretyExpr(exp) + "\n")
     readEvalPrint(newEnv)
