@@ -9,20 +9,34 @@ import scala.io.StdIn.readLine
 
 object Main {
 
+  private val EXITCOMMAND = "exit"
+  private val EXITMESSAGE = "bye"
+
   def readEvalPrint(env: Env): Unit = {
+    def returnToREPL(msg: String, env: Env): Unit = {
+      println(msg)
+      readEvalPrint(env)
+    }
     val input: String = readLine("# ")
-    val decl: Exp = parse(input).get
-    evalDecl(env, decl) match {
-      case Right((id, newEnv, exp)) => {
-        printf("val %s = %s\n", id, getPretyExpr(exp))
-        readEvalPrint(newEnv)
-      }
-      case Left(e: Exception) => {
-        printf(e.getMessage + "\n")
-        readEvalPrint(env)
+    if (input == EXITCOMMAND) {
+      println(EXITMESSAGE)
+      sys.exit(0)
+    }
+
+    parse(input) match {
+      case Parser.NoSuccess(msg, _) => returnToREPL(msg, env)
+      case Parser.Success(decl, _) => {
+        evalDecl(env, decl) match {
+          case Left(e: Exception) => returnToREPL(e.getMessage, env)
+          case Right((id, newEnv, exp)) => {
+            printf("val %s = %s\n", id, getPretyExpr(exp))
+            readEvalPrint(newEnv)
+          }
+        }
       }
     }
   }
+
 
   def main(args: Array[String]) {
     readEvalPrint(getEmptyEnv)
