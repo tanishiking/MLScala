@@ -15,4 +15,12 @@ class EvalSpec extends FlatSpec with Matchers {
     assert(applyPrim(Lt, ILit(1), ILit(5)) == Right(BLit(true)))
     assert(applyPrim(Lt, ILit(10), ILit(5)) == Right(BLit(false)))
   }
+
+  it should "throw RuntimeException" in {
+    assert(applyPrim(And, ILit(1), BLit(true)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Or, ILit(1), BLit(false)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Plus, BLit(true), BLit(false)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Mult, BLit(true), ILit(2)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Lt, BLit(true), ILit(2)).left.get.isInstanceOf[RuntimeException])
+  }
 }

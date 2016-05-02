@@ -10,7 +10,13 @@ object Parser extends RegexParsers {
 
   lazy val toplevel = expr <~ ";;" ^^ { case e => Exp(e) }
 
-  lazy val expr = ifExpr | ltExpr
+  lazy val expr = ifExpr | andExpr
+
+  lazy val andExpr = and | orExpr
+  lazy val and = orExpr ~ "&&" ~ orExpr ^^ { case p1 ~ _ ~ p2 => BinOp(And, p1, p2)}
+
+  lazy val orExpr = or | ltExpr
+  lazy val or = ltExpr ~ "||" ~ ltExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Or, p1, p2)}
 
   lazy val ltExpr = lessthan | pExpr
   lazy val lessthan = pExpr ~ "<" ~ pExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Lt, p1, p2)}

@@ -26,6 +26,18 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("100;;").get == Exp(ILit(100)))
   }
 
+  it should "parseOK" in {
+    assert(parse("1 && false;;").get == Exp(BinOp(And, ILit(1), BLit(false))))
+  }
+
+  it should "AndOp" in {
+    assert(parse("true && false;;").get == Exp(BinOp(And, BLit(true), BLit(false))))
+  }
+
+  it should "BinOp Or" in {
+    assert(parse("1 < 2 || 2 < 1;;").get == Exp(BinOp(Or, BinOp(Lt, ILit(1), ILit(2)), BinOp(Lt, ILit(2), ILit(1)))))
+  }
+
   it should "LessThan" in {
     assert(parse("1 < 2;;").get == Exp(BinOp(Lt, ILit(1), ILit(2))))
     assert(parse("1<2;;").get == Exp(BinOp(Lt, ILit(1), ILit(2))))

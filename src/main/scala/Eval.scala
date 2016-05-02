@@ -7,6 +7,10 @@ import mlscala.Environment._
 object Eval {
   def applyPrim(op: BinaryOp, arg1: Expr, arg2: Expr): Either[Exception, Expr] = {
     (op, arg1, arg2) match {
+      case (And, BLit(b1), BLit(b2))  => Right(BLit(b1 && b2))
+      case (And, _, _)                => Left(new RuntimeException("Both arguments must be boolean: &&"))
+      case (Or, BLit(b1), BLit(b2))   => Right(BLit(b1 || b2))
+      case (Or, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: ||"))
       case (Plus, ILit(i1), ILit(i2)) => Right(ILit(i1 + i2))
       case (Plus, _, _)               => Left(new RuntimeException("Both arguments must be integer: +"))
       case (Mult, ILit(i1), ILit(i2)) => Right(ILit(i1 * i2))

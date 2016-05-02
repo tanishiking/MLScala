@@ -2,6 +2,8 @@ package mlscala
 
 object Ast {
   sealed abstract class BinaryOp
+  case object And extends BinaryOp
+  case object Or extends BinaryOp
   case object Plus extends BinaryOp
   case object Mult extends BinaryOp
   case object Lt extends BinaryOp
