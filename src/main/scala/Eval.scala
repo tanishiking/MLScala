@@ -44,6 +44,12 @@ object Eval {
           case BLit(false) => evalExp(env, e3)
           case _           => Left(new RuntimeException("if expression must got boolean"))
         }
+      case LetExp(id, e, body) => {
+        for {
+          e1 <- evalExp(env, e).right
+          e2 <- evalExp(extendEnv(Var(id), e1, env), body).right
+        } yield e2
+      }
     }
   }
 

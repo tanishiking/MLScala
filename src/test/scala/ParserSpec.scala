@@ -63,4 +63,8 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("if true then 1 else 0;;").get == Exp(IfExp(BLit(true),ILit(1),ILit(0))))
   }
 
+  it should "LetExp" in {
+    assert(parse("let x = 1 in x;;").get == Exp(LetExp("x", ILit(1), Var("x"))))
+  }
+
 }

@@ -11,10 +11,15 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
     assert(evalExp(extendEnv(Var("x"), ILit(3), getEmptyEnv), BinOp(Plus, Var("x"), Var("x"))) == Right(ILit(6)))
   }
 
+  it should "ILit(1)" in {
+    assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), Var("x"))) == Right(ILit(1)))
+  }
+
   it should "throw Exception" in {
     assert(evalDecl(getEmptyEnv, Exp(BinOp(And, ILit(1), BLit(true)))).left.get.isInstanceOf[RuntimeException])
     assert(evalDecl(getEmptyEnv, Exp(BinOp(And, ILit(1), ILit(2)))).left.get.isInstanceOf[RuntimeException])
     assert(evalDecl(getEmptyEnv, Decl("x", BinOp(And, ILit(1), ILit(2)))).left.get.isInstanceOf[RuntimeException])
+    assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), BinOp(Plus, Var("x"), Var("y")))).left.get.isInstanceOf[RuntimeException])
   }
 
   it should "return tuple" in {
