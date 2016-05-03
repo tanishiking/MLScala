@@ -49,12 +49,8 @@ object Eval {
 
   def evalDecl(env: Env, prog: Program): Either[Exception, (String, Env, Expr)] = {
     prog match {
-      case Exp(e) => {
-        evalExp(env, e) match {
-          case Right(exp)      => Right(("-", env, exp))
-          case Left(exception) => Left(exception)
-        }
-      }
+      case Exp(e)      => evalExp(env, e).right.flatMap(v => Right(("-", env, v)))
+      case Decl(id, e) => evalExp(env, e).right.flatMap(v => Right((id, extendEnv(Var(id), e, env), v)))
     }
   }
 

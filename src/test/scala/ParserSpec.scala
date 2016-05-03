@@ -11,6 +11,10 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("without semisemi").getOrElse("error") == "error")
   }
 
+  it should "Decl(x, ILit(1))" in {
+    assert(parse("let x = 1;;").get == Decl("x", ILit(1)))
+  }
+
   it should "Var(a)" in {
     assert(parse("a;;").get == Exp(Var("a")))
     assert(parse("test;;").get == Exp(Var("test")))

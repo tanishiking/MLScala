@@ -17,6 +17,7 @@ object Ast {
 
   sealed abstract class Program
   case class Exp(e: Expr) extends Program
+  case class Decl(id: String, e: Expr) extends Program
 
   def getPretyExpr(e: Expr): String = {
     e match {

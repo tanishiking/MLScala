@@ -8,7 +8,9 @@ object Parser extends RegexParsers {
 
   def parse(input: String) = parseAll(toplevel, input)
 
-  lazy val toplevel = expr <~ ";;" ^^ { case e => Exp(e) }
+  lazy val toplevel = topExpr | topLet
+  lazy val topExpr = expr <~ ";;" ^^ { case e => Exp(e) }
+  lazy val topLet = "let" ~> (name <~ "=") ~ (expr <~ ";;") ^^ { case n ~ e => Decl(n, e) }
 
   lazy val expr = ifExpr | andExpr
 
@@ -29,6 +31,7 @@ object Parser extends RegexParsers {
 
   lazy val aExpr = intv | truev | falsev | varv | paren
 
+  lazy val name = """[a-zA-Z]""".r
   lazy val intv = """\d+""".r ^^ { case n => ILit(n.toInt) }
   lazy val truev = "true" ^^ { case _ => BLit(true) }
   lazy val falsev = "false" ^^ { case _ => BLit(false) }
