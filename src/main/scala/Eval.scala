@@ -53,10 +53,17 @@ object Eval {
     }
   }
 
+  // Reduce List of Either to Eiler of list
+  private def listU[A, B](ls: List[Either[A, B]]): Either[A, List[B]] =
+    ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
+
   def evalDecl(env: Env, prog: Program): Either[Exception, (String, Env, Expr)] = {
     prog match {
-      case Exp(e)      => evalExp(env, e).right.flatMap(v => Right(("-", env, v)))
-      case Decl(id, e) => evalExp(env, e).right.flatMap(v => Right((id, extendEnv(Var(id), e, env), v)))
+      case Exp(e)           => evalExp(env, e).right.flatMap(v => Right(("-", env, v)))
+      case MultiDecl(decls) => listU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>
+          Right((decls.map(_.id).headOption.getOrElse("-"),
+            es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (Expr, String)) => extendEnv(Var(t._2), t._1, curEnv) },
+            es.head)))
     }
   }
 

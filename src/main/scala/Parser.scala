@@ -10,7 +10,8 @@ object Parser extends RegexParsers {
 
   lazy val toplevel = topExpr | topLet
   lazy val topExpr = expr <~ ";;" ^^ { case e => Exp(e) }
-  lazy val topLet = "let" ~> (name <~ "=") ~ (expr <~ ";;") ^^ { case n ~ e => Decl(n, e) }
+  lazy val topLet = "let" ~> rep1sep(binding, "and") <~ ";;" ^^ { case bindings: List[Decl] => MultiDecl(bindings) }
+  lazy val binding = (name <~ "=") ~ expr ^^ { case id ~ e => Decl(id, e) }
 
   lazy val expr = ifExpr | letExpr | andExpr
 

@@ -12,7 +12,7 @@ class ParserSpec extends FlatSpec with Matchers {
   }
 
   it should "Decl(x, ILit(1))" in {
-    assert(parse("let x = 1;;").get == Decl("x", ILit(1)))
+    assert(parse("let x = 1;;").get == MultiDecl(List(Decl("x", ILit(1)))))
   }
 
   it should "Var(a)" in {

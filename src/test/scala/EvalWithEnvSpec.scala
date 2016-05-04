@@ -18,7 +18,7 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   it should "throw Exception" in {
     assert(evalDecl(getEmptyEnv, Exp(BinOp(And, ILit(1), BLit(true)))).left.get.isInstanceOf[RuntimeException])
     assert(evalDecl(getEmptyEnv, Exp(BinOp(And, ILit(1), ILit(2)))).left.get.isInstanceOf[RuntimeException])
-    assert(evalDecl(getEmptyEnv, Decl("x", BinOp(And, ILit(1), ILit(2)))).left.get.isInstanceOf[RuntimeException])
+    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", BinOp(And, ILit(1), ILit(2)))))).left.get.isInstanceOf[RuntimeException])
     assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), BinOp(Plus, Var("x"), Var("y")))).left.get.isInstanceOf[RuntimeException])
   }
 
@@ -27,6 +27,13 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   }
 
   it should "update env" in {
-    assert(evalDecl(getEmptyEnv, Decl("x", ILit(3))).right.get == ("x", Map(Var("x") -> ILit(3)), ILit(3)))
+    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", ILit(3))))).right.get == ("x", Map(Var("x") -> ILit(3)), ILit(3)))
+    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", ILit(3)), Decl("y", ILit(1))))).right.get
+      == ("x", Map(Var("x") -> ILit(3), Var("y") -> ILit(1)), ILit(3)))
+  }
+
+  it should "y would equal to global env's x value" in {
+    assert(evalDecl(Map(Var("x") -> ILit(10)), MultiDecl(List(Decl("x", ILit(3)), Decl("y", Var("x"))))).right.get
+      == ("x", Map(Var("x") -> ILit(3), Var("y") -> ILit(10)), ILit(3)))
   }
 }
