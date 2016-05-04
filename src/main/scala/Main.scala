@@ -25,15 +25,12 @@ object Main {
 
     parse(input) match {
       case Parser.NoSuccess(msg, _) => returnToREPL(msg, env)
-      case Parser.Success(decl, _) => {
-        evalDecl(env, decl) match {
+      case Parser.Success(decl, _) =>evalDecl(env, decl) match {
           case Left(e: Exception) => returnToREPL(e.getMessage, env)
-          case Right((id, newEnv, exp)) => {
+          case Right((id, newEnv, exp)) =>
             printf("val %s = %s\n", id, getPretyExpr(exp))
             readEvalPrint(newEnv)
-          }
         }
-      }
     }
   }
 
