@@ -3,6 +3,7 @@ package mlscala
 import exceptions.VariableNotBoundException
 import mlscala.Ast._
 import mlscala.Environment._
+import mlscala.EvalResult._
 
 object Eval {
   def applyPrim(op: BinaryOp, arg1: Expr, arg2: Expr): Either[Exception, Expr] = {
@@ -57,13 +58,14 @@ object Eval {
   private def listU[A, B](ls: List[Either[A, B]]): Either[A, List[B]] =
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
-  def evalDecl(env: Env, prog: Program): Either[Exception, (String, Env, Expr)] = {
+  def evalDecl(env: Env, prog: Program): Either[Exception, EvalResult] = {
     prog match {
-      case Exp(e)           => evalExp(env, e).right.flatMap(v => Right(("-", env, v)))
+      case Exp(e)           => evalExp(env, e).right.flatMap(v => Right(SingleEvalResult("-", env, v)))
       case MultiDecl(decls) => listU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>
-          Right((decls.map(_.id).headOption.getOrElse("-"),
+          Right(MultiEvalResult(
+            decls.map(_.id),
             es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (Expr, String)) => extendEnv(Var(t._2), t._1, curEnv) },
-            es.head)))
+            es)))
     }
   }
 
