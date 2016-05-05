@@ -1,7 +1,6 @@
 package mlscala
 
-import mlscala.Ast.{Exp, getPretyExpr}
-import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult}
+import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal}
 import mlscala.Parser.parse
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
@@ -30,11 +29,11 @@ object Main {
           case Left(e: Exception) => returnToREPL(e.getMessage, env)
           case Right(evalResult) => {
             evalResult match {
-              case SingleEvalResult(id, newEnv, e) =>
-                printf("val %s = %s\n", id, getPretyExpr(e))
+              case SingleEvalResult(id, newEnv, v) =>
+                printf("val %s = %s\n", id, getPrettyVal(v))
                 readEvalPrint(newEnv)
-              case MultiEvalResult(ids, newEnv, es) =>
-                ids.zip(es).map(t => String.format("val %s = %s", t._1, getPretyExpr(t._2))).foreach(println)
+              case MultiEvalResult(ids, newEnv, vs) =>
+                ids.zip(vs).map(t => String.format("val %s = %s", t._1, getPrettyVal(t._2))).foreach(println)
                 readEvalPrint(newEnv)
             }
           }

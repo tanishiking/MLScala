@@ -22,12 +22,4 @@ object Ast {
 
   case class Decl(id: String, e: Expr)
 
-  def getPretyExpr(e: Expr): String = {
-    e match {
-      case Var(name)           => name
-      case ILit(num)           => num.toString
-      case BLit(bool)          => bool.toString
-      case _                   => "-"
-    }
-  }
 }

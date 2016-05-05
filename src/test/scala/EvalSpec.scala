@@ -1,26 +1,27 @@
 import mlscala.Ast._
 import mlscala.Eval._
+import mlscala.EvalResult._
 import org.scalatest.{Matchers, FlatSpec}
 
 class EvalSpec extends FlatSpec with Matchers {
 
   behavior of "Eval.scala"
 
-  it should "ILit(_)" in {
-    assert(applyPrim(Plus, ILit(1), ILit(3)) == Right(ILit(4)))
-    assert(applyPrim(Mult, ILit(3), ILit(3)) == Right(ILit(9)))
+  it should "IntV(_)" in {
+    assert(applyPrim(Plus, IntV(1), IntV(3)) == Right(IntV(4)))
+    assert(applyPrim(Mult, IntV(3), IntV(3)) == Right(IntV(9)))
   }
 
-  it should "BLit(_)" in {
-    assert(applyPrim(Lt, ILit(1), ILit(5)) == Right(BLit(true)))
-    assert(applyPrim(Lt, ILit(10), ILit(5)) == Right(BLit(false)))
+  it should "BoolV(_)" in {
+    assert(applyPrim(Lt, IntV(1), IntV(5)) == Right(BoolV(true)))
+    assert(applyPrim(Lt, IntV(10), IntV(5)) == Right(BoolV(false)))
   }
 
   it should "throw RuntimeException" in {
-    assert(applyPrim(And, ILit(1), BLit(true)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Or, ILit(1), BLit(false)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Plus, BLit(true), BLit(false)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Mult, BLit(true), ILit(2)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Lt, BLit(true), ILit(2)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(And, IntV(1), BoolV(true)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Or, IntV(1), BoolV(false)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Plus, BoolV(true), BoolV(false)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Mult, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException])
+    assert(applyPrim(Lt, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException])
   }
 }

@@ -1,12 +1,13 @@
 package mlscala
 
 import Ast._
+import mlscala.EvalResult.EvalV
 
 object Environment {
-  type Env = Map[Var, Expr]
+  type Env = Map[Var, EvalV]
 
-  def getEmptyEnv: Env = Map.empty[Var, Expr]
-  def extendEnv(x: Var, v: Expr, env: Map[Var, Expr]): Env = env.updated(x, v)
+  def getEmptyEnv: Env = Map.empty[Var, EvalV]
+  def extendEnv(x: Var, v: EvalV, env: Map[Var, EvalV]): Env = env.updated(x, v)
 
-  def lookup(x: Var, env: Map[Var, Expr]): Option[Expr] = env.get(x)
+  def lookup(x: Var, env: Env): Option[EvalV] = env.get(x)
 }

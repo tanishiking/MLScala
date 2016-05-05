@@ -6,30 +6,31 @@ import mlscala.Environment._
 import mlscala.EvalResult._
 
 object Eval {
-  def applyPrim(op: BinaryOp, arg1: Expr, arg2: Expr): Either[Exception, Expr] = {
+
+  def applyPrim(op: BinaryOp, arg1: EvalV, arg2: EvalV): Either[Exception, EvalV] = {
     (op, arg1, arg2) match {
-      case (And, BLit(b1), BLit(b2))  => Right(BLit(b1 && b2))
+      case (And, BoolV(b1), BoolV(b2))  => Right(BoolV(b1 && b2))
       case (And, _, _)                => Left(new RuntimeException("Both arguments must be boolean: &&"))
-      case (Or, BLit(b1), BLit(b2))   => Right(BLit(b1 || b2))
+      case (Or, BoolV(b1), BoolV(b2))   => Right(BoolV(b1 || b2))
       case (Or, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: ||"))
-      case (Plus, ILit(i1), ILit(i2)) => Right(ILit(i1 + i2))
+      case (Plus, IntV(i1), IntV(i2)) => Right(IntV(i1 + i2))
       case (Plus, _, _)               => Left(new RuntimeException("Both arguments must be integer: +"))
-      case (Mult, ILit(i1), ILit(i2)) => Right(ILit(i1 * i2))
+      case (Mult, IntV(i1), IntV(i2)) => Right(IntV(i1 * i2))
       case (Mult, _, _)               => Left(new RuntimeException("Both arguments must be integer: *"))
-      case (Lt, ILit(i1), ILit(i2))   => Right(BLit(i1 < i2))
+      case (Lt, IntV(i1), IntV(i2))   => Right(BoolV(i1 < i2))
       case (Lt, _, _)                 => Left(new RuntimeException("Both arguments must be integer: <"))
     }
   }
 
-  def evalExp(env: Env, expr: Expr): Either[Exception, Expr] = {
+  def evalExp(env: Env, expr: Expr): Either[Exception, EvalV] = {
     expr match {
       case Var(x) =>
         lookup(Var(x), env) match {
           case Some(e) => Right(e)
           case None    => Left(new VariableNotBoundException("Variable " + x + " not bounded"))
         }
-      case ILit(i) => Right(ILit(i))
-      case BLit(b) => Right(BLit(b))
+      case ILit(i) => Right(IntV(i))
+      case BLit(b) => Right(BoolV(b))
       case BinOp(op, e1, e2) => {
         for {
           // どちらかがLeftならそのLeftが返る
@@ -41,8 +42,8 @@ object Eval {
       case IfExp(e1, e2, e3) =>
         // evalExp(env, e1) が Left(_) な場合は Left(_) が返る
         evalExp(env, e1).right.flatMap {
-          case BLit(true)  => evalExp(env, e2)
-          case BLit(false) => evalExp(env, e3)
+          case BoolV(true)  => evalExp(env, e2)
+          case BoolV(false) => evalExp(env, e3)
           case _           => Left(new RuntimeException("if expression must got boolean"))
         }
       case LetExp(id, e, body) => {
@@ -64,7 +65,7 @@ object Eval {
       case MultiDecl(decls) => listU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>
           Right(MultiEvalResult(
             decls.map(_.id),
-            es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (Expr, String)) => extendEnv(Var(t._2), t._1, curEnv) },
+            es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (EvalV, String)) => extendEnv(Var(t._2), t._1, curEnv) },
             es)))
     }
   }
