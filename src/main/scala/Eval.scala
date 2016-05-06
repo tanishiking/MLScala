@@ -52,6 +52,7 @@ object Eval {
           e2 <- evalExp(extendEnv(Var(id), e1, env), body).right
         } yield e2
       }
+      case FunExp(arg, body) => Right(ProcV(arg, env, body))
     }
   }
 

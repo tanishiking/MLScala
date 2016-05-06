@@ -37,4 +37,9 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
     assert(evalDecl(Map(Var("x") -> IntV(10)), MultiDecl(List(Decl("x", ILit(3)), Decl("y", Var("x"))))).right.get
       == MultiEvalResult(List("x", "y"), Map(Var("x") -> IntV(3), Var("y") -> IntV(10)), List(IntV(3), IntV(10))))
   }
+
+  it should "MultiDecl of functon" in {
+    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("addx", FunExp("x", BinOp(Plus, Var("x"), ILit(1))))))).right.get
+      == MultiEvalResult(List("addx"), Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), List(ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1))))))
+  }
 }

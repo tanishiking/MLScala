@@ -13,7 +13,7 @@ object Parser extends RegexParsers {
   lazy val topLet = "let" ~> rep1sep(binding, "and") <~ ";;" ^^ { case bindings: List[Decl] => MultiDecl(bindings) }
   lazy val binding = (name <~ "=") ~ expr ^^ { case id ~ e => Decl(id, e) }
 
-  lazy val expr = ifExpr | letExpr | andExpr
+  lazy val expr = ifExpr | letExpr | funExpr | andExpr
 
   lazy val andExpr = and | orExpr
   lazy val and = orExpr ~ "&&" ~ orExpr ^^ { case p1 ~ _ ~ p2 => BinOp(And, p1, p2)}
@@ -46,5 +46,5 @@ object Parser extends RegexParsers {
   lazy val letExpr: Parser[Expr] = "let" ~> (name <~ "=") ~ expr ~ ("in" ~> expr) ^^ {
     case id ~ e ~ body => LetExp(id, e, body)
   }
-
+  lazy val funExpr: Parser[Expr] = ("fun" ~> name) ~ ("->" ~> expr) ^^ { case arg ~ body => FunExp(arg, body)}
 }

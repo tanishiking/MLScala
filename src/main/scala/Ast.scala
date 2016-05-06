@@ -15,6 +15,7 @@ object Ast {
   case class BinOp(op: BinaryOp, e1: Expr, e2: Expr) extends Expr
   case class IfExp(cond: Expr, et: Expr, ef: Expr) extends Expr
   case class LetExp(id: String, e: Expr, body: Expr) extends Expr
+  case class FunExp(arg: String, body: Expr) extends Expr
 
   sealed abstract class Program
   case class Exp(e: Expr) extends Program
