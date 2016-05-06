@@ -32,7 +32,7 @@ object Parser extends RegexParsers {
 
   lazy val aExpr = intv | truev | falsev | varv | paren
 
-  lazy val name = """[a-zA-Z]""".r
+  lazy val name = """[a-zA-Z]+""".r
   lazy val intv = """\d+""".r ^^ { case n => ILit(n.toInt) }
   lazy val truev = "true" ^^ { case _ => BLit(true) }
   lazy val falsev = "false" ^^ { case _ => BLit(false) }
