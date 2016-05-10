@@ -68,5 +68,8 @@ object Parser extends RegexParsers {
   lazy val letExpr: Parser[Expr] = LET ~> (name <~ EQUAL) ~ expr ~ (IN ~> expr) ^^ {
     case id ~ e ~ body => LetExp(id, e, body)
   }
-  lazy val funExpr: Parser[Expr] = (FUN ~> name) ~ (RARROW ~> expr) ^^ { case arg ~ body => FunExp(arg, body)}
+
+  lazy val funExpr: Parser[Expr] = (FUN ~> rep1(name)) ~ (RARROW ~> expr) ^^ {
+    case args ~ body => args.foldRight(body) { (arg, exp) => FunExp(arg, exp) }
+  }
 }
