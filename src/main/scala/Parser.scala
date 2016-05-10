@@ -54,11 +54,11 @@ object Parser extends RegexParsers {
 
   lazy val aExpr = intv | truev | falsev | varv | paren
 
-  lazy val name = not(reserved) ~> """[a-zA-Z]+""".r
+  lazy val name = not(reserved) ~> """[a-zA-Z][a-zA-Z0-9_]*""".r
   lazy val intv = """\d+""".r ^^ { case n => ILit(n.toInt) }
   lazy val truev = "true" ^^ { case _ => BLit(true) }
   lazy val falsev = "false" ^^ { case _ => BLit(false) }
-  lazy val varv = not(reserved) ~> """[a-zA-Z]+""".r ^^ { case s => Var(s) }
+  lazy val varv = not(reserved) ~> """[a-zA-Z][a-zA-Z0-9_]*""".r ^^ { case s => Var(s) }
   lazy val paren = "(" ~> expr <~ ")"
 
   lazy val ifExpr: Parser[Expr] = (IF ~> expr <~ THEN) ~ expr ~ (ELSE ~> expr) ^^ {

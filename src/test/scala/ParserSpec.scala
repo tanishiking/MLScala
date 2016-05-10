@@ -18,6 +18,8 @@ class ParserSpec extends FlatSpec with Matchers {
   it should "Var(a)" in {
     assert(parse("a;;").get == Exp(Var("a")))
     assert(parse("test;;").get == Exp(Var("test")))
+    assert(parse("test_piyo;;").get == Exp(Var("test_piyo")))
+    assert(parse("t100;;").get == Exp(Var("t100")))
   }
 
   it should "BLit(true) or BLit(false)" in {
