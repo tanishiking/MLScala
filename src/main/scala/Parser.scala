@@ -50,7 +50,9 @@ object Parser extends RegexParsers {
   lazy val mult = appExpr ~ MULT ~ appExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Mult, p1, p2) }
 
   lazy val appExpr: Parser[Expr] = application | aExpr
-  lazy val application = aExpr ~ appExpr ^^ { case fun ~ arg => AppExp(fun, arg) }
+  lazy val application = aExpr ~ rep1(aExpr) ^^ {
+    case fun ~ args => args.tail.foldLeft(AppExp(fun, args.head)){ (acc, arg) => AppExp(acc, arg) }
+  }
 
   lazy val aExpr = intv | truev | falsev | varv | paren
 

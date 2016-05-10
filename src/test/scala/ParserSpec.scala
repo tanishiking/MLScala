@@ -82,4 +82,8 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("fun x -> fun y -> fun z -> (x + y) + z;;").get == parse("fun x y z -> (x + y) + z;;").get)
   }
 
+  it should "equal multi arg application to function" in {
+    assert(parse("(add 1) 2;;").get == parse("add 1 2;;").get)
+  }
+
 }
