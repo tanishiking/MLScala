@@ -21,6 +21,7 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
     assert(evalDecl(getEmptyEnv, Exp(BinOp(And, ILit(1), ILit(2)))).left.get.isInstanceOf[RuntimeException])
     assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", BinOp(And, ILit(1), ILit(2)))))).left.get.isInstanceOf[RuntimeException])
     assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), BinOp(Plus, Var("x"), Var("y")))).left.get.isInstanceOf[RuntimeException])
+    assert(evalExp(getEmptyEnv, AppExp(Var("addx"), ILit(1))).left.get.isInstanceOf[RuntimeException])
   }
 
   it should "return tuple" in {
@@ -41,5 +42,9 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   it should "MultiDecl of functon" in {
     assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("addx", FunExp("x", BinOp(Plus, Var("x"), ILit(1))))))).right.get
       == MultiEvalResult(List("addx"), Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), List(ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1))))))
+  }
+
+  it should "App addx to 1" in {
+    assert(evalExp(Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
   }
 }
