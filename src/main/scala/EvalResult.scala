@@ -14,6 +14,7 @@ object EvalResult {
   case class BoolV(b: Boolean) extends EvalV
   case class ProcV(arg: String, env: Env, body: Expr) extends EvalV
   case class DProcV(arg: String, body: Expr) extends EvalV // 動的束縛
+  case class PrintV() extends EvalV
 
   def getPrettyVal(v: EvalV): String = {
     v match {

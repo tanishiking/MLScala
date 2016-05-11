@@ -1,6 +1,7 @@
 package mlscala
 
-import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal}
+import mlscala.Ast.Var
+import mlscala.EvalResult.{PrintV, MultiEvalResult, SingleEvalResult, getPrettyVal}
 import mlscala.Parser.parse
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
@@ -41,9 +42,11 @@ object Main {
     }
   }
 
+  private val initialEnv: Env = Map(Var("print") -> PrintV())
+
 
   def main(args: Array[String]) {
-    readEvalPrint(getEmptyEnv)
+    readEvalPrint(initialEnv)
   }
 
 }
