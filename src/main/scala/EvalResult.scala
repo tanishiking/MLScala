@@ -20,6 +20,7 @@ object EvalResult {
       case IntV(i)          => i.toString
       case BoolV(b)         => b.toString
       case ProcV(arg, _, _) => arg
+      case DProcV(arg, _)   => arg
       case _                => "-"
     }
   }
