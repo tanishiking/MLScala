@@ -73,6 +73,10 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("let addx = fun x -> x + 1;;").get == MultiDecl(List(Decl("addx", FunExp("x", BinOp(Plus, Var("x"), ILit(1)))))))
   }
 
+  it should "Let dfunExp" in {
+    assert(parse("let addx = dfun x -> x + one;;").get == MultiDecl(List(Decl("addx", DFunExp("x", BinOp(Plus, Var("x"), Var("one")))))))
+  }
+
   it should "return AppExp" in {
     assert(parse("addx 1;;").get == Exp(AppExp(Var("addx"), ILit(1))))
   }

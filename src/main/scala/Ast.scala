@@ -16,6 +16,7 @@ object Ast {
   case class IfExp(cond: Expr, et: Expr, ef: Expr) extends Expr
   case class LetExp(id: String, e: Expr, body: Expr) extends Expr
   case class FunExp(arg: String, body: Expr) extends Expr
+  case class DFunExp(arg: String, body: Expr) extends Expr
   case class AppExp(fun: Expr, arg: Expr) extends Expr
 
   sealed abstract class Program

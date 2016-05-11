@@ -8,13 +8,14 @@ object Parser extends RegexParsers {
 
   def parse(input: String) = parseAll(toplevel, input)
 
-  lazy val reserved = IF | THEN | ELSE | LET | IN | FUN | AND | TRUE | FALSE
+  lazy val reserved = IF | THEN | ELSE | LET | IN | FUN | DFUN | AND | TRUE | FALSE
   lazy val IF = "if"
   lazy val THEN = "then"
   lazy val ELSE = "else"
   lazy val LET = "let"
   lazy val IN = "in"
   lazy val FUN = "fun"
+  lazy val DFUN = "dfun"
   lazy val AND = "and"
   lazy val TRUE = "true"
   lazy val FALSE = "false"
@@ -35,7 +36,7 @@ object Parser extends RegexParsers {
     case id ~ args ~ body => MultiDecl(List(Decl(id, args.foldRight(body) { (arg, exp) => FunExp(arg, exp) })))
   }
 
-  lazy val expr = ifExpr | letExpr | funExpr | andExpr
+  lazy val expr = ifExpr | letExpr | funExpr | dfunExpr | andExpr
 
   lazy val andExpr = and | orExpr
   lazy val and = orExpr ~ BAND ~ orExpr ^^ { case p1 ~ _ ~ p2 => BinOp(And, p1, p2)}
@@ -76,5 +77,9 @@ object Parser extends RegexParsers {
 
   lazy val funExpr: Parser[Expr] = (FUN ~> rep1(name)) ~ (RARROW ~> expr) ^^ {
     case args ~ body => args.foldRight(body) { (arg, exp) => FunExp(arg, exp) }
+  }
+
+  lazy val dfunExpr: Parser[Expr] = (DFUN ~> rep1(name)) ~ (RARROW ~> expr) ^^ {
+    case args ~ body => args.foldRight(body) { (arg, exp) => DFunExp(arg, exp) }
   }
 }

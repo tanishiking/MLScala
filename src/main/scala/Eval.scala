@@ -53,12 +53,14 @@ object Eval {
         } yield e2
       }
       case FunExp(arg, body) => Right(ProcV(arg, env, body))
+      case DFunExp(arg, body) => Right(DProcV(arg, body))
       case AppExp(fun, arg)  => {
         (for {
           funval <- evalExp(env, fun).right
           argval <- evalExp(env, arg).right
         } yield (funval, argval)) match {
           case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(extendEnv(Var(id), arg, _env), body)
+          case Right((DProcV(id, body), arg: EvalV))      => evalExp(extendEnv(Var(id), arg, env), body)
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
         }

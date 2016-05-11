@@ -47,4 +47,9 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   it should "App addx to 1" in {
     assert(evalExp(Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
   }
+
+  it should "App dynamic addx to 1" in {
+    assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one"))), Var("one") -> IntV(1)), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
+    assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one")))), AppExp(Var("addx"), ILit(1))).left.get.isInstanceOf[RuntimeException])
+  }
 }
