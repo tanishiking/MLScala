@@ -1,0 +1,3 @@
+let add = fun x y -> x + y;;
+let x = add 1 2;;
+print x;;
