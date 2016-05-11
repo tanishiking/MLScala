@@ -26,6 +26,7 @@ object Parser extends RegexParsers {
   lazy val EQUAL = "="
   lazy val LESS = "<"
   lazy val PLUS = "+"
+  lazy val MINUS = "-"
   lazy val MULT = "*"
 
   lazy val toplevel = topExpr | topLet | topDecl
@@ -47,8 +48,9 @@ object Parser extends RegexParsers {
   lazy val ltExpr = lessthan | pExpr
   lazy val lessthan = pExpr ~ LESS ~ pExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Lt, p1, p2)}
 
-  lazy val pExpr: Parser[Expr] = plus | mExpr
+  lazy val pExpr: Parser[Expr] = plus | minus | mExpr
   lazy val plus = mExpr ~ PLUS ~ mExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Plus, p1, p2) }
+  lazy val minus = mExpr ~ MINUS ~ mExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Minus, p1, p2)}
 
   lazy val mExpr: Parser[Expr] = mult | appExpr
   lazy val mult = appExpr ~ MULT ~ appExpr ^^ { case p1 ~ _ ~ p2 => BinOp(Mult, p1, p2) }

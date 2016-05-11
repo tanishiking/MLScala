@@ -15,6 +15,8 @@ object Eval {
       case (Or, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: ||"))
       case (Plus, IntV(i1), IntV(i2)) => Right(IntV(i1 + i2))
       case (Plus, _, _)               => Left(new RuntimeException("Both arguments must be integer: +"))
+      case (Minus, IntV(i1), IntV(i2)) => Right(IntV(i1 - i2))
+      case (Minus, _, _)               => Left(new RuntimeException("Both arguments must be integer: -"))
       case (Mult, IntV(i1), IntV(i2)) => Right(IntV(i1 * i2))
       case (Mult, _, _)               => Left(new RuntimeException("Both arguments must be integer: *"))
       case (Lt, IntV(i1), IntV(i2))   => Right(BoolV(i1 < i2))

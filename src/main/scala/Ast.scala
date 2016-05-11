@@ -5,6 +5,7 @@ object Ast {
   case object And extends BinaryOp
   case object Or extends BinaryOp
   case object Plus extends BinaryOp
+  case object Minus extends BinaryOp
   case object Mult extends BinaryOp
   case object Lt extends BinaryOp
 

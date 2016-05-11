@@ -53,6 +53,10 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("1 + 2;;").get == Exp(BinOp(Plus, ILit(1), ILit(2))))
   }
 
+  it should "minus" in {
+    assert(parse("1 - 2;;").get == Exp(BinOp(Minus, ILit(1), ILit(2))))
+  }
+
   it should "mult" in {
     assert(parse("1 * 2;;").get == Exp(BinOp(Mult, ILit(1), ILit(2))))
   }
