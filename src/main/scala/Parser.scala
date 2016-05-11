@@ -7,6 +7,7 @@ import scala.util.parsing.combinator._
 object Parser extends RegexParsers {
 
   def parse(input: String) = parseAll(toplevel, input)
+  def parseProgramFile(input: String) = parseAll(programFile, input)
 
   lazy val reserved = IF | THEN | ELSE | LET | IN | FUN | DFUN | AND | TRUE | FALSE
   lazy val IF = "if"
@@ -28,6 +29,8 @@ object Parser extends RegexParsers {
   lazy val PLUS = "+"
   lazy val MINUS = "-"
   lazy val MULT = "*"
+
+  lazy val programFile = rep1(toplevel)
 
   lazy val toplevel = topExpr | topLet | topDecl
   lazy val topExpr = expr <~ SEMISEMI ^^ { case e => Exp(e) }

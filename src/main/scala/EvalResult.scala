@@ -5,9 +5,15 @@ import mlscala.Environment._
 
 object EvalResult {
 
-  abstract sealed class EvalResult
-  case class SingleEvalResult(name: String, newEnv: Env, v: EvalV) extends EvalResult
-  case class MultiEvalResult(names: List[String], newEnv: Env, vs: List[EvalV]) extends EvalResult
+  abstract sealed class EvalResult {
+    def getEnv: Env
+  }
+  case class SingleEvalResult(name: String, newEnv: Env, v: EvalV) extends EvalResult {
+    override def getEnv: Env = newEnv
+  }
+  case class MultiEvalResult(names: List[String], newEnv: Env, vs: List[EvalV]) extends EvalResult {
+    override def getEnv: Env = newEnv
+  }
 
   abstract sealed class EvalV
   case class IntV(i: Int) extends EvalV
