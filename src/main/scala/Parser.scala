@@ -27,10 +27,13 @@ object Parser extends RegexParsers {
   lazy val PLUS = "+"
   lazy val MULT = "*"
 
-  lazy val toplevel = topExpr | topLet
+  lazy val toplevel = topExpr | topLet | topDecl
   lazy val topExpr = expr <~ SEMISEMI ^^ { case e => Exp(e) }
   lazy val topLet = LET ~> rep1sep(binding, AND) <~ SEMISEMI ^^ { case bindings: List[Decl] => MultiDecl(bindings) }
   lazy val binding = (name <~ EQUAL) ~ expr ^^ { case id ~ e => Decl(id, e) }
+  lazy val topDecl = (LET ~> name) ~ rep1(name) ~ (EQUAL ~> expr) <~ SEMISEMI ^^ {
+    case id ~ args ~ body => MultiDecl(List(Decl(id, args.foldRight(body) { (arg, exp) => FunExp(arg, exp) })))
+  }
 
   lazy val expr = ifExpr | letExpr | funExpr | andExpr
 

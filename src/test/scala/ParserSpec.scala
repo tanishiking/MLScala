@@ -86,4 +86,9 @@ class ParserSpec extends FlatSpec with Matchers {
     assert(parse("(add 1) 2;;").get == parse("add 1 2;;").get)
   }
 
+  it should "TopDeclaration" in {
+    assert(parse("let add x y = x + y;;").get == MultiDecl(List(Decl("add", FunExp("x", FunExp("y", BinOp(Plus, Var("x"), Var("y"))))))))
+    assert(parse("let addx x = x + 1;;").get == MultiDecl(List(Decl("addx", FunExp("x", BinOp(Plus, Var("x"), ILit(1)))))))
+  }
+
 }
