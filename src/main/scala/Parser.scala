@@ -7,7 +7,7 @@ import scala.util.parsing.combinator._
 object Parser extends RegexParsers {
 
   def parse(input: String) = parseAll(toplevel, input)
-  def parseProgramFile(input: String) = parseAll(programFile, input)
+  def parseProgram(input: String) = parseAll(programFile, input)
 
   lazy val reserved = IF | THEN | ELSE | LET | IN | FUN | DFUN | AND | TRUE | FALSE
   lazy val IF = "if"

@@ -2,7 +2,7 @@ package mlscala
 
 import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal}
 import mlscala.Ast.Program
-import mlscala.Parser.{parse, parseProgramFile}
+import mlscala.Parser.{parse, parseProgram}
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
 
@@ -46,7 +46,7 @@ object Main {
 
   private def interpret(file: File) = {
     val input: String = fromFile(file).mkString
-    parseProgramFile(input) match {
+    parseProgram(input) match {
       case Parser.NoSuccess(msg, _)    => sys.error(msg)
       case Parser.Success(programs, _) => programs.foldLeft(initialEnv){
         (accEnv: Env, program: Program) => evalDecl(accEnv, program) match {
