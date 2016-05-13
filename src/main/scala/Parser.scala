@@ -9,11 +9,12 @@ object Parser extends RegexParsers {
   def parse(input: String) = parseAll(toplevel, input)
   def parseProgram(input: String) = parseAll(programFile, input)
 
-  lazy val reserved = IF | THEN | ELSE | LET | IN | FUN | DFUN | AND | TRUE | FALSE
+  lazy val reserved = IF | THEN | ELSE | LET | REC | IN | FUN | DFUN | AND | TRUE | FALSE
   lazy val IF = "if"
   lazy val THEN = "then"
   lazy val ELSE = "else"
   lazy val LET = "let"
+  lazy val REC = "rec"
   lazy val IN = "in"
   lazy val FUN = "fun"
   lazy val DFUN = "dfun"
@@ -32,12 +33,15 @@ object Parser extends RegexParsers {
 
   lazy val programFile = rep1(toplevel)
 
-  lazy val toplevel = topExpr | topLet | topDecl
+  lazy val toplevel = topExpr | topLet | topDecl | recDecl
   lazy val topExpr = expr <~ SEMISEMI ^^ { case e => Exp(e) }
   lazy val topLet = LET ~> rep1sep(binding, AND) <~ SEMISEMI ^^ { case bindings: List[Decl] => MultiDecl(bindings) }
   lazy val binding = (name <~ EQUAL) ~ expr ^^ { case id ~ e => Decl(id, e) }
   lazy val topDecl = (LET ~> name) ~ rep1(name) ~ (EQUAL ~> expr) <~ SEMISEMI ^^ {
     case id ~ args ~ body => MultiDecl(List(Decl(id, args.foldRight(body) { (arg, exp) => FunExp(arg, exp) })))
+  }
+  lazy val recDecl = LET ~> REC ~> (name <~ EQUAL) ~ (FUN ~> name) ~ (RARROW ~> expr) <~ SEMISEMI ^^ {
+    case id ~ arg ~ e => RecDecl(id, arg, e)
   }
 
   lazy val expr = ifExpr | letExpr | funExpr | dfunExpr | andExpr

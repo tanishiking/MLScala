@@ -52,4 +52,9 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
     assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one"))), Var("one") -> IntV(1)), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
     assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one")))), AppExp(Var("addx"), ILit(1))).left.get.isInstanceOf[RuntimeException])
   }
+
+  "RecDecl" should "be evaled to DProcV" in {
+    evalDecl(getEmptyEnv, RecDecl("fact", "x", IfExp(BinOp(Lt, Var("x"), ILit(1)), ILit(1), BinOp(Mult, Var("x"), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1))))))).right.get ===
+      SingleEvalResult("fact",Map(Var("fact") -> DProcV("x",IfExp(BinOp(Lt,Var("x"),ILit(1)),ILit(1),AppExp(Var("fact"),BinOp(Minus,Var("x"),ILit(1)))))),DProcV("x",IfExp(BinOp(Lt,Var("x"),ILit(1)),ILit(1),AppExp(Var("fact"),BinOp(Minus,Var("x"),ILit(1))))))
+  }
 }

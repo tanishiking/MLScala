@@ -23,6 +23,7 @@ object Ast {
   sealed abstract class Program
   case class Exp(e: Expr) extends Program
   case class MultiDecl(bindings: List[Decl]) extends Program
+  case class RecDecl(id: String, arg: String, exp: Expr) extends Program
 
   case class Decl(id: String, e: Expr)
 

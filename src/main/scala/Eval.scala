@@ -85,6 +85,9 @@ object Eval {
             decls.map(_.id),
             es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (EvalV, String)) => extendEnv(Var(t._2), t._1, curEnv) },
             es)))
+      case RecDecl(id, arg, body) =>
+        val proc = DProcV(arg, body)
+        Right(SingleEvalResult(id, extendEnv(Var(id), proc, env), proc))
     }
   }
 
