@@ -63,6 +63,9 @@ object Eval {
         } yield (funval, argval)) match {
           case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(extendEnv(Var(id), arg, _env), body)
           case Right((DProcV(id, body), arg: EvalV))      => evalExp(extendEnv(Var(id), arg, env), body)
+          case Right((PrintV(), arg: EvalV))              =>
+            println(getPrettyVal(arg))
+            Right(arg)
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
         }
