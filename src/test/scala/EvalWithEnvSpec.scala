@@ -9,11 +9,11 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   behavior of "Eval.scala and Environment.Scala"
 
   it should "IntV(5)" in {
-    assert(evalExp(extendEnv(Var("x"), IntV(3), getEmptyEnv), BinOp(Plus, Var("x"), Var("x"))) == Right(IntV(6)))
+    assert(evalExp(extendEnv(Var("x"), IntV(3), getEmptyEnv), BinOp(Plus, Var("x"), Var("x"))) === Right(IntV(6)))
   }
 
   it should "IntV(1)" in {
-    assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), Var("x"))) == Right(IntV(1)))
+    assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), Var("x"))) === Right(IntV(1)))
   }
 
   it should "throw Exception" in {
@@ -25,31 +25,31 @@ class EvalWithEnvSpec extends FlatSpec with Matchers {
   }
 
   it should "return tuple" in {
-    assert(evalDecl(getEmptyEnv, Exp(BinOp(Plus, ILit(1), ILit(2)))).right.get == SingleEvalResult("-", getEmptyEnv, IntV(3)))
+    assert(evalDecl(getEmptyEnv, Exp(BinOp(Plus, ILit(1), ILit(2)))).right.get === SingleEvalResult("-", getEmptyEnv, IntV(3)))
   }
 
   it should "update env" in {
-    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", ILit(3))))).right.get == MultiEvalResult(List("x"), Map(Var("x") -> IntV(3)), List(IntV(3))))
+    assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", ILit(3))))).right.get === MultiEvalResult(List("x"), Map(Var("x") -> IntV(3)), List(IntV(3))))
     assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("x", ILit(3)), Decl("y", ILit(1))))).right.get
-      == MultiEvalResult(List("x", "y"), Map(Var("x") -> IntV(3), Var("y") -> IntV(1)), List(IntV(3), IntV(1))))
+      === MultiEvalResult(List("x", "y"), Map(Var("x") -> IntV(3), Var("y") -> IntV(1)), List(IntV(3), IntV(1))))
   }
 
   it should "y would equal to global env's x value" in {
     assert(evalDecl(Map(Var("x") -> IntV(10)), MultiDecl(List(Decl("x", ILit(3)), Decl("y", Var("x"))))).right.get
-      == MultiEvalResult(List("x", "y"), Map(Var("x") -> IntV(3), Var("y") -> IntV(10)), List(IntV(3), IntV(10))))
+      === MultiEvalResult(List("x", "y"), Map(Var("x") -> IntV(3), Var("y") -> IntV(10)), List(IntV(3), IntV(10))))
   }
 
   it should "MultiDecl of functon" in {
     assert(evalDecl(getEmptyEnv, MultiDecl(List(Decl("addx", FunExp("x", BinOp(Plus, Var("x"), ILit(1))))))).right.get
-      == MultiEvalResult(List("addx"), Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), List(ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1))))))
+      === MultiEvalResult(List("addx"), Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), List(ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1))))))
   }
 
   it should "App addx to 1" in {
-    assert(evalExp(Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
+    assert(evalExp(Map(Var("addx") -> ProcV("x", Map(), BinOp(Plus, Var("x"), ILit(1)))), AppExp(Var("addx"), ILit(1))).right.get === IntV(2))
   }
 
   it should "App dynamic addx to 1" in {
-    assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one"))), Var("one") -> IntV(1)), AppExp(Var("addx"), ILit(1))).right.get == IntV(2))
+    assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one"))), Var("one") -> IntV(1)), AppExp(Var("addx"), ILit(1))).right.get === IntV(2))
     assert(evalExp(Map(Var("addx") -> DProcV("x", BinOp(Plus, Var("x"), Var("one")))), AppExp(Var("addx"), ILit(1))).left.get.isInstanceOf[RuntimeException])
   }
 

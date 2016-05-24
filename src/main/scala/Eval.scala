@@ -33,30 +33,26 @@ object Eval {
         }
       case ILit(i) => Right(IntV(i))
       case BLit(b) => Right(BoolV(b))
-      case BinOp(op, e1, e2) => {
+      case BinOp(op, e1, e2) =>
         for {
-          // どちらかがLeftならそのLeftが返る
           arg1 <- evalExp(env, e1).right
           arg2 <- evalExp(env, e2).right
           res  <- applyPrim(op, arg1, arg2).right
         } yield res
-      }
       case IfExp(e1, e2, e3) =>
-        // evalExp(env, e1) が Left(_) な場合は Left(_) が返る
         evalExp(env, e1).right.flatMap {
           case BoolV(true)  => evalExp(env, e2)
           case BoolV(false) => evalExp(env, e3)
-          case _           => Left(new RuntimeException("if expression must got boolean"))
+          case _            => Left(new RuntimeException("if expression must got boolean"))
         }
-      case LetExp(id, e, body) => {
+      case LetExp(id, e, body) =>
         for {
           e1 <- evalExp(env, e).right
           e2 <- evalExp(extendEnv(Var(id), e1, env), body).right
         } yield e2
-      }
-      case FunExp(arg, body) => Right(ProcV(arg, env, body))
+      case FunExp(arg, body)  => Right(ProcV(arg, env, body))
       case DFunExp(arg, body) => Right(DProcV(arg, body))
-      case AppExp(fun, arg)  => {
+      case AppExp(fun, arg)   =>
         (for {
           funval <- evalExp(env, fun).right
           argval <- evalExp(env, arg).right
@@ -69,7 +65,6 @@ object Eval {
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
         }
-      }
     }
   }
 
