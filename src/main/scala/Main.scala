@@ -30,20 +30,19 @@ object Main {
     parse(input) match {
       case Parser.NoSuccess(msg, _) => returnToREPL(msg, env, tyenv)
       case Parser.Success(decl, _) =>
-        tyDecl(tyenv, decl) match {
-          case Left(e: Exception) => returnToREPL(e.getMessage, env, tyenv)
-          case Right(ty) =>
-            evalDecl(env, decl) match {
-              case Left(e: Exception) => returnToREPL(e.getMessage, env, tyenv)
-              case Right(evalResult) =>
-                evalResult match {
-                  case SingleEvalResult(id, newEnv, v) =>
-                    printf("val %s: %s = %s\n", id, getPrettyTy(ty), getPrettyVal(v))
-                    readEvalPrint(newEnv, tyenv)
-                  case MultiEvalResult(ids, newEnv, vs) =>
-                    ids.zip(vs).map(t => String.format("val %s: %s = %s", t._1, getPrettyTy(ty), getPrettyVal(t._2))).foreach(println)
-                    readEvalPrint(newEnv, tyenv)
-                }
+        val eitherTy = tyDecl(tyenv, decl)
+        val eitherEvalRes = evalDecl(env, decl)
+        (eitherTy, eitherEvalRes) match {
+          case (Left(e: Exception), _)     => returnToREPL(e.getMessage, env, tyenv)
+          case (_, Left(e: Exception))     => returnToREPL(e.getMessage, env, tyenv)
+          case (Right(ty), Right(evalRes)) =>
+            evalRes match {
+              case SingleEvalResult(id, newEnv, v) =>
+                printf("val %s: %s = %s\n", id, getPrettyTy(ty), getPrettyVal(v))
+                readEvalPrint(newEnv, tyenv)
+              case MultiEvalResult(ids, newEnv, vs) =>
+                ids.zip(vs).map(t => String.format("val %s: %s = %s", t._1, getPrettyTy(ty), getPrettyVal(t._2))).foreach(println)
+                readEvalPrint(newEnv, tyenv)
             }
         }
     }
