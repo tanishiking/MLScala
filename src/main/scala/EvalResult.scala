@@ -1,6 +1,6 @@
 package mlscala
 
-import mlscala.Ast.Expr
+import mlscala.Ast.{TyBool, TyInt, Expr, Type}
 import mlscala.Environment._
 
 object EvalResult {
@@ -29,6 +29,13 @@ object EvalResult {
       case ProcV(arg, _, _) => arg
       case DProcV(arg, _)   => arg
       case _                => "-"
+    }
+  }
+
+  def getPrettyTy(t: Type): String = {
+    t match {
+      case TyInt  => "int"
+      case TyBool => "boolean"
     }
   }
 

@@ -1,10 +1,11 @@
 package mlscala
 
-import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal}
+import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal, getPrettyTy}
 import mlscala.Ast.Program
 import mlscala.Parser.{parse, parseProgram}
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
+import mlscala.Typing.tyDecl
 
 import scala.io.StdIn.readLine
 import scala.io.Source.fromFile
@@ -15,10 +16,10 @@ object Main {
   private val EXITCOMMAND = "exit"
   private val EXITMESSAGE = "bye"
 
-  def readEvalPrint(env: Env): Unit = {
-    def returnToREPL(msg: String, env: Env): Unit = {
+  def readEvalPrint(env: Env, tyenv: TyEnv): Unit = {
+    def returnToREPL(msg: String, env: Env, tyenv: TyEnv): Unit = {
       println(msg)
-      readEvalPrint(env)
+      readEvalPrint(env, tyenv)
     }
     val input: String = readLine("# ")
     if (input == EXITCOMMAND) {
@@ -27,19 +28,23 @@ object Main {
     }
 
     parse(input) match {
-      case Parser.NoSuccess(msg, _) => returnToREPL(msg, env)
-      case Parser.Success(decl, _) =>evalDecl(env, decl) match {
-          case Left(e: Exception) => returnToREPL(e.getMessage, env)
-          case Right(evalResult) => {
-            evalResult match {
-              case SingleEvalResult(id, newEnv, v) =>
-                printf("val %s = %s\n", id, getPrettyVal(v))
-                readEvalPrint(newEnv)
-              case MultiEvalResult(ids, newEnv, vs) =>
-                ids.zip(vs).map(t => String.format("val %s = %s", t._1, getPrettyVal(t._2))).foreach(println)
-                readEvalPrint(newEnv)
+      case Parser.NoSuccess(msg, _) => returnToREPL(msg, env, tyenv)
+      case Parser.Success(decl, _) =>
+        tyDecl(tyenv, decl) match {
+          case Left(e: Exception) => returnToREPL(e.getMessage, env, tyenv)
+          case Right(ty) =>
+            evalDecl(env, decl) match {
+              case Left(e: Exception) => returnToREPL(e.getMessage, env, tyenv)
+              case Right(evalResult) =>
+                evalResult match {
+                  case SingleEvalResult(id, newEnv, v) =>
+                    printf("val %s: %s = %s\n", id, getPrettyTy(ty), getPrettyVal(v))
+                    readEvalPrint(newEnv, tyenv)
+                  case MultiEvalResult(ids, newEnv, vs) =>
+                    ids.zip(vs).map(t => String.format("val %s: %s = %s", t._1, getPrettyTy(ty), getPrettyVal(t._2))).foreach(println)
+                    readEvalPrint(newEnv, tyenv)
+                }
             }
-          }
         }
     }
   }
@@ -65,7 +70,7 @@ object Main {
 
 
   def main(args: Array[String]) {
-    if (args.isEmpty) readEvalPrint(initialEnv)
+    if (args.isEmpty) readEvalPrint(initialEnv, getEmptyTyEnv)
     else findFile(args.head) match {
       case Some(file) => interpret(file)
       case None       => sys.error("File not found: " + args.head)

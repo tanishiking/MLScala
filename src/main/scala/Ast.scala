@@ -27,4 +27,8 @@ object Ast {
 
   case class Decl(id: String, e: Expr)
 
+  abstract sealed class Type
+  case object TyInt extends Type
+  case object TyBool extends Type
+
 }
