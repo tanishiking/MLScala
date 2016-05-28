@@ -6,6 +6,46 @@ import mlscala.Environment.TyEnv
 
 object Typing {
 
+  type TypeVariable = Int
+  type TySet = Set[TypeVariable]
+  type Subst = Map[TypeVariable, Type]
+  private var count: TypeVariable = 0
+  def freshTyVar(): TypeVariable = {
+    count += 1
+    count - 1
+  }
+
+  private def freeVarTy(ty: Type): TySet = {
+    ty match {
+      case TyInt           => Set.empty[TypeVariable]
+      case TyBool          => Set.empty[TypeVariable]
+      case TyVar(tyvar)    => Set(tyvar)
+      case TyFun(ty1, ty2) => freeVarTy(ty1) ++ freeVarTy(ty2)
+    }
+  }
+
+  private def getPretyTy(ty: Type): String = {
+    ty match {
+      case TyInt       => "int"
+      case TyBool      => "boolean"
+      case TyVar(_)    => "tyvar: "
+      case TyFun(_, _) => "TyFun: "
+    }
+  }
+
+  def substType(subst: Subst, ty: Type): Type = {
+    ty match {
+      case TyInt           => TyInt
+      case TyBool          => TyBool
+      case TyFun(ty1, ty2) => TyFun(substType(subst, ty1), substType(subst, ty2))
+      case TyVar(tyvar)    =>
+        subst.get(tyvar) match {
+          case Some(typ) => substType(subst, typ)
+          case None      => TyVar(tyvar)
+        }
+    }
+  }
+
   def tyPrim(op: BinaryOp, ty1: Type, ty2: Type): Either[Exception, Type] = {
     op match {
       case And => (ty1, ty2) match {

@@ -69,4 +69,19 @@ class TypeSpec extends FlatSpec {
     assert(tyExp(getEmptyTyEnv, LetExp("x", ILit(1), Var("x"))).right.get === TyInt)
     assert(tyExp(Map(Var("x") -> TyInt), LetExp("y", ILit(1), Var("x"))).right.get === TyInt)
   }
+
+  "substType" should "return tyint" in {
+    assert(substType(Map.empty[TypeVariable, Type], TyInt) === TyInt)
+  }
+
+  it should "return tybool" in {
+    assert(substType(Map.empty[TypeVariable, Type], TyBool) === TyBool)
+  }
+
+  it should "return Tyfun()" in {
+    val alpha: TypeVariable = freshTyVar()
+    val beta: TypeVariable = freshTyVar()
+    assert(substType(Map(alpha -> TyInt), TyFun(TyVar(alpha), TyBool)) === TyFun(TyInt, TyBool))
+    assert(substType(Map(beta -> TyFun(TyVar(alpha), TyInt), alpha -> TyBool), TyVar(beta)) === TyFun(TyBool, TyInt))
+  }
 }

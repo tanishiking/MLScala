@@ -1,4 +1,5 @@
 package mlscala
+import mlscala.Typing.TypeVariable
 
 object Ast {
   sealed abstract class BinaryOp
@@ -30,5 +31,7 @@ object Ast {
   abstract sealed class Type
   case object TyInt extends Type
   case object TyBool extends Type
+  case class TyVar(tyvar: TypeVariable) extends Type
+  case class TyFun(ty1: Type, ty2: Type) extends Type
 
 }
