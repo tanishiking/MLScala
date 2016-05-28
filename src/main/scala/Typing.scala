@@ -118,7 +118,7 @@ object Typing {
           case Right((TyBool, TyInt, TyInt))   => Right(TyInt)
           case Right((TyBool, TyBool, TyBool)) => Right(TyBool)
           case Right((TyBool, _, _))           => Left(new TypeMismatchException("Type mismatch if"))
-          case Right((TyInt, _, _))            => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
+          case Right((_, _, _))            => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
           case Left(exception)                 => Left(exception)
         }
       case LetExp(id, e1, e2) =>
