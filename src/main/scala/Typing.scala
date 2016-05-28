@@ -4,11 +4,14 @@ import exceptions.{VariableNotBoundException, TypeMismatchException}
 import mlscala.Ast._
 import mlscala.Environment.TyEnv
 
+import scala.collection.immutable.ListMap
+
 object Typing {
 
   type TypeVariable = Int
   type TySet = Set[TypeVariable]
-  type Subst = Map[TypeVariable, Type]
+  type Substs = ListMap[TypeVariable, Type]
+  type TypePairs = List[(Type, Type)]
   private var count: TypeVariable = 0
   def freshTyVar(): TypeVariable = {
     count += 1
@@ -33,7 +36,7 @@ object Typing {
     }
   }
 
-  def substType(subst: Subst, ty: Type): Type = {
+  def substType(subst: Substs, ty: Type): Type = {
     ty match {
       case TyInt           => TyInt
       case TyBool          => TyBool
@@ -43,6 +46,23 @@ object Typing {
           case Some(typ) => substType(subst, typ)
           case None      => TyVar(tyvar)
         }
+    }
+  }
+
+  def unify(tpair: TypePairs): Either[Exception, Substs] = {
+    def unifyTyVar(tyvar: TypeVariable, ty: Type, rest: TypePairs): Either[Exception, Substs] = {
+      val sub: Substs = ListMap(tyvar -> ty)
+      val eqs: TypePairs = rest.map(pair => (substType(sub, pair._1), substType(sub, pair._2)))
+      unify(eqs).right.flatMap(substs => Right(sub ++ substs))
+    }
+    tpair match {
+      case Nil                                                          => Right(ListMap.empty[TypeVariable, Type])
+      case (TyInt, TyInt) :: rest                                       => unify(rest)
+      case (TyBool, TyBool) :: rest                                     => unify(rest)
+      case (TyFun(ta1, ta2), TyFun(tb1, tb2)) :: rest                   => unify((ta1, tb1) :: (ta2, tb2) :: rest)
+      case (TyVar(tyvar), ty) :: rest if !freeVarTy(ty).contains(tyvar) => unifyTyVar(tyvar, ty, rest)
+      case (ty, TyVar(tyvar)) :: rest if !freeVarTy(ty).contains(tyvar) => unifyTyVar(tyvar, ty, rest)
+      case _                                                            => Left(new RuntimeException("Unification error"))
     }
   }
 

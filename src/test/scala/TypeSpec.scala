@@ -4,6 +4,8 @@ import mlscala.Typing._
 import mlscala.Ast._
 import mlscala.Environment.getEmptyTyEnv
 
+import scala.collection.immutable.ListMap
+
 
 class TypeSpec extends FlatSpec {
 
@@ -71,17 +73,26 @@ class TypeSpec extends FlatSpec {
   }
 
   "substType" should "return tyint" in {
-    assert(substType(Map.empty[TypeVariable, Type], TyInt) === TyInt)
+    assert(substType(ListMap.empty[TypeVariable, Type], TyInt) === TyInt)
   }
 
   it should "return tybool" in {
-    assert(substType(Map.empty[TypeVariable, Type], TyBool) === TyBool)
+    assert(substType(ListMap.empty[TypeVariable, Type], TyBool) === TyBool)
   }
 
   it should "return Tyfun()" in {
     val alpha: TypeVariable = freshTyVar()
     val beta: TypeVariable = freshTyVar()
-    assert(substType(Map(alpha -> TyInt), TyFun(TyVar(alpha), TyBool)) === TyFun(TyInt, TyBool))
-    assert(substType(Map(beta -> TyFun(TyVar(alpha), TyInt), alpha -> TyBool), TyVar(beta)) === TyFun(TyBool, TyInt))
+    assert(substType(ListMap(alpha -> TyInt), TyFun(TyVar(alpha), TyBool)) === TyFun(TyInt, TyBool))
+    assert(substType(ListMap(beta -> TyFun(TyVar(alpha), TyInt), alpha -> TyBool), TyVar(beta)) === TyFun(TyBool, TyInt))
+  }
+
+  "unify" should "return unified substitutions" in {
+    val alpha: TypeVariable = freshTyVar()
+    val beta: TypeVariable = freshTyVar()
+    assert(unify(Nil).right.get === ListMap.empty[TypeVariable, Type])
+    assert(unify(List((TyVar(alpha), TyInt))).right.get === ListMap(alpha -> TyInt))
+    assert(unify(List((TyFun(TyBool, TyVar(alpha)), TyFun(TyVar(beta), TyFun(TyInt, TyVar(beta)))))).right.get
+      === ListMap(alpha -> TyFun(TyInt, TyBool), beta -> TyBool))
   }
 }
