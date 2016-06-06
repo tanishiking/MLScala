@@ -1,11 +1,11 @@
 package mlscala
 
 import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal, getPrettyTy}
-import mlscala.Ast.Program
+import mlscala.Ast.{Program, Type}
 import mlscala.Parser.{parse, parseProgram}
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
-import mlscala.Typing.tyDecl
+import mlscala.Typing.{Substs, tyDecl}
 
 import scala.io.StdIn.readLine
 import scala.io.Source.fromFile
@@ -30,12 +30,12 @@ object Main {
     parse(input) match {
       case Parser.NoSuccess(msg, _) => returnToREPL(msg, env, tyenv)
       case Parser.Success(decl, _) =>
-        val eitherTy = tyDecl(tyenv, decl)
+        val eitherSubTy = tyDecl(tyenv, decl)
         val eitherEvalRes = evalDecl(env, decl)
-        (eitherTy, eitherEvalRes) match {
+        (eitherSubTy, eitherEvalRes) match {
           case (Left(e: Exception), _)     => returnToREPL(e.getMessage, env, tyenv)
           case (_, Left(e: Exception))     => returnToREPL(e.getMessage, env, tyenv)
-          case (Right(ty), Right(evalRes)) =>
+          case (Right((_, ty)), Right(evalRes)) =>
             evalRes match {
               case SingleEvalResult(id, newEnv, v) =>
                 printf("val %s: %s = %s\n", id, getPrettyTy(ty), getPrettyVal(v))

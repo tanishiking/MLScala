@@ -11,6 +11,7 @@ object Typing {
   type TypeVariable = Int
   type TySet = Set[TypeVariable]
   type Substs = ListMap[TypeVariable, Type]
+  def getEmptySubsts: Substs = ListMap.empty[TypeVariable, Type]
   type TypePairs = List[(Type, Type)]
   private var count: TypeVariable = 0
   def freshTyVar(): TypeVariable = {
@@ -49,6 +50,8 @@ object Typing {
     }
   }
 
+  def eqsOfSubst(substs: Substs): TypePairs = substs.map{ case (tyvar, ty) => (TyVar(tyvar), ty) }.toList
+
   def unify(tpair: TypePairs): Either[Exception, Substs] = {
     def unifyTyVar(tyvar: TypeVariable, ty: Type, rest: TypePairs): Either[Exception, Substs] = {
       val sub: Substs = ListMap(tyvar -> ty)
@@ -66,71 +69,57 @@ object Typing {
     }
   }
 
-  def tyPrim(op: BinaryOp, ty1: Type, ty2: Type): Either[Exception, Type] = {
+  def tyPrim(op: BinaryOp, ty1: Type, ty2: Type): Either[Exception, (TypePairs, Type)] = {
+    // TODO: ty1 != ty2 のとき unify で typemismatch が起きるが...
     op match {
-      case And => (ty1, ty2) match {
-        case (TyBool, TyBool) => Right(TyBool)
-        case _                => Left(new TypeMismatchException("Arguments must be of integer: &&"))
-      }
-      case Or => (ty1, ty2) match {
-        case (TyBool, TyBool) => Right(TyBool)
-        case _                => Left(new TypeMismatchException("Arguments must be of integer: ||"))
-      }
-      case Plus => (ty1, ty2) match {
-        case (TyInt, TyInt) => Right(TyInt)
-        case _              => Left(new TypeMismatchException("Arguments must be of integer: +"))
-      }
-      case Minus => (ty1, ty2) match {
-        case (TyInt, TyInt) => Right(TyInt)
-        case _              => Left(new TypeMismatchException("Arguments must be of integer: -"))
-      }
-      case Mult => (ty1, ty2) match {
-        case (TyInt, TyInt) => Right(TyInt)
-        case _              => Left(new TypeMismatchException("Arguments must be of integer: *"))
-      }
-      case Lt => (ty1, ty2) match {
-        case (TyInt, TyInt) => Right(TyBool)
-        case _              => Left(new TypeMismatchException("Arguments must be of integer: <"))
-      }
+        case And   => Right(List((ty1, TyBool), (ty2, TyBool)), TyBool)
+        case Or    => Right(List((ty1, TyBool), (ty2, TyBool)), TyBool)
+        case Plus  => Right(List((ty1, TyInt), (ty2, TyInt)), TyInt)
+        case Minus => Right(List((ty1, TyInt), (ty2, TyInt)), TyInt)
+        case Mult  => Right(List((ty1, TyInt), (ty2, TyInt)), TyInt)
+        case Lt    => Right(List((ty1, TyInt), (ty2, TyInt)), TyBool)
     }
   }
 
-  def tyExp(tyenv: TyEnv, e: Expr): Either[Exception, Type] = {
+  def tyExp(tyenv: TyEnv, e: Expr): Either[Exception, (Substs, Type)] = {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
-        case Some(ty) => Right(ty)
+        case Some(ty) => Right(getEmptySubsts, ty)
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
       }
-      case ILit(_) => Right(TyInt)
-      case BLit(_) => Right(TyBool)
+      case ILit(_) => Right(getEmptySubsts, TyInt)
+      case BLit(_) => Right(getEmptySubsts, TyBool)
       case BinOp(op, e1, e2) =>
         for {
-          ty1 <- tyExp(tyenv, e1).right
-          ty2 <- tyExp(tyenv, e2).right
-          res <- tyPrim(op, ty1, ty2).right
-        } yield res
-      case IfExp(cond, e1, e2) =>
-        (for {
-          tycond <- tyExp(tyenv, cond).right
-          ty1    <- tyExp(tyenv, e1).right
-          ty2    <- tyExp(tyenv, e2).right
-        } yield (tycond, ty1, ty2)) match {
-          case Right((TyBool, TyInt, TyInt))   => Right(TyInt)
-          case Right((TyBool, TyBool, TyBool)) => Right(TyBool)
-          case Right((TyBool, _, _))           => Left(new TypeMismatchException("Type mismatch if"))
-          case Right((_, _, _))            => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
-          case Left(exception)                 => Left(exception)
-        }
+          // TODO: scalaz.\/ 使ったほうがすっきりしそう
+          subty1 <- tyExp(tyenv, e1).right
+          subty2 <- tyExp(tyenv, e2).right
+          eqsty  <- tyPrim(op, subty1._2, subty2._2).right
+          substs <- unify(eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1) ++ eqsty._1).right
+        } yield (substs, substType(substs, eqsty._2))
+    case IfExp(cond, e1, e2) =>
+      (for {
+        // TODO: subty2._2 != subty3._2 のとき TypeMismatchException を raise するように
+        subty1 <- tyExp(tyenv, cond).right
+        subty2 <- tyExp(tyenv, e1).right
+        subty3 <- tyExp(tyenv, e2).right
+        substs <- unify((subty2._2, subty3._2) :: eqsOfSubst(subty1._1 ++ subty2._1 ++ subty3._1)).right
+      } yield (subty1._2, subty2._2, substs)) match {
+        case Right((TyBool, ty, substs))  => Right(substs, ty)
+        case Right((_, _, _))             => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
+        case Left(exception)              => Left(exception)
+      }
       case LetExp(id, e1, e2) =>
         for {
-          ty1 <- tyExp(tyenv, e1).right
-          ty2 <- tyExp(tyenv.updated(Var(id), ty1), e2).right
-        } yield ty2
+          subty1 <- tyExp(tyenv, e1).right
+          subty2 <- tyExp(tyenv.updated(Var(id), subty1._2), e2).right
+          substs <- unify(eqsOfSubst(subty1._1 ++ subty2._1)).right
+        } yield (substs, substType(substs, subty2._2))
       case _ => Left(new TypeMismatchException("Not implemented!!!"))
     }
   }
 
-  def tyDecl(tyenv: TyEnv, decl: Program): Either[Exception, Type] = {
+  def tyDecl(tyenv: TyEnv, decl: Program): Either[Exception, (Substs, Type)] = {
     decl match {
       case Exp(e) => tyExp(tyenv, e)
       case _      => Left(new TypeMismatchException("Not implemeted!!!!"))
