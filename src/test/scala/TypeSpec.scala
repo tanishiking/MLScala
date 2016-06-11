@@ -34,30 +34,23 @@ class TypeSpec extends FlatSpec {
   }
   */
 
-  "tyExp Var" should "return type of variable" in {
-    assert(tyExp(Map(Var("x") -> TyInt), Var("x")).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(Map(Var("x") -> TyBool), Var("x")).right.get === (getEmptySubsts, TyBool))
+  "tyExp" should "return proper subst and type" in {
+    assert(tyExp(Map(Var("x") -> TyInt), Var("x")).right.get ===(getEmptySubsts, TyInt))
+    assert(tyExp(Map(Var("x") -> TyBool), Var("x")).right.get ===(getEmptySubsts, TyBool))
+    assert(tyExp(getEmptyTyEnv, ILit(1)).right.get ===(getEmptySubsts, TyInt))
+    assert(tyExp(getEmptyTyEnv, BLit(true)).right.get === (getEmptySubsts, TyBool))
+    assert(tyExp(getEmptyTyEnv, BinOp(Plus, ILit(1), ILit(1))).right.get._2 === tyPrim(Plus, TyInt, TyInt).right.get._2)
+    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), ILit(1), ILit(1))).right.get === (getEmptySubsts, TyInt))
+    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BLit(true), BLit(false))).right.get === (getEmptySubsts, TyBool))
+    assert(tyExp(getEmptyTyEnv, LetExp("x", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
+    assert(tyExp(Map(Var("x") -> TyInt), LetExp("y", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
+    assert(tyExp(getEmptyTyEnv, FunExp("x", Var("x"))).right.get === (getEmptySubsts, TyFun(TyVar(0), TyVar(0))))
+    assert(tyExp(getEmptyTyEnv, FunExp("x", BinOp(Plus, Var("x"), ILit(1)))).right.get === (Map(1 -> TyInt), TyFun(TyInt, TyInt)))
+    assert(tyExp(getEmptyTyEnv, AppExp(FunExp("x", Var("x")), ILit(1))).right.get === (Map(2 -> TyInt, 3 -> TyInt), TyInt))
   }
 
   it should "raise variableNotBoundException" in {
     assert(tyExp(Map(Var("x") -> TyBool), Var("y")).left.get.isInstanceOf[VariableNotBoundException])
-  }
-
-  "tyExp Lit" should "return tyInt" in {
-    assert(tyExp(getEmptyTyEnv, ILit(1)).right.get === (getEmptySubsts, TyInt))
-  }
-
-  it should "return tybool" in {
-    assert(tyExp(getEmptyTyEnv, BLit(true)).right.get === (getEmptySubsts, TyBool))
-  }
-
-  "tyExp BinOp " should "same result of tyPrim BinaryOp" in {
-    assert(tyExp(getEmptyTyEnv, BinOp(Plus, ILit(1), ILit(1))).right.get._2 === tyPrim(Plus, TyInt, TyInt).right.get._2)
-  }
-
-  "tyExp ifExp" should "return Ty" in {
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), ILit(1), ILit(1))).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BLit(true), BLit(false))).right.get === (getEmptySubsts, TyBool))
   }
 
   /*
@@ -67,11 +60,6 @@ class TypeSpec extends FlatSpec {
     assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BinOp(Plus, ILit(1), BLit(true)), ILit(1))).left.get.isInstanceOf[TypeMismatchException])
   }
   */
-
-  "tyExp LetExp" should "return TyInt" in {
-    assert(tyExp(getEmptyTyEnv, LetExp("x", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(Map(Var("x") -> TyInt), LetExp("y", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
-  }
 
   "substType" should "return tyint" in {
     assert(substType(ListMap.empty[TypeVariable, Type], TyInt) === TyInt)

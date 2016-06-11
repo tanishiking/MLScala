@@ -115,6 +115,18 @@ object Typing {
           subty2 <- tyExp(tyenv.updated(Var(id), subty1._2), e2).right
           substs <- unify(eqsOfSubst(subty1._1 ++ subty2._1)).right
         } yield (substs, substType(substs, subty2._2))
+      case FunExp(arg, body) =>
+        val domTy: Type = TyVar(freshTyVar())
+        tyExp(tyenv.updated(Var(arg), domTy), body).right.flatMap { case (sub, ranTy) =>
+          Right((sub, TyFun(substType(sub, domTy), ranTy)))
+        }
+      case AppExp(fun, arg) =>
+        val ranTy: Type = TyVar(freshTyVar())
+        for {
+          subty1 <- tyExp(tyenv, fun).right
+          subty2 <- tyExp(tyenv, arg).right
+          substs <- unify((subty1._2, TyFun(subty2._2, ranTy)) :: eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1)).right
+        } yield (substs, substType(substs, ranTy))
       case _ => Left(new TypeMismatchException("Not implemented!!!"))
     }
   }
