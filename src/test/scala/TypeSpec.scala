@@ -11,13 +11,10 @@ class TypeSpec extends FlatSpec {
 
   behavior of "Typing.scala"
 
-  "BinaryOp PLUS MULT" should "return TyInt" in {
+  "BinaryOp" should "return TyInt" in {
     assert(tyPrim(Plus, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
     assert(tyPrim(Mult, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
     assert(tyPrim(Minus, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
-  }
-
-  "BinaryOp LT AND OR" should "return TyBool" in {
     assert(tyPrim(Lt, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyBool))
     assert(tyPrim(And, TyBool, TyBool).right.get === (List((TyBool, TyBool), (TyBool, TyBool)), TyBool))
     assert(tyPrim(Or, TyBool, TyBool).right.get === (List((TyBool, TyBool), (TyBool, TyBool)), TyBool))
@@ -61,15 +58,10 @@ class TypeSpec extends FlatSpec {
   }
   */
 
-  "substType" should "return tyint" in {
+  "substType" should "return substedType" in {
     assert(substType(ListMap.empty[TypeVariable, Type], TyInt) === TyInt)
-  }
-
-  it should "return tybool" in {
     assert(substType(ListMap.empty[TypeVariable, Type], TyBool) === TyBool)
-  }
 
-  it should "return Tyfun()" in {
     val alpha: TypeVariable = freshTyVar()
     val beta: TypeVariable = freshTyVar()
     assert(substType(ListMap(alpha -> TyInt), TyFun(TyVar(alpha), TyBool)) === TyFun(TyInt, TyBool))
