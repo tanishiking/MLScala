@@ -103,7 +103,7 @@ object Typing {
         subty1 <- tyExp(tyenv, cond).right
         subty2 <- tyExp(tyenv, e1).right
         subty3 <- tyExp(tyenv, e2).right
-        substs <- unify((subty2._2, subty3._2) :: eqsOfSubst(subty1._1 ++ subty2._1 ++ subty3._1)).right
+        substs <- unify((subty2._2, subty3._2) :: eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1) ++ eqsOfSubst(subty3._1)).right
       } yield (subty1._2, subty2._2, substs)) match {
         case Right((TyBool, ty, substs))  => Right(substs, ty)
         case Right((_, _, _))             => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
