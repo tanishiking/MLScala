@@ -28,13 +28,9 @@ object Typing {
   }
 
   def closure(ty: Type, tyenv: TyEnv, subst: Substs): Tysc = {
-    println(ty)
-    println(tyenv)
-    println(subst)
     def freeVarialbes: TySet = freeVarTyEnv(tyenv).map(typevariable => freeVarTy(substType(subst, TyVar(typevariable))))
       .foldLeft(Set.empty[TypeVariable])((acc, tyset) => acc ++ tyset)
     val ids: TySet = freeVarTy(ty) -- freeVarialbes
-    println(TyScheme(ids.toList, ty))
     TyScheme(ids.toList, ty)
   }
 
