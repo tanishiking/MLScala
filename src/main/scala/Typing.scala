@@ -14,6 +14,30 @@ object Typing {
   def getEmptySubsts: Substs = ListMap.empty[TypeVariable, Type]
   type TypePairs = List[(Type, Type)]
   private var count: TypeVariable = 0
+
+  def tyschemeOfType(ty: Type): Tysc = TyScheme(Nil, ty)
+
+  def freeVarTyScheme(tyscheme: Tysc): TySet = {
+    tyscheme match {
+      case TyScheme(tyvars, ty) => tyvars.toSet ++ freeVarTy(ty)
+    }
+  }
+
+  def freeVarTyEnv(tyenv: TyEnv): TySet = {
+    tyenv.foldLeft(Set.empty[TypeVariable])((acc, tup: (Var, Tysc)) => acc ++ freeVarTyScheme(tup._2))
+  }
+
+  def closure(ty: Type, tyenv: TyEnv, subst: Substs): Tysc = {
+    println(ty)
+    println(tyenv)
+    println(subst)
+    def freeVarialbes: TySet = freeVarTyEnv(tyenv).map(typevariable => freeVarTy(substType(subst, TyVar(typevariable))))
+      .foldLeft(Set.empty[TypeVariable])((acc, tyset) => acc ++ tyset)
+    val ids: TySet = freeVarTy(ty) -- freeVarialbes
+    println(TyScheme(ids.toList, ty))
+    TyScheme(ids.toList, ty)
+  }
+
   def freshTyVar(): TypeVariable = {
     count += 1
     count - 1
@@ -84,7 +108,11 @@ object Typing {
   def tyExp(tyenv: TyEnv, e: Expr): Either[Exception, (Substs, Type)] = {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
-        case Some(ty) => Right(getEmptySubsts, ty)
+        case Some(tysc) => tysc match {
+          case TyScheme(vars, ty) =>
+            val s: Substs = vars.foldLeft(getEmptySubsts)((acc, id) => acc.updated(id, TyVar(freshTyVar())))
+            Right((getEmptySubsts, substType(s, ty)))
+        }
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
       }
       case ILit(_) => Right(getEmptySubsts, TyInt)
@@ -97,27 +125,27 @@ object Typing {
           eqsty  <- tyPrim(op, subty1._2, subty2._2).right
           substs <- unify(eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1) ++ eqsty._1).right
         } yield (substs, substType(substs, eqsty._2))
-    case IfExp(cond, e1, e2) =>
-      (for {
-        // TODO: subty2._2 != subty3._2 のとき TypeMismatchException を raise するように
-        subty1 <- tyExp(tyenv, cond).right
-        subty2 <- tyExp(tyenv, e1).right
-        subty3 <- tyExp(tyenv, e2).right
-        substs <- unify((subty2._2, subty3._2) :: eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1) ++ eqsOfSubst(subty3._1)).right
-      } yield (subty1._2, subty2._2, substs)) match {
-        case Right((TyBool, ty, substs))  => Right(substs, ty)
-        case Right((_, _, _))             => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
-        case Left(exception)              => Left(exception)
-      }
+      case IfExp(cond, e1, e2) =>
+        (for {
+          // TODO: subty2._2 != subty3._2 のとき TypeMismatchException を raise するように
+          subty1 <- tyExp(tyenv, cond).right
+          subty2 <- tyExp(tyenv, e1).right
+          subty3 <- tyExp(tyenv, e2).right
+          substs <- unify((subty2._2, subty3._2) :: eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1) ++ eqsOfSubst(subty3._1)).right
+        } yield (subty1._2, subty2._2, substs)) match {
+          case Right((TyBool, ty, substs))  => Right(substs, ty)
+          case Right((_, _, _))             => Left(new TypeMismatchException("Type mismatch if condition must be bool"))
+          case Left(exception)              => Left(exception)
+        }
       case LetExp(id, e1, e2) =>
         for {
           subty1 <- tyExp(tyenv, e1).right
-          subty2 <- tyExp(tyenv.updated(Var(id), subty1._2), e2).right
-          substs <- unify(eqsOfSubst(subty1._1 ++ subty2._1)).right
+          subty2 <- tyExp(tyenv.updated(Var(id), closure(subty1._2, tyenv, subty1._1)), e2).right
+          substs <- unify(eqsOfSubst(subty1._1) ++ eqsOfSubst(subty2._1)).right
         } yield (substs, substType(substs, subty2._2))
       case FunExp(arg, body) =>
         val domTy: Type = TyVar(freshTyVar())
-        tyExp(tyenv.updated(Var(arg), domTy), body).right.flatMap { case (sub, ranTy) =>
+        tyExp(tyenv.updated(Var(arg), tyschemeOfType(domTy)), body).right.flatMap { case (sub, ranTy) =>
           Right((sub, TyFun(substType(sub, domTy), ranTy)))
         }
       case AppExp(fun, arg) =>
@@ -131,9 +159,9 @@ object Typing {
     }
   }
 
-  def tyDecl(tyenv: TyEnv, decl: Program): Either[Exception, (Substs, Type)] = {
+  def tyDecl(tyenv: TyEnv, decl: Program): Either[Exception, (TyEnv, Type)] = {
     decl match {
-      case Exp(e) => tyExp(tyenv, e)
+      case Exp(e) => tyExp(tyenv, e).right.map { case (substs, ty) => (tyenv, ty) }
       case _      => Left(new TypeMismatchException("Not implemeted!!!!"))
     }
   }

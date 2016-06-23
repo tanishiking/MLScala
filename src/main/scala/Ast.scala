@@ -34,4 +34,6 @@ object Ast {
   case class TyVar(tyvar: TypeVariable) extends Type
   case class TyFun(ty1: Type, ty2: Type) extends Type
 
+  abstract sealed class Tysc
+  case class TyScheme(tyvars: List[TypeVariable], ty: Type) extends Tysc
 }

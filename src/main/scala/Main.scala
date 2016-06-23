@@ -30,19 +30,19 @@ object Main {
     parse(input) match {
       case Parser.NoSuccess(msg, _) => returnToREPL(msg, env, tyenv)
       case Parser.Success(decl, _) =>
-        val eitherSubTy = tyDecl(tyenv, decl)
+        val eitherTyEnvTy = tyDecl(tyenv, decl)
         val eitherEvalRes = evalDecl(env, decl)
-        (eitherSubTy, eitherEvalRes) match {
+        (eitherTyEnvTy, eitherEvalRes) match {
           case (Left(e: Exception), _)     => returnToREPL(e.getMessage, env, tyenv)
           case (_, Left(e: Exception))     => returnToREPL(e.getMessage, env, tyenv)
-          case (Right((_, ty)), Right(evalRes)) =>
+          case (Right((newtyenv, ty)), Right(evalRes)) =>
             evalRes match {
               case SingleEvalResult(id, newEnv, v) =>
                 printf("val %s: %s = %s\n", id, getPrettyTy(ty), getPrettyVal(v))
-                readEvalPrint(newEnv, tyenv)
+                readEvalPrint(newEnv, newtyenv)
               case MultiEvalResult(ids, newEnv, vs) =>
                 ids.zip(vs).map(t => String.format("val %s: %s = %s", t._1, getPrettyTy(ty), getPrettyVal(t._2))).foreach(println)
-                readEvalPrint(newEnv, tyenv)
+                readEvalPrint(newEnv, newtyenv)
             }
         }
     }
