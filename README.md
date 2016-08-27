@@ -1,2 +1,2 @@
 # MLScala
-ML interpreter written in Scala (for practice)
+minML interpreter written in Scala (for practice)
