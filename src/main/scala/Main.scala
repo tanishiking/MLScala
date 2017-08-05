@@ -1,15 +1,10 @@
 package mlscala
 
 import mlscala.EvalResult.{MultiEvalResult, SingleEvalResult, getPrettyVal, getPrettyTy}
-import mlscala.Ast.{Program, Type}
-import mlscala.Parser.{parse, parseProgram}
+import mlscala.Parser.parse
 import mlscala.Eval.evalDecl
 import mlscala.Environment._
-import mlscala.Typing.{Substs, tyDecl}
-
-import scala.io.StdIn.readLine
-import scala.io.Source.fromFile
-import java.io.File
+import mlscala.Typing.tyDecl
 
 object Main {
 
@@ -48,32 +43,7 @@ object Main {
     }
   }
 
-  private def interpret(file: File) = {
-    val input: String = fromFile(file).mkString
-    parseProgram(input) match {
-      case Parser.NoSuccess(msg, _)    => sys.error(msg)
-      case Parser.Success(programs, _) => programs.foldLeft(initialEnv){
-        (accEnv: Env, program: Program) => evalDecl(accEnv, program) match {
-          case Left(e: Exception) => sys.error(e.getMessage)
-          case Right(evalResult)  => evalResult.getEnv
-        }
-      }
-    }
-  }
-
-  private def findFile (filename:String): Option[File] = {
-    val file = new File(filename)
-    if (file.exists) Some(file)
-    else None
-  }
-
-
   def main(args: Array[String]) {
-    if (args.isEmpty) readEvalPrint(initialEnv, getEmptyTyEnv)
-    else findFile(args.head) match {
-      case Some(file) => interpret(file)
-      case None       => sys.error("File not found: " + args.head)
-    }
+    readEvalPrint(initialEnv, getEmptyTyEnv)
   }
-
 }
