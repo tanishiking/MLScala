@@ -1,33 +1,33 @@
 package mlscala
 
 import exceptions.VariableNotBoundException
-import mlscala.Ast._
-import mlscala.Environment._
-import mlscala.EvalResult._
+import Ast._
+import Environment.Env
+import EvalResult._
 
 object Eval {
-
   def applyPrim(op: BinaryOp, arg1: EvalV, arg2: EvalV): Either[Exception, EvalV] = {
     (op, arg1, arg2) match {
-      case (And, BoolV(b1), BoolV(b2))  => Right(BoolV(b1 && b2))
-      case (And, _, _)                => Left(new RuntimeException("Both arguments must be boolean: &&"))
-      case (Or, BoolV(b1), BoolV(b2))   => Right(BoolV(b1 || b2))
-      case (Or, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: ||"))
-      case (Plus, IntV(i1), IntV(i2)) => Right(IntV(i1 + i2))
-      case (Plus, _, _)               => Left(new RuntimeException("Both arguments must be integer: +"))
+      case (And, BoolV(b1), BoolV(b2)) => Right(BoolV(b1 && b2))
+      case (Or, BoolV(b1), BoolV(b2))  => Right(BoolV(b1 || b2))
+      case (Plus, IntV(i1), IntV(i2))  => Right(IntV(i1 + i2))
       case (Minus, IntV(i1), IntV(i2)) => Right(IntV(i1 - i2))
+      case (Mult, IntV(i1), IntV(i2))  => Right(IntV(i1 * i2))
+      case (Lt, IntV(i1), IntV(i2))    => Right(BoolV(i1 < i2))
+      case (And, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: &&"))
+      case (Or, _, _)                  => Left(new RuntimeException("Both arguments must be boolean: ||"))
+      case (Plus, _, _)                => Left(new RuntimeException("Both arguments must be integer: +"))
       case (Minus, _, _)               => Left(new RuntimeException("Both arguments must be integer: -"))
-      case (Mult, IntV(i1), IntV(i2)) => Right(IntV(i1 * i2))
-      case (Mult, _, _)               => Left(new RuntimeException("Both arguments must be integer: *"))
-      case (Lt, IntV(i1), IntV(i2))   => Right(BoolV(i1 < i2))
-      case (Lt, _, _)                 => Left(new RuntimeException("Both arguments must be integer: <"))
+      case (Mult, _, _)                => Left(new RuntimeException("Both arguments must be integer: *"))
+      case (Lt, _, _)                  => Left(new RuntimeException("Both arguments must be integer: <"))
     }
   }
 
   def evalExp(env: Env, expr: Expr): Either[Exception, EvalV] = {
     expr match {
       case Var(x) =>
-        lookup(Var(x), env) match {
+        println(env)
+        env.get(Var(x)) match {
           case Some(e) => Right(e)
           case None    => Left(new VariableNotBoundException("Variable " + x + " not bounded"))
         }
@@ -48,7 +48,7 @@ object Eval {
       case LetExp(id, e, body) =>
         for {
           e1 <- evalExp(env, e).right
-          e2 <- evalExp(extendEnv(Var(id), e1, env), body).right
+          e2 <- evalExp(env.updated(Var(id), e1), body).right
         } yield e2
       case FunExp(arg, body)  => Right(ProcV(arg, env, body))
       case DFunExp(arg, body) => Right(DProcV(arg, body))
@@ -57,10 +57,10 @@ object Eval {
           funval <- evalExp(env, fun).right
           argval <- evalExp(env, arg).right
         } yield (funval, argval)) match {
-          case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(extendEnv(Var(id), arg, _env), body)
-          case Right((DProcV(id, body), arg: EvalV))      => evalExp(extendEnv(Var(id), arg, env), body)
+          case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(_env.updated(Var(id), arg), body)
+          case Right((DProcV(id, body), arg: EvalV))      => evalExp(env.updated(Var(id), arg), body)
           case Right((PrintV(), arg: EvalV))              =>
-            println(getPrettyVal(arg))
+            println(arg)
             Right(arg)
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
@@ -69,21 +69,20 @@ object Eval {
   }
 
   // Reduce List of Either to Eiler of list
-  private def listU[A, B](ls: List[Either[A, B]]): Either[A, List[B]] =
+  private def seqU[A, B](ls: Seq[Either[A, B]]): Either[A, Seq[B]] =
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
-  def evalDecl(env: Env, prog: Program): Either[Exception, EvalResult] = {
-    prog match {
-      case Exp(e)           => evalExp(env, e).right.flatMap(v => Right(SingleEvalResult("-", env, v)))
-      case MultiDecl(decls) => listU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>
+  def evalStmt(env: Env, stmt: Stmt): Either[Exception, EvalResult] = {
+    stmt match {
+      case TopExpr(e)       => evalExp(env, e).right.flatMap(v => Right(SingleEvalResult("-", env, v)))
+      case MultiDecl(decls) => seqU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>
           Right(MultiEvalResult(
             decls.map(_.id),
-            es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (EvalV, String)) => extendEnv(Var(t._2), t._1, curEnv) },
+            es.zip(decls.map(_.id)).foldLeft(env){ (curEnv, t: (EvalV, String)) => curEnv.updated(Var(t._2), t._1) },
             es)))
       case RecDecl(id, arg, body) =>
         val proc = DProcV(arg, body)
-        Right(SingleEvalResult(id, extendEnv(Var(id), proc, env), proc))
+        Right(SingleEvalResult(id, env.updated(Var(id), proc), proc))
     }
   }
-
 }

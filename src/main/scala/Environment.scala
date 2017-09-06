@@ -1,18 +1,12 @@
 package mlscala
 
-import Ast._
-import mlscala.EvalResult.{PrintV, EvalV}
+import Ast.Var
+import EvalResult.{EvalV, PrintV}
 
 object Environment {
-
   type Env = Map[Var, EvalV]
-
-  type TyEnv = Map[Var, Tysc]
 
   val initialEnv: Env = Map(Var("print") -> PrintV())
 
-  def getEmptyTyEnv: TyEnv = Map.empty[Var, Tysc]
   def getEmptyEnv: Env = Map.empty[Var, EvalV]
-  def extendEnv(x: Var, v: EvalV, env: Map[Var, EvalV]): Env = env.updated(x, v)
-  def lookup(x: Var, env: Env): Option[EvalV] = env.get(x)
 }

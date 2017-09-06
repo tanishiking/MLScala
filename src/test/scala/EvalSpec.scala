@@ -1,28 +1,44 @@
-import mlscala.Ast._
-import mlscala.Eval._
-import mlscala.Environment._
-import mlscala.EvalResult._
-import org.scalatest.{Matchers, FlatSpec}
+package mlscala
 
-class EvalSpec extends FlatSpec with Matchers {
+import Ast._
+import Environment._
+import EvalResult._
+import org.scalatest.{Matchers, FunSpec}
 
-  behavior of "Eval.scala"
+class EvalSpec extends FunSpec with Matchers {
 
-  it should "return applied primitive op" in {
-    assert(applyPrim(Plus, IntV(1), IntV(3)) === Right(IntV(4)))
-    assert(applyPrim(Mult, IntV(3), IntV(3)) === Right(IntV(9)))
-    assert(applyPrim(Minus, IntV(3), IntV(1)) === Right(IntV(2)))
-    assert(applyPrim(Lt, IntV(1), IntV(5)) === Right(BoolV(true)))
-    assert(applyPrim(Lt, IntV(10), IntV(5)) === Right(BoolV(false)))
+  describe("Eval") {
+    describe(".applyPrim") {
+      it ("should return Either.Right for valid input") {
+        Eval.applyPrim(Plus, IntV(1), IntV(3)) shouldBe Right(IntV(4))
+        Eval.applyPrim(Minus, IntV(3), IntV(1)) shouldBe Right(IntV(2))
+        Eval.applyPrim(Minus, IntV(3), IntV(5)) shouldBe Right(IntV(-2))
+        Eval.applyPrim(Mult, IntV(3), IntV(3)) shouldBe Right(IntV(9))
+        Eval.applyPrim(And, BoolV(true), BoolV(true)) shouldBe Right(BoolV(true))
+        Eval.applyPrim(And, BoolV(false), BoolV(true)) shouldBe Right(BoolV(false))
+        Eval.applyPrim(And, BoolV(true), BoolV(false)) shouldBe Right(BoolV(false))
+        Eval.applyPrim(And, BoolV(false), BoolV(false)) shouldBe Right(BoolV(false))
+        Eval.applyPrim(Or, BoolV(true), BoolV(true)) shouldBe Right(BoolV(true))
+        Eval.applyPrim(Or, BoolV(false), BoolV(true)) shouldBe Right(BoolV(true))
+        Eval.applyPrim(Or, BoolV(true), BoolV(false)) shouldBe Right(BoolV(true))
+        Eval.applyPrim(Or, BoolV(false), BoolV(false)) shouldBe Right(BoolV(false))
+        Eval.applyPrim(Lt, IntV(1), IntV(5)) shouldBe Right(BoolV(true))
+        Eval.applyPrim(Lt, IntV(5), IntV(1)) shouldBe Right(BoolV(false))
+        Eval.applyPrim(Lt, IntV(5), IntV(5)) shouldBe Right(BoolV(false))
+      }
+
+      it ("should return Either.Left for invalid input") {
+        Eval.applyPrim(And, IntV(1), BoolV(true)).left.get.isInstanceOf[RuntimeException] shouldBe true
+        Eval.applyPrim(Or, IntV(1), BoolV(true)).left.get.isInstanceOf[RuntimeException] shouldBe true
+        Eval.applyPrim(Plus, BoolV(true), IntV(1)).left.get.isInstanceOf[RuntimeException] shouldBe true
+        Eval.applyPrim(Minus, BoolV(true), IntV(1)).left.get.isInstanceOf[RuntimeException] shouldBe true
+        Eval.applyPrim(Mult, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException] shouldBe true
+        Eval.applyPrim(Lt, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException] shouldBe true
+      }
+    }
   }
 
-  it should "throw RuntimeException for invalid binary op" in {
-    assert(applyPrim(And, IntV(1), BoolV(true)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Or, IntV(1), BoolV(false)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Plus, BoolV(true), BoolV(false)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Mult, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException])
-    assert(applyPrim(Lt, BoolV(true), IntV(2)).left.get.isInstanceOf[RuntimeException])
-  }
+  /*
 
   it should "properly eval exp" in {
     assert(evalExp(extendEnv(Var("x"), IntV(3), getEmptyEnv), BinOp(Plus, Var("x"), Var("x"))) === Right(IntV(6)))
@@ -52,4 +68,5 @@ class EvalSpec extends FlatSpec with Matchers {
     assert(evalExp(getEmptyEnv, LetExp("x", ILit(1), BinOp(Plus, Var("x"), Var("y")))).left.get.isInstanceOf[RuntimeException])
     assert(evalExp(getEmptyEnv, AppExp(Var("addx"), ILit(1))).left.get.isInstanceOf[RuntimeException])
   }
+  */
 }
