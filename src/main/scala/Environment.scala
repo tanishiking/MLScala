@@ -8,5 +8,5 @@ object Environment {
 
   val initialEnv: Env = Map(Var("print") -> PrintV())
 
-  def getEmptyEnv: Env = Map.empty[Var, EvalV]
+  def empty: Env = Map.empty[Var, EvalV]
 }

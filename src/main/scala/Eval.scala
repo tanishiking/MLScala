@@ -1,12 +1,12 @@
 package mlscala
 
-import exceptions.VariableNotBoundException
+import exceptions.{VariableNotBoundException, TypeMismatchException}
 import Ast._
 import Environment.Env
 import EvalResult._
 
 object Eval {
-  def applyPrim(op: BinaryOp, arg1: EvalV, arg2: EvalV): Either[Exception, EvalV] = {
+  private def applyPrim(op: BinaryOp, arg1: EvalV, arg2: EvalV): Either[Exception, EvalV] = {
     (op, arg1, arg2) match {
       case (And, BoolV(b1), BoolV(b2)) => Right(BoolV(b1 && b2))
       case (Or, BoolV(b1), BoolV(b2))  => Right(BoolV(b1 || b2))
@@ -14,16 +14,11 @@ object Eval {
       case (Minus, IntV(i1), IntV(i2)) => Right(IntV(i1 - i2))
       case (Mult, IntV(i1), IntV(i2))  => Right(IntV(i1 * i2))
       case (Lt, IntV(i1), IntV(i2))    => Right(BoolV(i1 < i2))
-      case (And, _, _)                 => Left(new RuntimeException("Both arguments must be boolean: &&"))
-      case (Or, _, _)                  => Left(new RuntimeException("Both arguments must be boolean: ||"))
-      case (Plus, _, _)                => Left(new RuntimeException("Both arguments must be integer: +"))
-      case (Minus, _, _)               => Left(new RuntimeException("Both arguments must be integer: -"))
-      case (Mult, _, _)                => Left(new RuntimeException("Both arguments must be integer: *"))
-      case (Lt, _, _)                  => Left(new RuntimeException("Both arguments must be integer: <"))
+      case _                           => Left(TypeMismatchException("both arguments must be same type"))
     }
   }
 
-  def evalExp(env: Env, expr: Expr): Either[Exception, EvalV] = {
+  private def evalExp(env: Env, expr: Expr): Either[Exception, EvalV] = {
     expr match {
       case Var(x) =>
         env.get(Var(x)) match {
@@ -58,9 +53,7 @@ object Eval {
         } yield (funval, argval)) match {
           case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(_env.updated(Var(id), arg), body)
           case Right((DProcV(id, body), arg: EvalV))      => evalExp(env.updated(Var(id), arg), body)
-          case Right((PrintV(), arg: EvalV))              =>
-            println(arg)
-            Right(arg)
+          case Right((PrintV(), arg: EvalV))              => println(arg); Right(arg)
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
         }

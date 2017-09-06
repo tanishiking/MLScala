@@ -1,12 +1,10 @@
 package mlscala
 
-import exceptions.{TypeMismatchException, VariableNotBoundException}
+import exceptions.TypeMismatchException
 import org.scalatest.{FunSpec, Matchers}
-import Typer.{TypeResult, typeStmt}
+import Typer.typeStmt
 import Type._
 import Ast._
-
-import scala.collection.immutable.ListMap
 
 
 class TypeSpec extends FunSpec with Matchers {
@@ -73,7 +71,24 @@ class TypeSpec extends FunSpec with Matchers {
 
       describe("funExpr") {
         it ("should type fun exp") {
-          // typeStmt(TyEnv.empty, TopExpr(FunExp("x", Var("x")))).right.get shouldBe (TyEnv.empty, TyFun(TyVar("hoge"), TyVar("hoge")))
+          typeStmt(TyEnv.empty, TopExpr(FunExp("x", Var("x")))).right.get._2 match {
+            case TyFun(ty1, ty2) if ty1.isInstanceOf[TyVar] && ty2.isInstanceOf[TyVar] => ty1 shouldBe ty2
+            case _ => fail()
+          }
+        }
+      }
+
+      describe("appExpr") {
+        it ("should type application") {
+          val freshTyVar = TyVar.fresh
+          typeStmt(
+            Map(Var("id") -> TyFun(freshTyVar, freshTyVar).typeScheme),
+            TopExpr(AppExp(Var("id"), ILit(3)))
+          ).right.get shouldBe
+            (
+              Map(Var("id") -> TyFun(freshTyVar, freshTyVar).typeScheme),
+              TyInt
+            )
         }
       }
     }
