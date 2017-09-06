@@ -41,12 +41,12 @@ object Typer {
       val eqs: EquationSet = rest.map(equation => (equation._1.substitute(sub), equation._2.substitute(sub)))
       unify(eqs).right.flatMap(unified => Right(Substs(sub.substs ++ unified.substs)))
     }
-    constraints match {
+    constraints.toList match {
       case Nil                                                             => Right(Substs.empty)
       case (TyInt, TyInt) :: rest                                          => unify(rest)
       case (TyBool, TyBool) :: rest                                        => unify(rest)
       case (TyFun(ta1, ta2), TyFun(tb1, tb2)) :: rest                      => unify((ta1, tb1) :: (ta2, tb2) :: rest)
-      // TyVar(alpha) = TyVar(alpha) のような制約は含まれるべきでないし
+      // TyVar(alpha) = TyVar(alpha) のような制約は含まれるべきでないし(含まれていた場合型代入の時点で無限ループになる)
       // TyVar(alpha) = TyFun(TyVar(alpha), TyInt) のような誤った制約は型付けの時点でおかしいので
       // !ty.freeVariables.contains(tyvar) が必要
       case (TyVar(tyvar), ty) :: rest if !ty.freeVariables.contains(tyvar) => unifyTyVar(tyvar, ty, rest)
@@ -72,10 +72,11 @@ object Typer {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
         case Some(typeScheme) =>
-          val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, id) =>
-            Substs(acc.substs.updated(id, TyVar.fresh))
+          val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
+            Substs(acc.substs.updated(tyvar, TyVar.fresh))
           }
-          Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
+          Right(TypeResult(Substs.empty, typeScheme.ty))
+          // Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
       }
       case ILit(_) => Right(TypeResult(Substs.empty, TyInt))
@@ -95,7 +96,7 @@ object Typer {
           typeThen <- typeExpr(tyenv, e1).right
           typeElse <- typeExpr(tyenv, e2).right
           substs   <- unify(
-            Seq((typeThen.typ, typeElse.typ)) ++
+            List((typeThen.typ, typeElse.typ)) ++
             typeCond.substs.toEquationSet ++
             typeThen.substs.toEquationSet ++
             typeElse.substs.toEquationSet
@@ -130,7 +131,7 @@ object Typer {
           typeFun <- typeExpr(tyenv, fun).right
           typeArg <- typeExpr(tyenv, arg).right
           substs  <- unify(
-            Seq((typeFun.typ, TyFun(typeArg.typ, rangeType))) ++
+            List((typeFun.typ, TyFun(typeArg.typ, rangeType))) ++
             typeFun.substs.toEquationSet ++
             typeArg.substs.toEquationSet
           ).right

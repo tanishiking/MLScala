@@ -4,30 +4,27 @@ import scala.collection.immutable.ListMap
 import Ast.Var
 
 object Type {
-  type TypeVariable = Int
+  type TypeVariable = String
   type TypeSet = Set[TypeVariable]
-  type EquationSet = Seq[(Type, Type)]
+  type EquationSet = List[(Type, Type)]
 
   type TyEnv = Map[Var, TyScheme] // let多相のため型環境は変数と型スキームとの対応とする
   object TyEnv {
-    val initialEnv: TyEnv = Map(Var("print") -> TyScheme(List(0), TyVar(0)))
+    private val printTypeVariable = uuid
+    val initialEnv: TyEnv = Map(Var("print") -> TyScheme(List(printTypeVariable), TyVar(printTypeVariable)))
     val empty: TyEnv = Map.empty[Var, TyScheme]
   }
 
   case class Substs(substs: ListMap[TypeVariable, Type]) {
     def toEquationSet: EquationSet = substs.map{
       case (tyvar, ty) => (TyVar(tyvar), ty)
-    }.toSeq
+    }.toList
   }
   object Substs {
     def empty: Substs = Substs(ListMap.empty[TypeVariable, Type])
   }
 
-  private var count: TypeVariable = 1
-  private def freshTyVar(): TypeVariable = {
-    count += 1
-    count - 1
-  }
+  private def uuid: String = java.util.UUID.randomUUID.toString
 
   sealed trait Type {
     override def toString: String = "-"
@@ -46,15 +43,17 @@ object Type {
     override def substitute(substs: Substs): Type = TyBool
   }
   case class TyVar(tyvar: TypeVariable) extends Type { // monomorphic type variable
+    override def toString: String = s"T$tyvar"
     override def freeVariables: TypeSet = Set(tyvar)
-    override def substitute(substs: Substs): Type =
+    override def substitute(substs: Substs): Type = {
       substs.substs.get(tyvar) match {
         case Some(typ) => typ.substitute(substs)
         case None      => TyVar(tyvar)
+      }
     }
   }
   object TyVar {
-    val fresh: TyVar = TyVar(freshTyVar())
+    val fresh: TyVar = TyVar(uuid)
   }
   case class TyFun(ty1: Type, ty2: Type) extends Type {
     override def toString: String = s"$ty1 -> $ty2"

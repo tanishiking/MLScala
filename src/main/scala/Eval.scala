@@ -26,7 +26,6 @@ object Eval {
   def evalExp(env: Env, expr: Expr): Either[Exception, EvalV] = {
     expr match {
       case Var(x) =>
-        println(env)
         env.get(Var(x)) match {
           case Some(e) => Right(e)
           case None    => Left(new VariableNotBoundException("Variable " + x + " not bounded"))
