@@ -5,6 +5,7 @@ import EvalResult.{MultiEvalResult, SingleEvalResult}
 import fastparse.core.Parsed
 import Environment.Env
 import Ast.Stmt
+import Type.TyEnv
 
 @JSExportTopLevel("ML")
 object ML {
@@ -47,18 +48,26 @@ object ML {
 
   @JSExport
   def interpret(input: String): String = {
-    println(input)
-    val output = Parser.program.parse(input) match {
-      case Parsed.Failure(expected, index, extra) => expected.toString
-      case Parsed.Success(program, _) => program.foldLeft(Environment.initialEnv) {
-        (accEnv: Env, stmt: Stmt) => Eval.evalStmt(accEnv, stmt) match {
-          case Left(e: Exception) => sys.error(e.getMessage)
-          case Right(evalResult)  => evalResult.getEnv
+    var buffer = ""
+    val res: Either[Exception, (TyEnv, Env)] = Parser.program.parse(input) match {
+      case Parsed.Failure(expected, index, extra) => Left(new RuntimeException(expected.toString))
+      case Parsed.Success(program, _) =>
+        program.foldLeft(Right((TyEnv.initialEnv, Environment.initialEnv)): Either[Exception, (TyEnv, Env)]) {
+          (acc, stmt) => acc match {
+            case Left(exception) => Left(exception)
+            case Right((tyenv, env)) =>
+              (Typer.typeStmt(tyenv, stmt), Eval.evalStmt(env, stmt)) match {
+                case (Right(typeResult), Right(evalResult)) => Right((typeResult._1, evalResult.getEnv))
+                case (Left(exception), _) => Left(exception)
+                case (_, Left(exception)) => Left(exception)
+          }
         }
-      }; Eval.getOutput
+      }
     }
+    buffer += Eval.getOutput
+    res.left.foreach { error => buffer += error.getMessage }
     Eval.flushBuffer
-    output
+    buffer
   }
 
 
