@@ -1,16 +1,17 @@
 package mlscala
 
-// import scalajs.js.annotation._
+import scalajs.js.annotation._
 import EvalResult.{MultiEvalResult, SingleEvalResult}
 import fastparse.core.Parsed
 import Environment.Env
 import Ast.Stmt
 
-// @JSExportTopLevel("ML")
+@JSExportTopLevel("ML")
 object ML {
   private val ExitCommand = "exit"
   private val ExitMessage = "bye"
 
+  /*
   def loop(env: Env, tyenv: Type.TyEnv): Unit = {
     def returnToREPL(msg: String, env: Env, tyenv: Type.TyEnv): Unit = {
       println(msg)
@@ -42,8 +43,9 @@ object ML {
         }
     }
   }
+  */
 
-  // @JSExport
+  @JSExport
   def interpret(input: String): Env = {
     Parser.program.parse(input) match {
       case Parsed.Failure(expected, index, extra) => sys.error(expected.toString)
@@ -58,7 +60,7 @@ object ML {
 
 
   def main(args: Array[String]): Unit = {
-    loop(Environment.initialEnv, Type.TyEnv.initialEnv)
-    // interpret(args.head)
+    // loop(Environment.initialEnv, Type.TyEnv.initialEnv)
+    interpret(args.head)
   }
 }
