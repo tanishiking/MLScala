@@ -4,11 +4,60 @@
     <meta charset="UTF-8">
     <title>MLScala</title>
     <script src="/Users/tanishiking/dev/src/github.com/tanishiking/mlscala/target/scala-2.12/mlscala-fastopt.js"></script>
-    <script>
-      ML.interpret("let rec fact = fun x -> if x < 1 then 1 else x * fact (x - 1);; print (fact 6);;");
-    </script>
+    <style>
+      * {
+        font-size: 100%;
+        font: inherit;
+      }
+      body {
+        margin: 10px auto 0;
+        width: 90%;
+        font-size: 200%;
+        font-family: monospace;
+      }
+      div#container {
+        position: absolute;
+        top: 50px;
+        bottom: 40%;
+        width: 90%;
+      }
+      textarea#code {
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+        padding: 5px;
+        height: 100%;
+      }
+      input#run {
+        margin-left: 10px;
+        border-radius: 5px;
+        height: 30px;
+        border: 1px solid #375EAB;
+        font-size: 16px;
+        background: #375EAB;
+        color: white;
+        top: 1px;
+      }
+    </style>
   </head>
   <body>
-    <p>HTML5で作成しました！</p>
+    <div id="header">min-ML interpreter<input type="button" value="Run" id="run"></div>
+    <div id="container">
+      <textarea id="code">let rec fact = fun x -> if x < 1 then 1 else x * fact(x - 1);;
+print (fact 6);;</textarea>
+      <div id="output"></div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const textArea = document.querySelector('#code');
+        const output = document.querySelector('#output');
+        const run = document.querySelector('#run');
+
+        run.addEventListener('click', function() {
+          const code = textArea.value;
+          ML.interpret(code);
+        });
+      });
+    </script>
   </body>
 </html>
