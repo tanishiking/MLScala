@@ -1,79 +1,118 @@
-import exceptions.{VariableNotBoundException, TypeMismatchException}
-import org.scalatest.FlatSpec
-import mlscala.Typing._
-import mlscala.Ast._
-import mlscala.Environment.getEmptyTyEnv
+package mlscala
 
-import scala.collection.immutable.ListMap
+import exceptions.TypeMismatchException
+import org.scalatest.{FunSpec, Matchers}
+import Typer.typeStmt
+import Type._
+import Ast._
 
 
-class TypeSpec extends FlatSpec {
+class TypeSpec extends FunSpec with Matchers {
+  describe("Typing") {
+    describe("typeExpr") {
+      describe("TyVar") {
+        it ("should type variable from ty env") {
+          typeStmt(Map(Var("x") -> TyInt.typeScheme), TopExpr(Var("x"))).right.get shouldBe(Map(Var("x") -> TyInt.typeScheme), TyInt)
+        }
+      }
 
-  behavior of "Typing.scala"
+      describe("TyInt") {
+        it ("should type integer") {
+          typeStmt(TyEnv.empty, TopExpr(ILit(0))).right.get shouldBe (TyEnv.empty, TyInt)
+        }
+      }
 
-  "BinaryOp" should "return TyInt" in {
-    assert(tyPrim(Plus, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
-    assert(tyPrim(Mult, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
-    assert(tyPrim(Minus, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyInt))
-    assert(tyPrim(Lt, TyInt, TyInt).right.get === (List((TyInt, TyInt), (TyInt, TyInt)), TyBool))
-    assert(tyPrim(And, TyBool, TyBool).right.get === (List((TyBool, TyBool), (TyBool, TyBool)), TyBool))
-    assert(tyPrim(Or, TyBool, TyBool).right.get === (List((TyBool, TyBool), (TyBool, TyBool)), TyBool))
-  }
+      describe("TyBool") {
+        it ("should type boolean") {
+          typeStmt(TyEnv.empty, TopExpr(BLit(true))).right.get shouldBe (TyEnv.empty, TyBool)
+        }
+      }
 
-  /*
-  "BinaryOp typemismatch" should "raise TypeMismatchException" in {
-    assert(tyPrim(Lt, TyInt, TyBool).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyPrim(And, TyInt, TyInt).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyPrim(Or, TyInt, TyInt).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyPrim(Plus, TyBool, TyInt).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyPrim(Mult, TyBool, TyBool).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyPrim(Minus, TyBool, TyBool).left.get.isInstanceOf[TypeMismatchException])
-  }
-  */
+      describe("BinOp") {
+        it ("should type binary operation") {
+          typeStmt(TyEnv.empty, TopExpr(BinOp(And, BLit(true), BLit(true)))).right.get shouldBe (TyEnv.empty, TyBool)
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Or, BLit(true), BLit(true)))).right.get shouldBe (TyEnv.empty, TyBool)
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Plus, ILit(0), ILit(0)))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Minus, ILit(0), ILit(0)))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Mult, ILit(0), ILit(0)))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Lt, ILit(0), ILit(0)))).right.get shouldBe (TyEnv.empty, TyBool)
+        }
 
-  "tyExp" should "return proper subst and type" in {
-    assert(tyExp(Map(Var("x") -> tyschemeOfType(TyInt)), Var("x")).right.get ===(getEmptySubsts, TyInt))
-    assert(tyExp(Map(Var("x") -> tyschemeOfType(TyBool)), Var("x")).right.get ===(getEmptySubsts, TyBool))
-    assert(tyExp(getEmptyTyEnv, ILit(1)).right.get ===(getEmptySubsts, TyInt))
-    assert(tyExp(getEmptyTyEnv, BLit(true)).right.get === (getEmptySubsts, TyBool))
-    assert(tyExp(getEmptyTyEnv, BinOp(Plus, ILit(1), ILit(1))).right.get._2 === tyPrim(Plus, TyInt, TyInt).right.get._2)
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), ILit(1), ILit(1))).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BLit(true), BLit(false))).right.get === (getEmptySubsts, TyBool))
-    assert(tyExp(getEmptyTyEnv, LetExp("x", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(Map(Var("x") -> tyschemeOfType(TyInt)), LetExp("y", ILit(1), Var("x"))).right.get === (getEmptySubsts, TyInt))
-    assert(tyExp(getEmptyTyEnv, FunExp("x", Var("x"))).right.get === (getEmptySubsts, TyFun(TyVar(0), TyVar(0))))
-    assert(tyExp(getEmptyTyEnv, FunExp("x", BinOp(Plus, Var("x"), ILit(1)))).right.get === (Map(1 -> TyInt), TyFun(TyInt, TyInt)))
-    assert(tyExp(getEmptyTyEnv, AppExp(FunExp("x", Var("x")), ILit(1))).right.get === (Map(2 -> TyInt, 3 -> TyInt), TyInt))
-  }
+        it ("should type mismatch with invalid binary operation") {
+          typeStmt(TyEnv.empty, TopExpr(BinOp(And, ILit(1), BLit(true)))).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+          typeStmt(TyEnv.empty, TopExpr(BinOp(Or, ILit(1), BLit(true)))).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+        }
+      }
 
-  it should "raise variableNotBoundException" in {
-    assert(tyExp(Map(Var("x") -> tyschemeOfType(TyBool)), Var("y")).left.get.isInstanceOf[VariableNotBoundException])
-  }
+      describe("IfExpr") {
+        it ("should type if expression return then exp's (and else's) type") {
+          typeStmt(TyEnv.empty, TopExpr(IfExp(BLit(true), ILit(1), ILit(1)))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(IfExp(BinOp(Lt, ILit(1), ILit(1)), ILit(1), ILit(1)))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(IfExp(BLit(true), BLit(false), BLit(true)))).right.get shouldBe (TyEnv.empty, TyBool)
+        }
 
-  /*
-  it should "raise TypeMismatchException" in {
-    assert(tyExp(getEmptyTyEnv, IfExp(ILit(1), ILit(1), ILit(1))).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BLit(true), ILit(1))).left.get.isInstanceOf[TypeMismatchException])
-    assert(tyExp(getEmptyTyEnv, IfExp(BLit(true), BinOp(Plus, ILit(1), BLit(true)), ILit(1))).left.get.isInstanceOf[TypeMismatchException])
-  }
-  */
+        it ("should fail typing if then expr and else expr have different type") {
+          typeStmt(TyEnv.empty, TopExpr(IfExp(BLit(true), ILit(1), BLit(true)))).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+        }
 
-  "substType" should "return substedType" in {
-    assert(substType(ListMap.empty[TypeVariable, Type], TyInt) === TyInt)
-    assert(substType(ListMap.empty[TypeVariable, Type], TyBool) === TyBool)
+        it ("should fail typing if conditional expr has not boolean type") {
+          typeStmt(TyEnv.empty, TopExpr(IfExp(ILit(1), ILit(1), ILit(1)))).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+          typeStmt(TyEnv.empty, TopExpr(IfExp(BinOp(Plus, ILit(1), ILit(1)), ILit(1), ILit(1)))).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+        }
+      }
 
-    val alpha: TypeVariable = freshTyVar()
-    val beta: TypeVariable = freshTyVar()
-    assert(substType(ListMap(alpha -> TyInt), TyFun(TyVar(alpha), TyBool)) === TyFun(TyInt, TyBool))
-    assert(substType(ListMap(beta -> TyFun(TyVar(alpha), TyInt), alpha -> TyBool), TyVar(beta)) === TyFun(TyBool, TyInt))
-  }
+      describe("letExpr") {
+        it ("should type let expression") {
+          typeStmt(TyEnv.empty, TopExpr(LetExp("x", ILit(1), Var("x")))).right.get shouldBe (TyEnv.empty, TyInt)
+          typeStmt(TyEnv.empty, TopExpr(LetExp("x", BLit(true), Var("x")))).right.get shouldBe (TyEnv.empty, TyBool)
+          typeStmt(TyEnv.empty, TopExpr(LetExp("id", FunExp("x", Var("x")), AppExp(Var("id"), ILit(1))))).right.get shouldBe (TyEnv.empty, TyInt)
+        }
+      }
 
-  "unify" should "return unified substitutions" in {
-    val alpha: TypeVariable = freshTyVar()
-    val beta: TypeVariable = freshTyVar()
-    assert(unify(Nil).right.get === ListMap.empty[TypeVariable, Type])
-    assert(unify(List((TyVar(alpha), TyInt))).right.get === ListMap(alpha -> TyInt))
-    assert(unify(List((TyFun(TyBool, TyVar(alpha)), TyFun(TyVar(beta), TyFun(TyInt, TyVar(beta)))))).right.get
-      === ListMap(alpha -> TyFun(TyInt, TyBool), beta -> TyBool))
+      describe("letRecExpr") {
+        it ("should type letRecExpr") {
+          typeStmt(TyEnv.empty,
+            TopExpr(LetRecExp(
+              "fact",
+              FunExp("x", IfExp(BinOp(Lt ,Var("x"),ILit(1)), ILit(1), BinOp(Mult, Var("x"), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1)))))),
+              AppExp(Var("fact"), ILit(6))
+            ))
+          ).right.get shouldBe (TyEnv.empty, TyInt)
+
+          typeStmt(TyEnv.empty,
+            TopExpr(
+              LetRecExp(
+                "fact",
+                FunExp("x", IfExp(BinOp(Lt, Var("x"), ILit(1)), ILit(1), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1))))),
+                AppExp(Var("fact"), BLit(true))
+              )
+            )
+          ).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+        }
+      }
+
+      describe("funExpr") {
+        it ("should type fun exp") {
+          typeStmt(TyEnv.empty, TopExpr(FunExp("x", Var("x")))).right.get._2 match {
+            case TyFun(ty1, ty2) if ty1.isInstanceOf[TyVar] && ty2.isInstanceOf[TyVar] => ty1 shouldBe ty2
+            case _ => fail()
+          }
+        }
+      }
+
+      describe("appExpr") {
+        it ("should type application") {
+          val freshTyVar = TyVar.fresh
+          typeStmt(
+            Map(Var("id") -> TyFun(freshTyVar, freshTyVar).typeScheme),
+            TopExpr(AppExp(Var("id"), ILit(3)))
+          ).right.get shouldBe
+            (
+              Map(Var("id") -> TyFun(freshTyVar, freshTyVar).typeScheme),
+              TyInt
+            )
+        }
+      }
+    }
   }
 }

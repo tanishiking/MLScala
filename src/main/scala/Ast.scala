@@ -1,14 +1,25 @@
 package mlscala
-import mlscala.Typing.TypeVariable
 
 object Ast {
   sealed abstract class BinaryOp
-  case object And extends BinaryOp
-  case object Or extends BinaryOp
-  case object Plus extends BinaryOp
-  case object Minus extends BinaryOp
-  case object Mult extends BinaryOp
-  case object Lt extends BinaryOp
+  case object And extends BinaryOp {
+    override def toString: String = "&&"
+  }
+  case object Or extends BinaryOp {
+    override def toString: String = "||"
+  }
+  case object Plus extends BinaryOp {
+    override def toString: String = "+"
+  }
+  case object Minus extends BinaryOp {
+    override def toString: String = "-"
+  }
+  case object Mult extends BinaryOp {
+    override def toString: String = "*"
+  }
+  case object Lt extends BinaryOp {
+    override def toString: String = "<"
+  }
 
   sealed abstract class Expr
   case class Var(id: String) extends Expr
@@ -17,23 +28,17 @@ object Ast {
   case class BinOp(op: BinaryOp, e1: Expr, e2: Expr) extends Expr
   case class IfExp(cond: Expr, et: Expr, ef: Expr) extends Expr
   case class LetExp(id: String, e: Expr, body: Expr) extends Expr
+  case class LetRecExp(id: String, func: FunExp, body: Expr) extends Expr
   case class FunExp(arg: String, body: Expr) extends Expr
   case class DFunExp(arg: String, body: Expr) extends Expr
   case class AppExp(fun: Expr, arg: Expr) extends Expr
 
-  sealed abstract class Program
-  case class Exp(e: Expr) extends Program
-  case class MultiDecl(bindings: List[Decl]) extends Program
-  case class RecDecl(id: String, arg: String, exp: Expr) extends Program
-
   case class Decl(id: String, e: Expr)
 
-  abstract sealed class Type
-  case object TyInt extends Type
-  case object TyBool extends Type
-  case class TyVar(tyvar: TypeVariable) extends Type
-  case class TyFun(ty1: Type, ty2: Type) extends Type
+  sealed abstract class Stmt
+  case class TopExpr(e: Expr) extends Stmt
+  case class MultiDecl(bindings: Seq[Decl]) extends Stmt
+  case class RecDecl(id: String, arg: String, exp: Expr) extends Stmt
 
-  abstract sealed class Tysc
-  case class TyScheme(tyvars: List[TypeVariable], ty: Type) extends Tysc
+  type Program = Seq[Stmt]
 }
