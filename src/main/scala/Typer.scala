@@ -41,7 +41,7 @@ object Typer {
       val eqs: EquationSet = rest.map(equation => (equation._1.substitute(sub), equation._2.substitute(sub)))
       unify(eqs).right.flatMap(unified => Right(Substs(sub.substs ++ unified.substs)))
     }
-    constraints.toList match {
+    constraints match {
       case Nil                                                             => Right(Substs.empty)
       case (TyInt, TyInt) :: rest                                          => unify(rest)
       case (TyBool, TyBool) :: rest                                        => unify(rest)
@@ -58,13 +58,12 @@ object Typer {
 
   private def typeBinOp(op: BinaryOp, ty1: Type, ty2: Type): Either[Exception, TypeResult] = {
     op match {
-        case And   if ty1 == TyBool && ty2 == TyBool => Right(TypeResult(Substs.empty, TyBool))
-        case Or    if ty1 == TyBool && ty2 == TyBool => Right(TypeResult(Substs.empty, TyBool))
-        case Plus  if ty1 == TyInt  && ty2 == TyInt  => Right(TypeResult(Substs.empty, TyInt))
-        case Minus if ty1 == TyInt  && ty2 == TyInt  => Right(TypeResult(Substs.empty, TyInt))
-        case Mult  if ty1 == TyInt  && ty2 == TyInt  => Right(TypeResult(Substs.empty, TyInt))
-        case Lt    if ty1 == TyInt  && ty2 == TyInt  => Right(TypeResult(Substs.empty, TyBool))
-        case _                                       => Left(TypeMismatchException(s"$op "))
+        case And   => Right(TypeResult(Substs.empty, TyBool))
+        case Or    => Right(TypeResult(Substs.empty, TyBool))
+        case Plus  => Right(TypeResult(Substs.empty, TyInt))
+        case Minus => Right(TypeResult(Substs.empty, TyInt))
+        case Mult  => Right(TypeResult(Substs.empty, TyInt))
+        case Lt    => Right(TypeResult(Substs.empty, TyBool))
     }
   }
 
@@ -87,7 +86,7 @@ object Typer {
           res2   <- typeExpr(tyenv, e2).right
           res3   <- typeBinOp(op, res1.typ, res2.typ).right
           substs <- unify(
-            res1.substs.toEquationSet ++ res2.substs.toEquationSet ++ res3.substs.toEquationSet
+            (res1.typ, res2.typ) :: res1.substs.toEquationSet ++ res2.substs.toEquationSet ++ res3.substs.toEquationSet
           ).right
         } yield TypeResult(substs, res3.typ.substitute(substs))
       case IfExp(cond, e1, e2) =>
@@ -140,9 +139,20 @@ object Typer {
     }
   }
 
+  private def seqU[A, B](ls: Seq[Either[A, B]]): Either[A, Seq[B]] =
+    ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
+
   def typeStmt(tyenv: TyEnv, stmt: Stmt): Either[Exception, (TyEnv, Type)] = {
     stmt match {
       case TopExpr(e) => typeExpr(tyenv, e).right.map { case TypeResult(substs, ty) => (tyenv, ty) }
+      case MultiDecl(decls) => seqU(decls.map(d => typeExpr(tyenv, d.e))).right.flatMap { typeResults =>
+        Right((
+          typeResults.zip(decls.map(_.id)).foldLeft(tyenv) { (curEnv: TyEnv, t: (TypeResult, String)) =>
+            curEnv.updated(Var(t._2), t._1.typ.typeScheme)
+          },
+          typeResults.last.typ
+        ))
+      }
       case _      => Left(TypeMismatchException("Not implemeted!!!!"))
     }
   }
