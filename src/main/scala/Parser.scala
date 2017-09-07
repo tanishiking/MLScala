@@ -88,16 +88,14 @@ object Parser {
   private val topLet: P[Stmt] = P(LET ~ binding.rep(min=1, sep=AND) ~ SEMISEMI).map {
     case (_, bindings, _) => MultiDecl(bindings.toList)
   }
-  /*
   private val topDecl: P[Stmt] = P(LET ~ ident ~ ident.rep(1) ~ EQUAL ~ expr ~ SEMISEMI).map {
     case (_, id, args, _, body, _) =>
       MultiDecl(List(Decl(id, args.foldRight(body) { (arg, exp) => FunExp(arg, exp) })))
   }
-  */
   private val recDecl: P[Stmt] = P(LET ~ REC ~ ident ~ EQUAL ~ FUN ~ ident ~ RARROW ~ expr ~ SEMISEMI).map {
     case (_, _, id, _, _, arg, _, e, _) => RecDecl(id, arg, e)
   }
-  val statement: P[Stmt] = P(topExpr | topLet | recDecl)
+  val statement: P[Stmt] = P(topExpr | topLet | topDecl | recDecl)
 
   val program: P[Program] = {
     P(statement.rep(1)).map(res => res.toList)

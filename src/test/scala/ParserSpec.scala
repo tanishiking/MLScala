@@ -161,6 +161,17 @@ class ParserSpec extends FunSpec with Matchers {
       }
     }
 
+    describe("topDecl") {
+      it("should parse top declaration") {
+        Parser.statement.parse("let add x = x + 1;;").get.value shouldBe
+          MultiDecl(List(Decl("add", FunExp("x", BinOp(Plus, Var("x"), ILit(1))))))
+        Parser.statement.parse("let add x y = x + y;;").get.value shouldBe
+          MultiDecl(List(
+            Decl("add", FunExp("x", FunExp("y", BinOp(Plus, Var("x"), Var("y")))))
+          ))
+      }
+    }
+
     describe("recDecl") {
       it("should parse recursive declaration") {
         Parser.statement.parse("let rec test = fun x -> x + 1;;").get.value shouldBe
