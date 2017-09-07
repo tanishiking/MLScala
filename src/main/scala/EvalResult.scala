@@ -23,12 +23,12 @@ object EvalResult {
     override def toString: String = b.toString
   }
   case class ProcV(arg: String, env: Env, body: Expr) extends EvalV {
-    override def toString: String = arg
+    override def toString: String = body.toString
   }
   case class DProcV(arg: String, body: Expr) extends EvalV {
-    override def toString: String = arg
+    override def toString: String = body.toString
   }
   case class PrintV() extends EvalV {
-    override def toString: String = "-"
+    override def toString: String = "print"
   }
 }

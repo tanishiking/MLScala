@@ -22,16 +22,36 @@ object Ast {
   }
 
   sealed abstract class Expr
-  case class Var(id: String) extends Expr
-  case class ILit(v: Int) extends Expr
-  case class BLit(v: Boolean) extends Expr
-  case class BinOp(op: BinaryOp, e1: Expr, e2: Expr) extends Expr
-  case class IfExp(cond: Expr, et: Expr, ef: Expr) extends Expr
-  case class LetExp(id: String, e: Expr, body: Expr) extends Expr
-  case class LetRecExp(id: String, func: FunExp, body: Expr) extends Expr
-  case class FunExp(arg: String, body: Expr) extends Expr
-  case class DFunExp(arg: String, body: Expr) extends Expr
-  case class AppExp(fun: Expr, arg: Expr) extends Expr
+  case class Var(id: String) extends Expr {
+    override def toString: String = id
+  }
+  case class ILit(v: Int) extends Expr {
+    override def toString: String = v.toString
+  }
+  case class BLit(v: Boolean) extends Expr {
+    override def toString: String = v.toString
+  }
+  case class BinOp(op: BinaryOp, e1: Expr, e2: Expr) extends Expr {
+    override def toString: String = s"$e1 $op $e2"
+  }
+  case class IfExp(cond: Expr, et: Expr, ef: Expr) extends Expr {
+    override def toString: String = s"if $cond then $et else $ef"
+  }
+  case class LetExp(id: String, e: Expr, body: Expr) extends Expr {
+    override def toString: String = s"let $id = $e in $body"
+  }
+  case class LetRecExp(id: String, func: FunExp, body: Expr) extends Expr {
+    override def toString: String = s"let rec $id = $func in $body"
+  }
+  case class FunExp(arg: String, body: Expr) extends Expr {
+    override def toString: String = s"fun $arg -> $body"
+  }
+  case class DFunExp(arg: String, body: Expr) extends Expr {
+    override def toString: String = s"dfun $arg -> $body"
+  }
+  case class AppExp(fun: Expr, arg: Expr) extends Expr {
+    override def toString: String = s"$fun $arg"
+  }
 
   case class Decl(id: String, e: Expr)
 

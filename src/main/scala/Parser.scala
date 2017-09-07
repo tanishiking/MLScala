@@ -11,6 +11,9 @@ object Parser {
   import fastparse.noApi._
   import White._
 
+  def errorMessage[T](p: Parser[T], str: String) =
+    ParseError(p.parse(str).asInstanceOf[Parsed.Failure]).getMessage
+
   private val IF = "if".!
   private val THEN = "then".!
   private val ELSE = "else".!

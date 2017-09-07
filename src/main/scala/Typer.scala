@@ -51,8 +51,8 @@ object Typer {
       // !ty.freeVariables.contains(tyvar) が必要
       case (TyVar(tyvar), ty) :: rest if !ty.freeVariables.contains(tyvar) => unifyTyVar(tyvar, ty, rest)
       case (ty, TyVar(tyvar)) :: rest if !ty.freeVariables.contains(tyvar) => unifyTyVar(tyvar, ty, rest)
-      case (ty1, ty2) :: _ if ty1 != ty2                                   => Left(TypeMismatchException(s"$ty1 not equal to $ty2"))
-      case _                                                               => Left(new RuntimeException("Unification error"))
+      case (ty1, ty2) :: _ if ty1 != ty2                                   => Left(TypeMismatchException(s"TypeError: expected $ty2, actual: $ty1"))
+      case (ty1, ty2) :: _                                                 => Left(TypeMismatchException(s"TypeError: $ty1 and $ty2 must not be same type"))
     }
   }
 
@@ -65,7 +65,7 @@ object Typer {
       )
     }
     if (ty1.isInstanceOf[TyFun] || ty2.isInstanceOf[TyFun]) {
-      Left(TypeMismatchException(s"Type $ty1 $op $ty2 is invalid"))
+      Left(TypeMismatchException(s"TypeError: Type $ty1 $op $ty2 is invalid"))
     } else {
       op match {
         case And   => Right(TypeResult(genSubsts(TyBool), TyBool))
@@ -82,9 +82,9 @@ object Typer {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
         case Some(typeScheme) =>
-          val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
-            Substs(acc.substs.updated(tyvar, TyVar.fresh))
-          }
+          // val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
+          //   Substs(acc.substs.updated(tyvar, TyVar.fresh))
+          // }
           Right(TypeResult(Substs.empty, typeScheme.ty))
           // Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
@@ -113,7 +113,7 @@ object Typer {
           ).right
         } yield (typeCond.typ, typeThen.typ, substs)) match {
           case Right((TyBool, ty, substs)) => Right(TypeResult(substs, ty))
-          case Right((_, _, _))            => Left(TypeMismatchException("Type mismatch if condition must be bool"))
+          case Right((tycond, _, _))       => Left(TypeMismatchException(s"TypeError: expected: $TyBool, actual: $tycond"))
           case Left(exception)             => Left(exception)
         }
       case LetExp(id, e1, e2) =>
@@ -135,11 +135,11 @@ object Typer {
         val rangeType = TyVar.fresh
         for {
           typeFunc <- typeExpr(
-              tyenv.updated(Var(id), TyFun(domainType, rangeType).typeScheme).updated(Var(func.arg), domainType.typeScheme),
-              func
-            ).right
+            tyenv.updated(Var(id), TyFun(domainType, rangeType).typeScheme).updated(Var(func.arg), domainType.typeScheme),
+            func
+          ).right
           typeBody <- typeExpr(tyenv.updated(Var(id), closure(typeFunc.typ, tyenv, typeFunc.substs)), body).right
-          substs <- unify((typeFunc.typ, TyFun(domainType, rangeType)) :: typeFunc.substs.toEquationSet ++ typeBody.substs.toEquationSet).right
+          substs <- unify((TyFun(domainType, rangeType), typeFunc.typ) :: typeFunc.substs.toEquationSet ++ typeBody.substs.toEquationSet).right
         } yield TypeResult(substs, typeBody.typ.substitute(substs))
       case FunExp(arg, body) =>
         val domainType: Type = TyVar.fresh
@@ -152,7 +152,7 @@ object Typer {
           typeFun <- typeExpr(tyenv, fun).right
           typeArg <- typeExpr(tyenv, arg).right
           substs  <- unify(
-            List((typeFun.typ, TyFun(typeArg.typ, rangeType))) ++
+            List((TyFun(typeArg.typ, rangeType), typeFun.typ)) ++
             typeFun.substs.toEquationSet ++
             typeArg.substs.toEquationSet
           ).right
@@ -188,7 +188,7 @@ object Typer {
           case Right(typeResult) => Right(tyenv.updated(Var(id), typeResult.typ.typeScheme), typeResult.typ)
           case Left(exception)   => Left(exception)
         }
-      case _      => Left(TypeMismatchException("Not implemeted!!!!"))
+      case _ => Left(TypeMismatchException("Not implemeted!!!!"))
     }
   }
 }

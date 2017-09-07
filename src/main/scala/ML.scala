@@ -50,7 +50,9 @@ object ML {
   def interpret(input: String): String = {
     var buffer = ""
     val res: Either[Exception, (TyEnv, Env)] = Parser.program.parse(input) match {
-      case Parsed.Failure(expected, index, extra) => Left(new RuntimeException(expected.toString))
+      case Parsed.Failure(expected, _, extra) => Left(new RuntimeException(
+        s"ParseError: ${Parser.errorMessage(expected, input)}"
+      ))
       case Parsed.Success(program, _) =>
         program.foldLeft(Right((TyEnv.initialEnv, Environment.initialEnv)): Either[Exception, (TyEnv, Env)]) {
           (acc, stmt) => acc match {
