@@ -6,6 +6,12 @@ import Environment.Env
 import EvalResult._
 
 object Eval {
+  private var output = ""
+  def getOutput: String = output
+  def flushBuffer: Unit = {
+    output = ""
+  }
+
   private def applyPrim(op: BinaryOp, arg1: EvalV, arg2: EvalV): Either[Exception, EvalV] = {
     (op, arg1, arg2) match {
       case (And, BoolV(b1), BoolV(b2)) => Right(BoolV(b1 && b2))
@@ -59,7 +65,7 @@ object Eval {
         } yield (funval, argval)) match {
           case Right((ProcV(id, _env, body), arg: EvalV)) => evalExp(_env.updated(Var(id), arg), body)
           case Right((DProcV(id, body), arg: EvalV))      => evalExp(env.updated(Var(id), arg), body)
-          case Right((PrintV(), arg: EvalV))              => println(arg); Right(arg)
+          case Right((PrintV(), arg: EvalV))              => println(arg); output += s"$arg\n" ; Right(arg)
           case Left(e: Exception)                         => Left(e)
           case _                                          => Left(new RuntimeException("Non-function value is applied"))
         }
@@ -71,7 +77,6 @@ object Eval {
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
   def evalStmt(env: Env, stmt: Stmt): Either[Exception, EvalResult] = {
-    println(stmt)
     stmt match {
       case TopExpr(e)       => evalExp(env, e).right.flatMap(v => Right(SingleEvalResult("-", env, v)))
       case MultiDecl(decls) => seqU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>

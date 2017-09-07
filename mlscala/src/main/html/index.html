@@ -55,7 +55,8 @@ print (fact 6);;</textarea>
 
         run.addEventListener('click', function() {
           const code = textArea.value;
-          ML.interpret(code);
+          const result = ML.interpret(code.replace(/(\r?\n|\r\n?)/g, ''));
+          output.innerText = result;
         });
       });
     </script>

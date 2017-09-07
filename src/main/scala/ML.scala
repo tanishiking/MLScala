@@ -46,16 +46,19 @@ object ML {
   */
 
   @JSExport
-  def interpret(input: String): Env = {
-    Parser.program.parse(input) match {
-      case Parsed.Failure(expected, index, extra) => sys.error(expected.toString)
-      case Parsed.Success(program, _)      => program.foldLeft(Environment.initialEnv) {
+  def interpret(input: String): String = {
+    println(input)
+    val output = Parser.program.parse(input) match {
+      case Parsed.Failure(expected, index, extra) => expected.toString
+      case Parsed.Success(program, _) => program.foldLeft(Environment.initialEnv) {
         (accEnv: Env, stmt: Stmt) => Eval.evalStmt(accEnv, stmt) match {
           case Left(e: Exception) => sys.error(e.getMessage)
           case Right(evalResult)  => evalResult.getEnv
         }
-      }
+      }; Eval.getOutput
     }
+    Eval.flushBuffer
+    output
   }
 
 
