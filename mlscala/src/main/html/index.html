@@ -5,7 +5,7 @@
     <title>MLScala</title>
     <script src="/Users/tanishiking/dev/src/github.com/tanishiking/mlscala/target/scala-2.12/mlscala-fastopt.js"></script>
     <script>
-      ML.interpret("let x = 3 in print x;;");
+      ML.interpret("let rec fact = fun x -> if x < 1 then 1 else x * fact (x - 1);; print (fact 6);;");
     </script>
   </head>
   <body>

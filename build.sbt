@@ -1,5 +1,5 @@
 lazy val root = project.in(file("."))
-  // .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin)
   .settings(
     name := "mlscala",
     version := "1.0",
