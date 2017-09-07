@@ -164,6 +164,19 @@ object Typer {
           typeResults.last.typ
         ))
       }
+      case RecDecl(id, arg, body) =>
+        val domainType = TyVar.fresh
+        val rangeType = TyVar.fresh
+        (for {
+          typeBody <- typeExpr(
+            tyenv.updated(Var(id), TyFun(domainType, rangeType).typeScheme).updated(Var(arg), domainType.typeScheme),
+            body
+          ).right
+          substs <- unify(typeBody.substs.toEquationSet).right
+        } yield TypeResult(substs, TyFun(domainType.substitute(substs), rangeType.substitute(substs)))) match {
+          case Right(typeResult) => Right(tyenv.updated(Var(id), typeResult.typ.typeScheme), typeResult.typ)
+          case Left(exception)   => Left(exception)
+        }
       case _      => Left(TypeMismatchException("Not implemeted!!!!"))
     }
   }
