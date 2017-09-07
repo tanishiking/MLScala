@@ -53,7 +53,7 @@ object Type {
     }
   }
   object TyVar {
-    val fresh: TyVar = TyVar(uuid)
+    def fresh: TyVar = TyVar(uuid)
   }
   case class TyFun(ty1: Type, ty2: Type) extends Type {
     override def toString: String = s"$ty1 -> $ty2"

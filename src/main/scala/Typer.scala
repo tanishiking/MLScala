@@ -57,13 +57,24 @@ object Typer {
   }
 
   private def typeBinOp(op: BinaryOp, ty1: Type, ty2: Type): Either[Exception, TypeResult] = {
-    op match {
-        case And   => Right(TypeResult(Substs.empty, TyBool))
-        case Or    => Right(TypeResult(Substs.empty, TyBool))
-        case Plus  => Right(TypeResult(Substs.empty, TyInt))
-        case Minus => Right(TypeResult(Substs.empty, TyInt))
-        case Mult  => Right(TypeResult(Substs.empty, TyInt))
-        case Lt    => Right(TypeResult(Substs.empty, TyBool))
+    def genSubsts(bothSideType: Type): Substs = {
+      Substs(
+        (ty1.freeVariables ++ ty2.freeVariables).map { tyvar =>
+          tyvar -> bothSideType
+        }(collection.breakOut)
+      )
+    }
+    if (ty1.isInstanceOf[TyFun] || ty2.isInstanceOf[TyFun]) {
+      Left(TypeMismatchException(s"Type $ty1 $op $ty2 is invalid"))
+    } else {
+      op match {
+        case And   => Right(TypeResult(genSubsts(TyBool), TyBool))
+        case Or    => Right(TypeResult(genSubsts(TyBool), TyBool))
+        case Plus  => Right(TypeResult(genSubsts(TyInt), TyInt))
+        case Minus => Right(TypeResult(genSubsts(TyInt), TyInt))
+        case Mult  => Right(TypeResult(genSubsts(TyInt), TyInt))
+        case Lt    => Right(TypeResult(genSubsts(TyInt), TyBool))
+      }
     }
   }
 
