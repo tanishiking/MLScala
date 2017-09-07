@@ -52,6 +52,9 @@ object Parser {
   private val funExpr: P[Expr] = P(FUN ~ ident.rep(1) ~ RARROW ~ expr).map {
     case (_, args, _, body) => args.foldRight(body) { (arg, exp) => FunExp(arg, exp) }
   }
+  private val letRecExpr: P[Expr] = P(LET ~ REC ~ ident ~ EQUAL ~ funExpr ~ IN ~ expr).map {
+    case (_, _, identifier, _, func: FunExp, _, body) => LetRecExp(identifier, func, body)
+  }
   private val dfunExpr: P[Expr] = P(DFUN ~ ident.rep(1) ~ RARROW ~ expr).map {
     case (_, args, _, body) => args.foldRight(body) { (arg, exp) => DFunExp(arg, exp) }
   }
@@ -80,7 +83,7 @@ object Parser {
   private val and: P[Expr]     = P(orExpr ~ BAND ~ orExpr).map { case (p1, _, p2) => BinOp(And, p1, p2)}
   private val andExpr: P[Expr] = P(and | orExpr)
 
-  private lazy val expr: P[Expr]  = P(ifExpr | letExpr | funExpr | dfunExpr | andExpr)
+  private lazy val expr: P[Expr]  = P(ifExpr | letExpr | letRecExpr | funExpr | dfunExpr | andExpr)
 
   private val binding: P[Decl] = P(ident ~ EQUAL ~ expr).map { case (id, _, e) => Decl(id, e) }
 

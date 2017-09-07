@@ -140,6 +140,17 @@ class ParserSpec extends FunSpec with Matchers {
         }
       }
 
+      describe("letRecExpr") {
+        it("should parse let rec expr") {
+          Parser.statement.parse("let rec fact = fun x -> if x < 1 then 1 else x * fact(x - 1) in fact 6;;").get.value shouldBe
+            TopExpr(LetRecExp(
+              "fact",
+              FunExp("x", IfExp(BinOp(Lt ,Var("x"),ILit(1)), ILit(1), BinOp(Mult, Var("x"), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1)))))),
+              AppExp(Var("fact"), ILit(6))
+            ))
+        }
+      }
+
       describe("ifExpr") {
         it("should parse if expr") {
           Parser.statement.parse("if true then 1 else 1;;").get.value shouldBe

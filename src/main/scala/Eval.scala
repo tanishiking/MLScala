@@ -44,6 +44,12 @@ object Eval {
           e1 <- evalExp(env, e).right
           e2 <- evalExp(env.updated(Var(id), e1), body).right
         } yield e2
+      case LetRecExp(id, func, body) =>
+        val proc = DProcV(func.arg, func.body)
+        for {
+          funVal  <- evalExp(env.updated(Var(id), proc), func).right
+          bodyVal <- evalExp(env.updated(Var(id), funVal), body).right
+        } yield bodyVal
       case FunExp(arg, body)  => Right(ProcV(arg, env, body))
       case DFunExp(arg, body) => Right(DProcV(arg, body))
       case AppExp(fun, arg)   =>
@@ -65,6 +71,7 @@ object Eval {
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
   def evalStmt(env: Env, stmt: Stmt): Either[Exception, EvalResult] = {
+    println(stmt)
     stmt match {
       case TopExpr(e)       => evalExp(env, e).right.flatMap(v => Right(SingleEvalResult("-", env, v)))
       case MultiDecl(decls) => seqU(decls.map(d => evalExp(env, d.e))).right.flatMap(es =>

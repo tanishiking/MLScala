@@ -69,6 +69,28 @@ class TypeSpec extends FunSpec with Matchers {
         }
       }
 
+      describe("letRecExpr") {
+        it ("should type letRecExpr") {
+          typeStmt(TyEnv.empty,
+            TopExpr(LetRecExp(
+              "fact",
+              FunExp("x", IfExp(BinOp(Lt ,Var("x"),ILit(1)), ILit(1), BinOp(Mult, Var("x"), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1)))))),
+              AppExp(Var("fact"), ILit(6))
+            ))
+          ).right.get shouldBe (TyEnv.empty, TyInt)
+
+          typeStmt(TyEnv.empty,
+            TopExpr(
+              LetRecExp(
+                "fact",
+                FunExp("x", IfExp(BinOp(Lt, Var("x"), ILit(1)), ILit(1), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1))))),
+                AppExp(Var("fact"), BLit(true))
+              )
+            )
+          ).left.get.isInstanceOf[TypeMismatchException] shouldBe true
+        }
+      }
+
       describe("funExpr") {
         it ("should type fun exp") {
           typeStmt(TyEnv.empty, TopExpr(FunExp("x", Var("x")))).right.get._2 match {

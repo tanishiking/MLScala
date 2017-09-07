@@ -72,6 +72,12 @@ class EvalSpec extends FunSpec with Matchers {
         }
       }
 
+      describe("letRecExpr") {
+        it ("should eval let expression") {
+          Eval.evalStmt(Environment.empty, TopExpr(LetExp("x", ILit(1), Var("x")))) shouldBe Right(SingleEvalResult("-", Environment.empty, IntV(1)))
+        }
+      }
+
       describe("funExpr") {
         it ("should eval funExpr") {
           Eval.evalStmt(Environment.empty, TopExpr(FunExp("x", Var("x")))) shouldBe Right(SingleEvalResult("-", Environment.empty, ProcV("x", Map(), Var("x"))))
@@ -81,7 +87,13 @@ class EvalSpec extends FunSpec with Matchers {
 
       describe("dfunExpr") {
         it ("should eval dfunExpr") {
-          Eval.evalStmt(Environment.empty, TopExpr(DFunExp("x", Var("x")))) shouldBe Right(SingleEvalResult("-", Environment.empty, DProcV("x", Var("x"))))
+          Eval.evalStmt(Environment.empty,
+            TopExpr(LetRecExp(
+              "fact",
+              FunExp("x", IfExp(BinOp(Lt ,Var("x"),ILit(1)), ILit(1), BinOp(Mult, Var("x"), AppExp(Var("fact"), BinOp(Minus, Var("x"), ILit(1)))))),
+              AppExp(Var("fact"), ILit(6))
+            ))
+          ) shouldBe Right(SingleEvalResult("-", Environment.empty, IntV(720)))
         }
       }
 

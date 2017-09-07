@@ -130,6 +130,17 @@ object Typer {
           typeBody <- typeExpr(tyenv.updated(Var(id), closure(typeLet.typ, tyenv, typeLet.substs)), e2).right
           substs   <- unify(typeLet.substs.toEquationSet ++ typeBody.substs.toEquationSet).right
         } yield TypeResult(substs, typeBody.typ.substitute(substs))
+      case LetRecExp(id, func, body) =>
+        val domainType = TyVar.fresh
+        val rangeType = TyVar.fresh
+        for {
+          typeFunc <- typeExpr(
+              tyenv.updated(Var(id), TyFun(domainType, rangeType).typeScheme).updated(Var(func.arg), domainType.typeScheme),
+              func
+            ).right
+          typeBody <- typeExpr(tyenv.updated(Var(id), closure(typeFunc.typ, tyenv, typeFunc.substs)), body).right
+          substs <- unify((typeFunc.typ, TyFun(domainType, rangeType)) :: typeFunc.substs.toEquationSet ++ typeBody.substs.toEquationSet).right
+        } yield TypeResult(substs, typeBody.typ.substitute(substs))
       case FunExp(arg, body) =>
         val domainType: Type = TyVar.fresh
         typeExpr(tyenv.updated(Var(arg), domainType.typeScheme), body).right.flatMap { case TypeResult(sub, rangeType) =>
