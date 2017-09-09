@@ -30,7 +30,7 @@ object Type {
     override def toString: String = "-"
     def freeVariables: TypeSet
     def substitute(substs: Substs): Type
-    def typeScheme: TyScheme = TyScheme(this.freeVariables.toList, this)
+    def typeScheme: TyScheme = TyScheme(List.empty, this)
   }
   case object TyInt extends Type {
     override def toString: String = "int"

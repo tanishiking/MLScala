@@ -82,11 +82,11 @@ object Typer {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
         case Some(typeScheme) =>
-          // val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
-          //   Substs(acc.substs.updated(tyvar, TyVar.fresh))
-          // }
-          Right(TypeResult(Substs.empty, typeScheme.ty))
-          // Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
+          val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
+            Substs(acc.substs.updated(tyvar, TyVar.fresh))
+          }
+          // Right(TypeResult(Substs.empty, typeScheme.ty))
+          Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
       }
       case ILit(_) => Right(TypeResult(Substs.empty, TyInt))
@@ -165,6 +165,7 @@ object Typer {
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
   def typeStmt(tyenv: TyEnv, stmt: Stmt): Either[Exception, (TyEnv, Type)] = {
+    println(stmt)
     stmt match {
       case TopExpr(e) => typeExpr(tyenv, e).right.map { case TypeResult(substs, ty) => (tyenv, ty) }
       case MultiDecl(decls) => seqU(decls.map(d => typeExpr(tyenv, d.e))).right.flatMap { typeResults =>
