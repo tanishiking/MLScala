@@ -3236,27 +3236,23 @@ function $asArrayOf_Lmlscala_EvalResult$EvalV(obj, depth) {
   return (($isArrayOf_Lmlscala_EvalResult$EvalV(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lmlscala.EvalResult$EvalV;", depth))
 }
 /** @constructor */
-function $c_Lmlscala_ML$() {
-  $c_O.call(this);
-  this.ExitCommand$1 = null;
-  this.ExitMessage$1 = null
+function $c_Lmlscala_Interpreter$() {
+  $c_O.call(this)
 }
-$c_Lmlscala_ML$.prototype = new $h_O();
-$c_Lmlscala_ML$.prototype.constructor = $c_Lmlscala_ML$;
+$c_Lmlscala_Interpreter$.prototype = new $h_O();
+$c_Lmlscala_Interpreter$.prototype.constructor = $c_Lmlscala_Interpreter$;
 /** @constructor */
-function $h_Lmlscala_ML$() {
+function $h_Lmlscala_Interpreter$() {
   /*<skip>*/
 }
-$h_Lmlscala_ML$.prototype = $c_Lmlscala_ML$.prototype;
-$c_Lmlscala_ML$.prototype.init___ = (function() {
-  this.ExitCommand$1 = "exit";
-  this.ExitMessage$1 = "bye";
+$h_Lmlscala_Interpreter$.prototype = $c_Lmlscala_Interpreter$.prototype;
+$c_Lmlscala_Interpreter$.prototype.init___ = (function() {
   return this
 });
-$c_Lmlscala_ML$.prototype.$$js$exported$meth$interpret__T__O = (function(input) {
+$c_Lmlscala_Interpreter$.prototype.$$js$exported$meth$interpret__T__O = (function(input) {
   return this.interpret__T__T(input)
 });
-$c_Lmlscala_ML$.prototype.interpret__T__T = (function(input) {
+$c_Lmlscala_Interpreter$.prototype.interpret__T__T = (function(input) {
   var elem$1 = null;
   elem$1 = "";
   var x1 = $m_Lmlscala_Parser$().program$1.parse__O__I__F3__Lfastparse_core_Parsed(input, ($m_Lmlscala_Parser$(), 0), ($m_Lmlscala_Parser$(), null));
@@ -3342,23 +3338,23 @@ $c_Lmlscala_ML$.prototype.interpret__T__T = (function(input) {
   this$10.output$1 = "";
   return $as_T(elem$1)
 });
-$c_Lmlscala_ML$.prototype.interpret = (function(arg$1) {
+$c_Lmlscala_Interpreter$.prototype.interpret = (function(arg$1) {
   var prep0 = $as_T(arg$1);
   return this.$$js$exported$meth$interpret__T__O(prep0)
 });
-var $d_Lmlscala_ML$ = new $TypeData().initClass({
-  Lmlscala_ML$: 0
-}, false, "mlscala.ML$", {
-  Lmlscala_ML$: 1,
+var $d_Lmlscala_Interpreter$ = new $TypeData().initClass({
+  Lmlscala_Interpreter$: 0
+}, false, "mlscala.Interpreter$", {
+  Lmlscala_Interpreter$: 1,
   O: 1
 });
-$c_Lmlscala_ML$.prototype.$classData = $d_Lmlscala_ML$;
-var $n_Lmlscala_ML$ = (void 0);
-function $m_Lmlscala_ML$() {
-  if ((!$n_Lmlscala_ML$)) {
-    $n_Lmlscala_ML$ = new $c_Lmlscala_ML$().init___()
+$c_Lmlscala_Interpreter$.prototype.$classData = $d_Lmlscala_Interpreter$;
+var $n_Lmlscala_Interpreter$ = (void 0);
+function $m_Lmlscala_Interpreter$() {
+  if ((!$n_Lmlscala_Interpreter$)) {
+    $n_Lmlscala_Interpreter$ = new $c_Lmlscala_Interpreter$().init___()
   };
-  return $n_Lmlscala_ML$
+  return $n_Lmlscala_Interpreter$
 }
 /** @constructor */
 function $c_Lmlscala_Parser$() {
@@ -3387,7 +3383,8 @@ function $c_Lmlscala_Parser$() {
   this.MULT$1 = null;
   this.LPAREN$1 = null;
   this.RPAREN$1 = null;
-  this.reserved$1 = null;
+  this.reservedWords$1 = null;
+  this.allowedHeadChars$1 = null;
   this.ident$1 = null;
   this.variable$1 = null;
   this.number$1 = null;
@@ -3481,83 +3478,91 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
   this.LPAREN$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser($m_Lfastparse_noApi$().LiteralStr__T__Lfastparse_core_Parser("("), this$24.WL$1).$$bang__Lfastparse_core_Parser();
   var this$25 = this.White$1;
   this.RPAREN$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser($m_Lfastparse_noApi$().LiteralStr__T__Lfastparse_core_Parser(")"), this$25.WL$1).$$bang__Lfastparse_core_Parser();
-  var this$47 = $m_Lfastparse_noApi$();
-  var p$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$24$1) {
-    return (function() {
-      var this$46 = this$24$1.White$1;
-      var this$45 = this$24$1.White$1;
-      var this$44 = this$24$1.White$1;
-      var this$43 = this$24$1.White$1;
-      var this$42 = this$24$1.White$1;
-      var this$41 = this$24$1.White$1;
-      var this$40 = this$24$1.White$1;
-      var this$39 = this$24$1.White$1;
-      var this$38 = this$24$1.White$1;
-      var this$37 = this$24$1.White$1;
-      var this$36 = this$24$1.White$1;
-      var this$35 = this$24$1.White$1;
-      var this$34 = this$24$1.White$1;
-      var this$33 = this$24$1.White$1;
-      var this$32 = this$24$1.White$1;
-      var this$31 = this$24$1.White$1;
-      var this$30 = this$24$1.White$1;
-      var this$29 = this$24$1.White$1;
-      var this$28 = this$24$1.White$1;
-      var this$27 = this$24$1.White$1;
-      var this$26 = this$24$1.White$1;
-      var p0 = this$24$1.IF$1;
-      var p0$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0, this$26.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.THEN$1);
-      var p0$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$1, this$27.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.ELSE$1);
-      var p0$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$2, this$28.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.LET$1);
-      var p0$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$3, this$29.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.REC$1);
-      var p0$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$4, this$30.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.IN$1);
-      var p0$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$5, this$31.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.FUN$1);
-      var p0$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$6, this$32.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.DFUN$1);
-      var p0$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$7, this$33.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.AND$1);
-      var p0$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$8, this$34.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.TRUE$1);
-      var p0$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$9, this$35.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.FALSE$1);
-      var p0$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$10, this$36.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.RARROW$1);
-      var p0$12 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$11, this$37.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.SEMISEMI$1);
-      var p0$13 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$12, this$38.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.BAND$1);
-      var p0$14 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$13, this$39.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.BOR$1);
-      var p0$15 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$14, this$40.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.EQUAL$1);
-      var p0$16 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$15, this$41.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.LESS$1);
-      var p0$17 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$16, this$42.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.PLUS$1);
-      var p0$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$17, this$43.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.MINUS$1);
-      var p0$19 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$18, this$44.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.MULT$1);
-      var p0$20 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$19, this$45.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.LPAREN$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$20, this$46.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$24$1.RPAREN$1)
-    })
-  })(this));
-  var name = new $c_Lsourcecode_Name().init___T("reserved");
-  this.reserved$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name.value$2, p$1, this$47.implicitReprOps$1);
+  var array = ["if", "then", "else", "let", "rec", "in", "fun", "dfun", "and", "true", "false"];
+  if (($uI(array.length) === 0)) {
+    var jsx$1 = $m_sci_Set$EmptySet$()
+  } else {
+    var b = new $c_scm_SetBuilder().init___sc_Set($m_sci_Set$EmptySet$());
+    var i = 0;
+    var len = $uI(array.length);
+    while ((i < len)) {
+      var index = i;
+      var arg1 = array[index];
+      b.$$plus$eq__O__scm_SetBuilder(arg1);
+      i = ((1 + i) | 0)
+    };
+    var jsx$1 = b.elems$1
+  };
+  this.reservedWords$1 = $as_sci_Set(jsx$1);
+  var this$30 = new $c_sr_RichChar().init___C(97);
+  var end = new $c_jl_Character().init___C(122);
+  var this$36 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$30, end);
+  var this$34 = new $c_sr_RichChar().init___C(65);
+  var end$1 = new $c_jl_Character().init___C(90);
+  var that = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$34, end$1);
+  $m_sci_IndexedSeq$();
+  var bf = $m_sc_IndexedSeq$().ReusableCBF$6;
+  this.allowedHeadChars$1 = $as_sc_TraversableOnce($f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this$36, that, bf)).toSet__sci_Set();
+  var this$57 = this.White$1;
   var this$56 = this.White$1;
   var this$55 = $m_Lfastparse_noApi$();
-  var p$2 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$25$1) {
+  var p$1 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$24$1) {
     return (function() {
-      var this$49 = this$25$1.White$1;
-      var this$48 = this$25$1.White$1;
-      var p0$21 = this$25$1.reserved$1;
-      var p0$22 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$21, this$48.WL$1).unary$und$bang__Lfastparse_core_Parser();
-      var jsx$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$22, this$49.WL$1);
       var this$54 = $m_Lfastparse_noApi$();
-      var this$53 = new $c_sr_RichChar().init___C(97);
-      var end = new $c_jl_Character().init___C(122);
-      var strings = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$53, end);
+      var jsx$7 = $as_sc_TraversableLike($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_jl_Character().init___C(95)])));
+      var this$42 = new $c_sr_RichChar().init___C(97);
+      var end$2 = new $c_jl_Character().init___C(122);
+      var jsx$6 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$42, end$2);
+      var this$43 = $m_sc_Seq$();
+      var jsx$5 = $as_sc_TraversableLike(jsx$7.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$6, this$43.ReusableCBFInstance$2));
+      var this$47 = new $c_sr_RichChar().init___C(65);
+      var end$3 = new $c_jl_Character().init___C(90);
+      var jsx$4 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$47, end$3);
+      var this$48 = $m_sc_Seq$();
+      var jsx$3 = $as_sc_TraversableLike(jsx$5.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$4, this$48.ReusableCBFInstance$2));
+      var this$52 = new $c_sr_RichChar().init___C(48);
+      var end$4 = new $c_jl_Character().init___C(57);
+      var jsx$2 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$52, end$4);
+      var this$53 = $m_sc_Seq$();
+      var strings = $as_sc_Seq(jsx$3.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$2, this$53.ReusableCBFInstance$2));
       $m_Lfastparse_noApi$();
       var min = 1;
-      return jsx$1.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(this$54.ElemsWhileIn__sc_Seq__I__Lfastparse_parsers_Intrinsics$ElemsWhileIn(strings, min), $m_Lfastparse_core_Implicits$Sequencer$().SingleSequencer__Lfastparse_core_Implicits$Sequencer())
+      return this$54.ElemsWhileIn__sc_Seq__I__Lfastparse_parsers_Intrinsics$ElemsWhileIn(strings, min)
     })
   })(this));
-  var name$1 = new $c_Lsourcecode_Name().init___T("ident");
-  var p0$23 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$1.value$2, p$2, this$55.implicitReprOps$1);
-  this.ident$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$23, this$56.WL$1).$$bang__Lfastparse_core_Parser();
-  var this$58 = $m_Lfastparse_noApi$();
-  var p$3 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$26$1) {
+  var name = new $c_Lsourcecode_Name().init___T("ident");
+  var p0 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name.value$2, p$1, this$55.implicitReprOps$1);
+  var p0$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0, this$56.WL$1).$$bang__Lfastparse_core_Parser();
+  this.ident$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$1, this$57.WL$1).filter__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$25$1) {
+    return (function(matched$2) {
+      var matched = $as_T(matched$2);
+      var this$59 = new $c_sci_StringOps().init___T(matched);
+      var this$60 = $f_sc_TraversableLike__headOption__s_Option(this$59);
+      if ((!this$60.isEmpty__Z())) {
+        var arg1$1 = this$60.get__O();
+        if ((arg1$1 === null)) {
+          var head = 0
+        } else {
+          var this$62 = $as_jl_Character(arg1$1);
+          var head = this$62.value$1
+        };
+        var jsx$8 = this$25$1.allowedHeadChars$1.contains__O__Z(new $c_jl_Character().init___C(head))
+      } else {
+        var jsx$8 = false
+      };
+      if (jsx$8) {
+        return (!this$25$1.reservedWords$1.contains__O__Z(matched))
+      } else {
+        return false
+      }
+    })
+  })(this)));
+  var this$66 = $m_Lfastparse_noApi$();
+  var p$2 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$26$1) {
     return (function() {
-      var this$57 = this$26$1.White$1;
-      var p0$24 = this$26$1.ident$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$24, this$57.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this) {
+      var this$65 = this$26$1.White$1;
+      var p0$2 = this$26$1.ident$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$2, this$65.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this) {
         return (function(v$2) {
           var v = $as_T(v$2);
           return new $c_Lmlscala_Ast$Var().init___T(v)
@@ -3565,32 +3570,32 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       })(this$26$1)))
     })
   })(this));
-  var name$2 = new $c_Lsourcecode_Name().init___T("variable");
-  this.variable$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$2.value$2, p$3, this$58.implicitReprOps$1);
-  var this$71 = $m_Lfastparse_noApi$();
-  var p$4 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$27$1) {
+  var name$1 = new $c_Lsourcecode_Name().init___T("variable");
+  this.variable$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$1.value$2, p$2, this$66.implicitReprOps$1);
+  var this$79 = $m_Lfastparse_noApi$();
+  var p$3 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$27$1) {
     return (function() {
-      var this$70 = this$27$1.White$1;
-      var this$65 = this$27$1.White$1;
-      var this$64 = this$27$1.White$1;
-      var this$63 = $m_Lfastparse_noApi$();
-      var this$62 = new $c_sr_RichChar().init___C(48);
-      var end$1 = new $c_jl_Character().init___C(57);
-      var strings$1 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$62, end$1);
+      var this$78 = this$27$1.White$1;
+      var this$73 = this$27$1.White$1;
+      var this$72 = this$27$1.White$1;
+      var this$71 = $m_Lfastparse_noApi$();
+      var this$70 = new $c_sr_RichChar().init___C(48);
+      var end$5 = new $c_jl_Character().init___C(57);
+      var strings$1 = $f_sr_IntegralProxy__to__O__sci_NumericRange$Inclusive(this$70, end$5);
       $m_Lfastparse_noApi$();
       var min$1 = 1;
-      var p0$25 = this$63.ElemsWhileIn__sc_Seq__I__Lfastparse_parsers_Intrinsics$ElemsWhileIn(strings$1, min$1);
-      var p0$26 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$25, this$64.WL$1).$$bang__Lfastparse_core_Parser();
-      var p0$27 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$26, this$65.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$1) {
+      var p0$3 = this$71.ElemsWhileIn__sc_Seq__I__Lfastparse_parsers_Intrinsics$ElemsWhileIn(strings$1, min$1);
+      var p0$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$3, this$72.WL$1).$$bang__Lfastparse_core_Parser();
+      var p0$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$4, this$73.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this$1) {
         return (function(x$1$2) {
           var x$1 = $as_T(x$1$2);
-          var this$67 = new $c_sci_StringOps().init___T(x$1);
-          var this$69 = $m_jl_Integer$();
-          var $$this = this$67.repr$1;
-          return this$69.parseInt__T__I__I($$this, 10)
+          var this$75 = new $c_sci_StringOps().init___T(x$1);
+          var this$77 = $m_jl_Integer$();
+          var $$this = this$75.repr$1;
+          return this$77.parseInt__T__I__I($$this, 10)
         })
       })(this$27$1)));
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$27, this$70.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$2$1) {
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$5, this$78.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$2$1) {
         return (function(v$2$1) {
           var v$1 = $uI(v$2$1);
           return new $c_Lmlscala_Ast$ILit().init___I(v$1)
@@ -3598,73 +3603,73 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       })(this$27$1)))
     })
   })(this));
-  var name$3 = new $c_Lsourcecode_Name().init___T("number");
-  this.number$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$3.value$2, p$4, this$71.implicitReprOps$1);
-  var this$73 = this.White$1;
-  var this$72 = $m_Lfastparse_noApi$();
-  var p$5 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$28$1) {
+  var name$2 = new $c_Lsourcecode_Name().init___T("number");
+  this.number$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$2.value$2, p$3, this$79.implicitReprOps$1);
+  var this$81 = this.White$1;
+  var this$80 = $m_Lfastparse_noApi$();
+  var p$4 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$28$1) {
     return (function() {
       return this$28$1.TRUE$1
     })
   })(this));
-  var name$4 = new $c_Lsourcecode_Name().init___T("truev");
-  var p0$28 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$4.value$2, p$5, this$72.implicitReprOps$1);
-  this.truev$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$28, this$73.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$29$1) {
+  var name$3 = new $c_Lsourcecode_Name().init___T("truev");
+  var p0$6 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$3.value$2, p$4, this$80.implicitReprOps$1);
+  this.truev$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$6, this$81.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$29$1) {
     return (function(x$2$2) {
       $as_T(x$2$2);
       return new $c_Lmlscala_Ast$BLit().init___Z(true)
     })
   })(this)));
-  var this$75 = this.White$1;
-  var this$74 = $m_Lfastparse_noApi$();
-  var p$6 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$30$1) {
+  var this$83 = this.White$1;
+  var this$82 = $m_Lfastparse_noApi$();
+  var p$5 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$30$1) {
     return (function() {
       return this$30$1.FALSE$1
     })
   })(this));
-  var name$5 = new $c_Lsourcecode_Name().init___T("falsev");
-  var p0$29 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$5.value$2, p$6, this$74.implicitReprOps$1);
-  this.falsev$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$29, this$75.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$31$1) {
+  var name$4 = new $c_Lsourcecode_Name().init___T("falsev");
+  var p0$7 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$4.value$2, p$5, this$82.implicitReprOps$1);
+  this.falsev$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$7, this$83.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$31$1) {
     return (function(x$3$2) {
       $as_T(x$3$2);
       return new $c_Lmlscala_Ast$BLit().init___Z(false)
     })
   })(this)));
-  var this$87 = this.White$1;
-  var this$86 = $m_Lfastparse_noApi$();
-  var p$7 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$32$1) {
+  var this$95 = this.White$1;
+  var this$94 = $m_Lfastparse_noApi$();
+  var p$6 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$32$1) {
     return (function() {
+      var this$92 = this$32$1.White$1;
+      var this$90 = this$32$1.White$1;
+      var this$88 = this$32$1.White$1;
+      var this$86 = this$32$1.White$1;
       var this$84 = this$32$1.White$1;
-      var this$82 = this$32$1.White$1;
-      var this$80 = this$32$1.White$1;
-      var this$78 = this$32$1.White$1;
-      var this$76 = this$32$1.White$1;
-      var p0$30 = this$32$1.IF$1;
-      var jsx$7 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$30, this$76.WL$1);
-      var jsx$6 = this$32$1.expr__p1__Lfastparse_core_Parser();
-      var this$77 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$31 = jsx$7.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$6, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$77)));
-      var jsx$8 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$31, this$78.WL$1);
-      var jsx$5 = this$32$1.THEN$1;
-      var this$79 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$32 = jsx$8.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$5, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$79)));
-      var jsx$9 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$32, this$80.WL$1);
-      var jsx$4 = this$32$1.expr__p1__Lfastparse_core_Parser();
-      var this$81 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$33 = jsx$9.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$4, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$81)));
-      var jsx$10 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$33, this$82.WL$1);
-      var jsx$3 = this$32$1.ELSE$1;
-      var this$83 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$34 = jsx$10.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$3, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$83)));
-      var jsx$11 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$34, this$84.WL$1);
-      var jsx$2 = this$32$1.expr__p1__Lfastparse_core_Parser();
+      var p0$8 = this$32$1.IF$1;
+      var jsx$14 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$8, this$84.WL$1);
+      var jsx$13 = this$32$1.expr__p1__Lfastparse_core_Parser();
       var this$85 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$11.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$2, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$85)))
+      var p0$9 = jsx$14.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$13, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$85)));
+      var jsx$15 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$9, this$86.WL$1);
+      var jsx$12 = this$32$1.THEN$1;
+      var this$87 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$10 = jsx$15.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$12, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$87)));
+      var jsx$16 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$10, this$88.WL$1);
+      var jsx$11 = this$32$1.expr__p1__Lfastparse_core_Parser();
+      var this$89 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$11 = jsx$16.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$11, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$89)));
+      var jsx$17 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$11, this$90.WL$1);
+      var jsx$10 = this$32$1.ELSE$1;
+      var this$91 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$12 = jsx$17.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$10, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$91)));
+      var jsx$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$12, this$92.WL$1);
+      var jsx$9 = this$32$1.expr__p1__Lfastparse_core_Parser();
+      var this$93 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$18.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$9, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$93)))
     })
   })(this));
-  var name$6 = new $c_Lsourcecode_Name().init___T("ifExpr");
-  var p0$35 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$6.value$2, p$7, this$86.implicitReprOps$1);
-  this.ifExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$35, this$87.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$33$1) {
+  var name$5 = new $c_Lsourcecode_Name().init___T("ifExpr");
+  var p0$13 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$5.value$2, p$6, this$94.implicitReprOps$1);
+  this.ifExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$13, this$95.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$33$1) {
     return (function(x0$1$2) {
       var x0$1 = $as_T6(x0$1$2);
       if ((x0$1 !== null)) {
@@ -3677,41 +3682,41 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$99 = this.White$1;
-  var this$98 = $m_Lfastparse_noApi$();
-  var p$8 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$34$1) {
+  var this$107 = this.White$1;
+  var this$106 = $m_Lfastparse_noApi$();
+  var p$7 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$34$1) {
     return (function() {
+      var this$104 = this$34$1.White$1;
+      var this$102 = this$34$1.White$1;
+      var this$100 = this$34$1.White$1;
+      var this$98 = this$34$1.White$1;
       var this$96 = this$34$1.White$1;
-      var this$94 = this$34$1.White$1;
-      var this$92 = this$34$1.White$1;
-      var this$90 = this$34$1.White$1;
-      var this$88 = this$34$1.White$1;
-      var p0$36 = this$34$1.LET$1;
-      var jsx$17 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$36, this$88.WL$1);
-      var jsx$16 = this$34$1.ident$1;
-      var this$89 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$37 = jsx$17.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$16, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$89)));
-      var jsx$18 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$37, this$90.WL$1);
-      var jsx$15 = this$34$1.EQUAL$1;
-      var this$91 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$38 = jsx$18.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$15, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$91)));
-      var jsx$19 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$38, this$92.WL$1);
-      var jsx$14 = this$34$1.expr__p1__Lfastparse_core_Parser();
-      var this$93 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$39 = jsx$19.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$14, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$93)));
-      var jsx$20 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$39, this$94.WL$1);
-      var jsx$13 = this$34$1.IN$1;
-      var this$95 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$40 = jsx$20.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$13, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$95)));
-      var jsx$21 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$40, this$96.WL$1);
-      var jsx$12 = this$34$1.expr__p1__Lfastparse_core_Parser();
+      var p0$14 = this$34$1.LET$1;
+      var jsx$24 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$14, this$96.WL$1);
+      var jsx$23 = this$34$1.ident$1;
       var this$97 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$21.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$12, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$97)))
+      var p0$15 = jsx$24.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$23, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$97)));
+      var jsx$25 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$15, this$98.WL$1);
+      var jsx$22 = this$34$1.EQUAL$1;
+      var this$99 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$16 = jsx$25.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$22, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$99)));
+      var jsx$26 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$16, this$100.WL$1);
+      var jsx$21 = this$34$1.expr__p1__Lfastparse_core_Parser();
+      var this$101 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$17 = jsx$26.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$21, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$101)));
+      var jsx$27 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$17, this$102.WL$1);
+      var jsx$20 = this$34$1.IN$1;
+      var this$103 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$18 = jsx$27.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$20, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$103)));
+      var jsx$28 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$18, this$104.WL$1);
+      var jsx$19 = this$34$1.expr__p1__Lfastparse_core_Parser();
+      var this$105 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$28.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$19, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$105)))
     })
   })(this));
-  var name$7 = new $c_Lsourcecode_Name().init___T("letExpr");
-  var p0$41 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$7.value$2, p$8, this$98.implicitReprOps$1);
-  this.letExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$41, this$99.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$35$1) {
+  var name$6 = new $c_Lsourcecode_Name().init___T("letExpr");
+  var p0$19 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$6.value$2, p$7, this$106.implicitReprOps$1);
+  this.letExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$19, this$107.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$35$1) {
     return (function(x0$2$2) {
       var x0$2 = $as_T6(x0$2$2);
       if ((x0$2 !== null)) {
@@ -3724,36 +3729,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$109 = this.White$1;
-  var this$108 = $m_Lfastparse_noApi$();
-  var p$9 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$36$1) {
+  var this$117 = this.White$1;
+  var this$116 = $m_Lfastparse_noApi$();
+  var p$8 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$36$1) {
     return (function() {
-      var this$106 = this$36$1.White$1;
-      var this$104 = this$36$1.White$1;
-      var this$100 = this$36$1.White$1;
-      var p0$42 = this$36$1.FUN$1;
-      var jsx$25 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$42, this$100.WL$1);
-      var this$101 = this$36$1.White$1;
-      var p0$43 = this$36$1.ident$1;
-      var qual$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$43, this$101.WL$1);
+      var this$114 = this$36$1.White$1;
+      var this$112 = this$36$1.White$1;
+      var this$108 = this$36$1.White$1;
+      var p0$20 = this$36$1.FUN$1;
+      var jsx$32 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$20, this$108.WL$1);
+      var this$109 = this$36$1.White$1;
+      var p0$21 = this$36$1.ident$1;
+      var qual$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$21, this$109.WL$1);
       var x$5 = $m_Lfastparse_all$().Pass$1;
-      var this$102 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$24 = qual$1.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$5, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$102));
-      var this$103 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$44 = jsx$25.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$24, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$103)));
-      var jsx$26 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$44, this$104.WL$1);
-      var jsx$23 = this$36$1.RARROW$1;
-      var this$105 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$45 = jsx$26.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$23, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$105)));
-      var jsx$27 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$45, this$106.WL$1);
-      var jsx$22 = this$36$1.expr__p1__Lfastparse_core_Parser();
-      var this$107 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$27.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$22, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$107)))
+      var this$110 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$31 = qual$1.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$5, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$110));
+      var this$111 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$22 = jsx$32.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$31, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$111)));
+      var jsx$33 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$22, this$112.WL$1);
+      var jsx$30 = this$36$1.RARROW$1;
+      var this$113 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$23 = jsx$33.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$30, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$113)));
+      var jsx$34 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$23, this$114.WL$1);
+      var jsx$29 = this$36$1.expr__p1__Lfastparse_core_Parser();
+      var this$115 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$34.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$29, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$115)))
     })
   })(this));
-  var name$8 = new $c_Lsourcecode_Name().init___T("funExpr");
-  var p0$46 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$8.value$2, p$9, this$108.implicitReprOps$1);
-  this.funExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$46, this$109.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$37$1) {
+  var name$7 = new $c_Lsourcecode_Name().init___T("funExpr");
+  var p0$24 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$7.value$2, p$8, this$116.implicitReprOps$1);
+  this.funExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$24, this$117.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$37$1) {
     return (function(x0$3$2) {
       var x0$3 = $as_T4(x0$3$2);
       if ((x0$3 !== null)) {
@@ -3771,46 +3776,46 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$123 = this.White$1;
-  var this$122 = $m_Lfastparse_noApi$();
-  var p$10 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$38$1) {
+  var this$131 = this.White$1;
+  var this$130 = $m_Lfastparse_noApi$();
+  var p$9 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$38$1) {
     return (function() {
+      var this$128 = this$38$1.White$1;
+      var this$126 = this$38$1.White$1;
+      var this$124 = this$38$1.White$1;
+      var this$122 = this$38$1.White$1;
       var this$120 = this$38$1.White$1;
       var this$118 = this$38$1.White$1;
-      var this$116 = this$38$1.White$1;
-      var this$114 = this$38$1.White$1;
-      var this$112 = this$38$1.White$1;
-      var this$110 = this$38$1.White$1;
-      var p0$47 = this$38$1.LET$1;
-      var jsx$34 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$47, this$110.WL$1);
-      var jsx$33 = this$38$1.REC$1;
-      var this$111 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$48 = jsx$34.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$33, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$111)));
-      var jsx$35 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$48, this$112.WL$1);
-      var jsx$32 = this$38$1.ident$1;
-      var this$113 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$49 = jsx$35.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$32, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$113)));
-      var jsx$36 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$49, this$114.WL$1);
-      var jsx$31 = this$38$1.EQUAL$1;
-      var this$115 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$50 = jsx$36.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$31, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$115)));
-      var jsx$37 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$50, this$116.WL$1);
-      var jsx$30 = this$38$1.funExpr$1;
-      var this$117 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$51 = jsx$37.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$30, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$117)));
-      var jsx$38 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$51, this$118.WL$1);
-      var jsx$29 = this$38$1.IN$1;
+      var p0$25 = this$38$1.LET$1;
+      var jsx$41 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$25, this$118.WL$1);
+      var jsx$40 = this$38$1.REC$1;
       var this$119 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$52 = jsx$38.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$29, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$119)));
-      var jsx$39 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$52, this$120.WL$1);
-      var jsx$28 = this$38$1.expr__p1__Lfastparse_core_Parser();
+      var p0$26 = jsx$41.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$40, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$119)));
+      var jsx$42 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$26, this$120.WL$1);
+      var jsx$39 = this$38$1.ident$1;
       var this$121 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$39.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$28, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer6__O(this$121)))
+      var p0$27 = jsx$42.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$39, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$121)));
+      var jsx$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$27, this$122.WL$1);
+      var jsx$38 = this$38$1.EQUAL$1;
+      var this$123 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$28 = jsx$43.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$38, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$123)));
+      var jsx$44 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$28, this$124.WL$1);
+      var jsx$37 = this$38$1.funExpr$1;
+      var this$125 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$29 = jsx$44.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$37, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$125)));
+      var jsx$45 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$29, this$126.WL$1);
+      var jsx$36 = this$38$1.IN$1;
+      var this$127 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$30 = jsx$45.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$36, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$127)));
+      var jsx$46 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$30, this$128.WL$1);
+      var jsx$35 = this$38$1.expr__p1__Lfastparse_core_Parser();
+      var this$129 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$46.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$35, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer6__O(this$129)))
     })
   })(this));
-  var name$9 = new $c_Lsourcecode_Name().init___T("letRecExpr");
-  var p0$53 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$9.value$2, p$10, this$122.implicitReprOps$1);
-  this.letRecExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$53, this$123.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$39$1) {
+  var name$8 = new $c_Lsourcecode_Name().init___T("letRecExpr");
+  var p0$31 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$8.value$2, p$9, this$130.implicitReprOps$1);
+  this.letRecExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$31, this$131.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$39$1) {
     return (function(x0$4$2) {
       var x0$4 = $as_T7(x0$4$2);
       if ((x0$4 !== null)) {
@@ -3825,36 +3830,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       throw new $c_s_MatchError().init___O(x0$4)
     })
   })(this)));
-  var this$133 = this.White$1;
-  var this$132 = $m_Lfastparse_noApi$();
-  var p$11 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$40$1) {
+  var this$141 = this.White$1;
+  var this$140 = $m_Lfastparse_noApi$();
+  var p$10 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$40$1) {
     return (function() {
-      var this$130 = this$40$1.White$1;
-      var this$128 = this$40$1.White$1;
-      var this$124 = this$40$1.White$1;
-      var p0$54 = this$40$1.DFUN$1;
-      var jsx$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$54, this$124.WL$1);
-      var this$125 = this$40$1.White$1;
-      var p0$55 = this$40$1.ident$1;
-      var qual$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$55, this$125.WL$1);
+      var this$138 = this$40$1.White$1;
+      var this$136 = this$40$1.White$1;
+      var this$132 = this$40$1.White$1;
+      var p0$32 = this$40$1.DFUN$1;
+      var jsx$50 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$32, this$132.WL$1);
+      var this$133 = this$40$1.White$1;
+      var p0$33 = this$40$1.ident$1;
+      var qual$2 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$33, this$133.WL$1);
       var x$9 = $m_Lfastparse_all$().Pass$1;
-      var this$126 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$42 = qual$2.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$9, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$126));
-      var this$127 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$56 = jsx$43.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$42, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$127)));
-      var jsx$44 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$56, this$128.WL$1);
-      var jsx$41 = this$40$1.RARROW$1;
-      var this$129 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$57 = jsx$44.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$41, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$129)));
-      var jsx$45 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$57, this$130.WL$1);
-      var jsx$40 = this$40$1.expr__p1__Lfastparse_core_Parser();
-      var this$131 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$45.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$40, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$131)))
+      var this$134 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$49 = qual$2.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$9, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$134));
+      var this$135 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$34 = jsx$50.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$49, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$135)));
+      var jsx$51 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$34, this$136.WL$1);
+      var jsx$48 = this$40$1.RARROW$1;
+      var this$137 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$35 = jsx$51.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$48, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$137)));
+      var jsx$52 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$35, this$138.WL$1);
+      var jsx$47 = this$40$1.expr__p1__Lfastparse_core_Parser();
+      var this$139 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$52.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$47, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$139)))
     })
   })(this));
-  var name$10 = new $c_Lsourcecode_Name().init___T("dfunExpr");
-  var p0$58 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$10.value$2, p$11, this$132.implicitReprOps$1);
-  this.dfunExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$58, this$133.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$41$1) {
+  var name$9 = new $c_Lsourcecode_Name().init___T("dfunExpr");
+  var p0$36 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$9.value$2, p$10, this$140.implicitReprOps$1);
+  this.dfunExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$36, this$141.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$41$1) {
     return (function(x0$5$2) {
       var x0$5 = $as_T4(x0$5$2);
       if ((x0$5 !== null)) {
@@ -3872,26 +3877,26 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$139 = this.White$1;
-  var this$138 = $m_Lfastparse_noApi$();
-  var p$12 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$42$1) {
+  var this$147 = this.White$1;
+  var this$146 = $m_Lfastparse_noApi$();
+  var p$11 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$42$1) {
     return (function() {
-      var this$136 = this$42$1.White$1;
-      var this$134 = this$42$1.White$1;
-      var p0$59 = this$42$1.LPAREN$1;
-      var jsx$48 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$59, this$134.WL$1);
-      var jsx$47 = this$42$1.expr__p1__Lfastparse_core_Parser();
-      var this$135 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$60 = jsx$48.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$47, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$135)));
-      var jsx$49 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$60, this$136.WL$1);
-      var jsx$46 = this$42$1.RPAREN$1;
-      var this$137 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$49.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$46, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$137)))
+      var this$144 = this$42$1.White$1;
+      var this$142 = this$42$1.White$1;
+      var p0$37 = this$42$1.LPAREN$1;
+      var jsx$55 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$37, this$142.WL$1);
+      var jsx$54 = this$42$1.expr__p1__Lfastparse_core_Parser();
+      var this$143 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$38 = jsx$55.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$54, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$143)));
+      var jsx$56 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$38, this$144.WL$1);
+      var jsx$53 = this$42$1.RPAREN$1;
+      var this$145 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$56.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$53, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$145)))
     })
   })(this));
-  var name$11 = new $c_Lsourcecode_Name().init___T("paren");
-  var p0$61 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$11.value$2, p$12, this$138.implicitReprOps$1);
-  this.paren$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$61, this$139.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$43$1) {
+  var name$10 = new $c_Lsourcecode_Name().init___T("paren");
+  var p0$39 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$10.value$2, p$11, this$146.implicitReprOps$1);
+  this.paren$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$39, this$147.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$43$1) {
     return (function(x0$6$2) {
       var x0$6 = $as_T3(x0$6$2);
       if ((x0$6 !== null)) {
@@ -3902,42 +3907,42 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$144 = $m_Lfastparse_noApi$();
-  var p$13 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$44$1) {
+  var this$152 = $m_Lfastparse_noApi$();
+  var p$12 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$44$1) {
     return (function() {
-      var this$143 = this$44$1.White$1;
-      var this$142 = this$44$1.White$1;
-      var this$141 = this$44$1.White$1;
-      var this$140 = this$44$1.White$1;
-      var p0$62 = this$44$1.truev$1;
-      var p0$63 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$62, this$140.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.falsev$1);
-      var p0$64 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$63, this$141.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.variable$1);
-      var p0$65 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$64, this$142.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.number$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$65, this$143.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.paren$1)
+      var this$151 = this$44$1.White$1;
+      var this$150 = this$44$1.White$1;
+      var this$149 = this$44$1.White$1;
+      var this$148 = this$44$1.White$1;
+      var p0$40 = this$44$1.truev$1;
+      var p0$41 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$40, this$148.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.falsev$1);
+      var p0$42 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$41, this$149.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.variable$1);
+      var p0$43 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$42, this$150.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.number$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$43, this$151.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$44$1.paren$1)
     })
   })(this));
-  var name$12 = new $c_Lsourcecode_Name().init___T("aExpr");
-  this.aExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$12.value$2, p$13, this$144.implicitReprOps$1);
-  var this$150 = this.White$1;
-  var this$149 = $m_Lfastparse_noApi$();
-  var p$14 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$45$1) {
+  var name$11 = new $c_Lsourcecode_Name().init___T("aExpr");
+  this.aExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$11.value$2, p$12, this$152.implicitReprOps$1);
+  var this$158 = this.White$1;
+  var this$157 = $m_Lfastparse_noApi$();
+  var p$13 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$45$1) {
     return (function() {
-      var this$145 = this$45$1.White$1;
-      var p0$66 = this$45$1.variable$1;
-      var jsx$51 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$66, this$145.WL$1);
-      var this$146 = this$45$1.White$1;
-      var p0$67 = this$45$1.aExpr$1;
-      var qual$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$67, this$146.WL$1);
+      var this$153 = this$45$1.White$1;
+      var p0$44 = this$45$1.variable$1;
+      var jsx$58 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$44, this$153.WL$1);
+      var this$154 = this$45$1.White$1;
+      var p0$45 = this$45$1.aExpr$1;
+      var qual$3 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$45, this$154.WL$1);
       var x$13 = $m_Lfastparse_all$().Pass$1;
-      var this$147 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$50 = qual$3.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$13, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$147));
-      var this$148 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$51.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$50, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$148)))
+      var this$155 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$57 = qual$3.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$13, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$155));
+      var this$156 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$58.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$57, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$156)))
     })
   })(this));
-  var name$13 = new $c_Lsourcecode_Name().init___T("application");
-  var p0$68 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$13.value$2, p$14, this$149.implicitReprOps$1);
-  this.application$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$68, this$150.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$46$1) {
+  var name$12 = new $c_Lsourcecode_Name().init___T("application");
+  var p0$46 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$12.value$2, p$13, this$157.implicitReprOps$1);
+  this.application$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$46, this$158.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$46$1) {
     return (function(x0$7$2) {
       var x0$7 = $as_T2(x0$7$2);
       if ((x0$7 !== null)) {
@@ -3955,36 +3960,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$152 = $m_Lfastparse_noApi$();
-  var p$15 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$47$1) {
+  var this$160 = $m_Lfastparse_noApi$();
+  var p$14 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$47$1) {
     return (function() {
-      var this$151 = this$47$1.White$1;
-      var p0$69 = this$47$1.application$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$69, this$151.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$47$1.aExpr$1)
+      var this$159 = this$47$1.White$1;
+      var p0$47 = this$47$1.application$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$47, this$159.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$47$1.aExpr$1)
     })
   })(this));
-  var name$14 = new $c_Lsourcecode_Name().init___T("appExpr");
-  this.appExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$14.value$2, p$15, this$152.implicitReprOps$1);
-  var this$158 = this.White$1;
-  var this$157 = $m_Lfastparse_noApi$();
-  var p$16 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$48$1) {
+  var name$13 = new $c_Lsourcecode_Name().init___T("appExpr");
+  this.appExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$13.value$2, p$14, this$160.implicitReprOps$1);
+  var this$166 = this.White$1;
+  var this$165 = $m_Lfastparse_noApi$();
+  var p$15 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$48$1) {
     return (function() {
-      var this$155 = this$48$1.White$1;
-      var this$153 = this$48$1.White$1;
-      var p0$70 = this$48$1.appExpr$1;
-      var jsx$54 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$70, this$153.WL$1);
-      var jsx$53 = this$48$1.MULT$1;
-      var this$154 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$71 = jsx$54.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$53, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$154)));
-      var jsx$55 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$71, this$155.WL$1);
-      var jsx$52 = this$48$1.appExpr$1;
-      var this$156 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$55.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$52, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$156)))
+      var this$163 = this$48$1.White$1;
+      var this$161 = this$48$1.White$1;
+      var p0$48 = this$48$1.appExpr$1;
+      var jsx$61 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$48, this$161.WL$1);
+      var jsx$60 = this$48$1.MULT$1;
+      var this$162 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$49 = jsx$61.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$60, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$162)));
+      var jsx$62 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$49, this$163.WL$1);
+      var jsx$59 = this$48$1.appExpr$1;
+      var this$164 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$62.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$59, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$164)))
     })
   })(this));
-  var name$15 = new $c_Lsourcecode_Name().init___T("mult");
-  var p0$72 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$15.value$2, p$16, this$157.implicitReprOps$1);
-  this.mult$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$72, this$158.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$49$1) {
+  var name$14 = new $c_Lsourcecode_Name().init___T("mult");
+  var p0$50 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$14.value$2, p$15, this$165.implicitReprOps$1);
+  this.mult$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$50, this$166.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$49$1) {
     return (function(x0$8$2) {
       var x0$8 = $as_T3(x0$8$2);
       if ((x0$8 !== null)) {
@@ -3996,36 +4001,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$160 = $m_Lfastparse_noApi$();
-  var p$17 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$50$1) {
+  var this$168 = $m_Lfastparse_noApi$();
+  var p$16 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$50$1) {
     return (function() {
-      var this$159 = this$50$1.White$1;
-      var p0$73 = this$50$1.mult$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$73, this$159.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$50$1.appExpr$1)
+      var this$167 = this$50$1.White$1;
+      var p0$51 = this$50$1.mult$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$51, this$167.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$50$1.appExpr$1)
     })
   })(this));
-  var name$16 = new $c_Lsourcecode_Name().init___T("multExpr");
-  this.multExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$16.value$2, p$17, this$160.implicitReprOps$1);
-  var this$166 = this.White$1;
-  var this$165 = $m_Lfastparse_noApi$();
-  var p$18 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$51$1) {
+  var name$15 = new $c_Lsourcecode_Name().init___T("multExpr");
+  this.multExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$15.value$2, p$16, this$168.implicitReprOps$1);
+  var this$174 = this.White$1;
+  var this$173 = $m_Lfastparse_noApi$();
+  var p$17 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$51$1) {
     return (function() {
-      var this$163 = this$51$1.White$1;
-      var this$161 = this$51$1.White$1;
-      var p0$74 = this$51$1.multExpr$1;
-      var jsx$58 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$74, this$161.WL$1);
-      var jsx$57 = this$51$1.PLUS$1;
-      var this$162 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$75 = jsx$58.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$57, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$162)));
-      var jsx$59 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$75, this$163.WL$1);
-      var jsx$56 = this$51$1.multExpr$1;
-      var this$164 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$59.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$56, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$164)))
+      var this$171 = this$51$1.White$1;
+      var this$169 = this$51$1.White$1;
+      var p0$52 = this$51$1.multExpr$1;
+      var jsx$65 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$52, this$169.WL$1);
+      var jsx$64 = this$51$1.PLUS$1;
+      var this$170 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$53 = jsx$65.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$64, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$170)));
+      var jsx$66 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$53, this$171.WL$1);
+      var jsx$63 = this$51$1.multExpr$1;
+      var this$172 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$66.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$63, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$172)))
     })
   })(this));
-  var name$17 = new $c_Lsourcecode_Name().init___T("plus");
-  var p0$76 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$17.value$2, p$18, this$165.implicitReprOps$1);
-  this.plus$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$76, this$166.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$52$1) {
+  var name$16 = new $c_Lsourcecode_Name().init___T("plus");
+  var p0$54 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$16.value$2, p$17, this$173.implicitReprOps$1);
+  this.plus$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$54, this$174.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$52$1) {
     return (function(x0$9$2) {
       var x0$9 = $as_T3(x0$9$2);
       if ((x0$9 !== null)) {
@@ -4037,26 +4042,26 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$172 = this.White$1;
-  var this$171 = $m_Lfastparse_noApi$();
-  var p$19 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$53$1) {
+  var this$180 = this.White$1;
+  var this$179 = $m_Lfastparse_noApi$();
+  var p$18 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$53$1) {
     return (function() {
-      var this$169 = this$53$1.White$1;
-      var this$167 = this$53$1.White$1;
-      var p0$77 = this$53$1.multExpr$1;
-      var jsx$62 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$77, this$167.WL$1);
-      var jsx$61 = this$53$1.MINUS$1;
-      var this$168 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$78 = jsx$62.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$61, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$168)));
-      var jsx$63 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$78, this$169.WL$1);
-      var jsx$60 = this$53$1.multExpr$1;
-      var this$170 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$63.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$60, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$170)))
+      var this$177 = this$53$1.White$1;
+      var this$175 = this$53$1.White$1;
+      var p0$55 = this$53$1.multExpr$1;
+      var jsx$69 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$55, this$175.WL$1);
+      var jsx$68 = this$53$1.MINUS$1;
+      var this$176 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$56 = jsx$69.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$68, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$176)));
+      var jsx$70 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$56, this$177.WL$1);
+      var jsx$67 = this$53$1.multExpr$1;
+      var this$178 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$70.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$67, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$178)))
     })
   })(this));
-  var name$18 = new $c_Lsourcecode_Name().init___T("minus");
-  var p0$79 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$18.value$2, p$19, this$171.implicitReprOps$1);
-  this.minus$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$79, this$172.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$54$1) {
+  var name$17 = new $c_Lsourcecode_Name().init___T("minus");
+  var p0$57 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$17.value$2, p$18, this$179.implicitReprOps$1);
+  this.minus$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$57, this$180.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$54$1) {
     return (function(x0$10$2) {
       var x0$10 = $as_T3(x0$10$2);
       if ((x0$10 !== null)) {
@@ -4068,38 +4073,38 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$175 = $m_Lfastparse_noApi$();
-  var p$20 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$55$1) {
+  var this$183 = $m_Lfastparse_noApi$();
+  var p$19 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$55$1) {
     return (function() {
-      var this$174 = this$55$1.White$1;
-      var this$173 = this$55$1.White$1;
-      var p0$80 = this$55$1.plus$1;
-      var p0$81 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$80, this$173.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$55$1.minus$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$81, this$174.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$55$1.multExpr$1)
+      var this$182 = this$55$1.White$1;
+      var this$181 = this$55$1.White$1;
+      var p0$58 = this$55$1.plus$1;
+      var p0$59 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$58, this$181.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$55$1.minus$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$59, this$182.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$55$1.multExpr$1)
     })
   })(this));
-  var name$19 = new $c_Lsourcecode_Name().init___T("arithmeticExpr");
-  this.arithmeticExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$19.value$2, p$20, this$175.implicitReprOps$1);
-  var this$181 = this.White$1;
-  var this$180 = $m_Lfastparse_noApi$();
-  var p$21 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$56$1) {
+  var name$18 = new $c_Lsourcecode_Name().init___T("arithmeticExpr");
+  this.arithmeticExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$18.value$2, p$19, this$183.implicitReprOps$1);
+  var this$189 = this.White$1;
+  var this$188 = $m_Lfastparse_noApi$();
+  var p$20 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$56$1) {
     return (function() {
-      var this$178 = this$56$1.White$1;
-      var this$176 = this$56$1.White$1;
-      var p0$82 = this$56$1.arithmeticExpr$1;
-      var jsx$66 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$82, this$176.WL$1);
-      var jsx$65 = this$56$1.LESS$1;
-      var this$177 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$83 = jsx$66.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$65, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$177)));
-      var jsx$67 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$83, this$178.WL$1);
-      var jsx$64 = this$56$1.arithmeticExpr$1;
-      var this$179 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$67.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$64, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$179)))
+      var this$186 = this$56$1.White$1;
+      var this$184 = this$56$1.White$1;
+      var p0$60 = this$56$1.arithmeticExpr$1;
+      var jsx$73 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$60, this$184.WL$1);
+      var jsx$72 = this$56$1.LESS$1;
+      var this$185 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$61 = jsx$73.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$72, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$185)));
+      var jsx$74 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$61, this$186.WL$1);
+      var jsx$71 = this$56$1.arithmeticExpr$1;
+      var this$187 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$74.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$71, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$187)))
     })
   })(this));
-  var name$20 = new $c_Lsourcecode_Name().init___T("lessThan");
-  var p0$84 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$20.value$2, p$21, this$180.implicitReprOps$1);
-  this.lessThan$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$84, this$181.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$57$1) {
+  var name$19 = new $c_Lsourcecode_Name().init___T("lessThan");
+  var p0$62 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$19.value$2, p$20, this$188.implicitReprOps$1);
+  this.lessThan$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$62, this$189.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$57$1) {
     return (function(x0$11$2) {
       var x0$11 = $as_T3(x0$11$2);
       if ((x0$11 !== null)) {
@@ -4111,36 +4116,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$183 = $m_Lfastparse_noApi$();
-  var p$22 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$58$1) {
+  var this$191 = $m_Lfastparse_noApi$();
+  var p$21 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$58$1) {
     return (function() {
-      var this$182 = this$58$1.White$1;
-      var p0$85 = this$58$1.lessThan$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$85, this$182.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$58$1.arithmeticExpr$1)
+      var this$190 = this$58$1.White$1;
+      var p0$63 = this$58$1.lessThan$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$63, this$190.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$58$1.arithmeticExpr$1)
     })
   })(this));
-  var name$21 = new $c_Lsourcecode_Name().init___T("ltExpr");
-  this.ltExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$21.value$2, p$22, this$183.implicitReprOps$1);
-  var this$189 = this.White$1;
-  var this$188 = $m_Lfastparse_noApi$();
-  var p$23 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$59$1) {
+  var name$20 = new $c_Lsourcecode_Name().init___T("ltExpr");
+  this.ltExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$20.value$2, p$21, this$191.implicitReprOps$1);
+  var this$197 = this.White$1;
+  var this$196 = $m_Lfastparse_noApi$();
+  var p$22 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$59$1) {
     return (function() {
-      var this$186 = this$59$1.White$1;
-      var this$184 = this$59$1.White$1;
-      var p0$86 = this$59$1.ltExpr$1;
-      var jsx$70 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$86, this$184.WL$1);
-      var jsx$69 = this$59$1.BOR$1;
-      var this$185 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$87 = jsx$70.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$69, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$185)));
-      var jsx$71 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$87, this$186.WL$1);
-      var jsx$68 = this$59$1.ltExpr$1;
-      var this$187 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$71.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$68, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$187)))
+      var this$194 = this$59$1.White$1;
+      var this$192 = this$59$1.White$1;
+      var p0$64 = this$59$1.ltExpr$1;
+      var jsx$77 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$64, this$192.WL$1);
+      var jsx$76 = this$59$1.BOR$1;
+      var this$193 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$65 = jsx$77.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$76, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$193)));
+      var jsx$78 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$65, this$194.WL$1);
+      var jsx$75 = this$59$1.ltExpr$1;
+      var this$195 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$78.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$75, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$195)))
     })
   })(this));
-  var name$22 = new $c_Lsourcecode_Name().init___T("or");
-  var p0$88 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$22.value$2, p$23, this$188.implicitReprOps$1);
-  this.or$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$88, this$189.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$60$1) {
+  var name$21 = new $c_Lsourcecode_Name().init___T("or");
+  var p0$66 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$21.value$2, p$22, this$196.implicitReprOps$1);
+  this.or$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$66, this$197.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$60$1) {
     return (function(x0$12$2) {
       var x0$12 = $as_T3(x0$12$2);
       if ((x0$12 !== null)) {
@@ -4152,36 +4157,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$191 = $m_Lfastparse_noApi$();
-  var p$24 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$61$1) {
+  var this$199 = $m_Lfastparse_noApi$();
+  var p$23 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$61$1) {
     return (function() {
-      var this$190 = this$61$1.White$1;
-      var p0$89 = this$61$1.or$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$89, this$190.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$61$1.ltExpr$1)
+      var this$198 = this$61$1.White$1;
+      var p0$67 = this$61$1.or$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$67, this$198.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$61$1.ltExpr$1)
     })
   })(this));
-  var name$23 = new $c_Lsourcecode_Name().init___T("orExpr");
-  this.orExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$23.value$2, p$24, this$191.implicitReprOps$1);
-  var this$197 = this.White$1;
-  var this$196 = $m_Lfastparse_noApi$();
-  var p$25 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$62$1) {
+  var name$22 = new $c_Lsourcecode_Name().init___T("orExpr");
+  this.orExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$22.value$2, p$23, this$199.implicitReprOps$1);
+  var this$205 = this.White$1;
+  var this$204 = $m_Lfastparse_noApi$();
+  var p$24 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$62$1) {
     return (function() {
-      var this$194 = this$62$1.White$1;
-      var this$192 = this$62$1.White$1;
-      var p0$90 = this$62$1.orExpr$1;
-      var jsx$74 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$90, this$192.WL$1);
-      var jsx$73 = this$62$1.BAND$1;
-      var this$193 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$91 = jsx$74.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$73, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$193)));
-      var jsx$75 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$91, this$194.WL$1);
-      var jsx$72 = this$62$1.orExpr$1;
-      var this$195 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$75.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$72, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$195)))
+      var this$202 = this$62$1.White$1;
+      var this$200 = this$62$1.White$1;
+      var p0$68 = this$62$1.orExpr$1;
+      var jsx$81 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$68, this$200.WL$1);
+      var jsx$80 = this$62$1.BAND$1;
+      var this$201 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$69 = jsx$81.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$80, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$201)));
+      var jsx$82 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$69, this$202.WL$1);
+      var jsx$79 = this$62$1.orExpr$1;
+      var this$203 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$82.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$79, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$203)))
     })
   })(this));
-  var name$24 = new $c_Lsourcecode_Name().init___T("and");
-  var p0$92 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$24.value$2, p$25, this$196.implicitReprOps$1);
-  this.and$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$92, this$197.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$63$1) {
+  var name$23 = new $c_Lsourcecode_Name().init___T("and");
+  var p0$70 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$23.value$2, p$24, this$204.implicitReprOps$1);
+  this.and$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$70, this$205.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$63$1) {
     return (function(x0$13$2) {
       var x0$13 = $as_T3(x0$13$2);
       if ((x0$13 !== null)) {
@@ -4193,36 +4198,36 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$199 = $m_Lfastparse_noApi$();
-  var p$26 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$64$1) {
+  var this$207 = $m_Lfastparse_noApi$();
+  var p$25 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$64$1) {
     return (function() {
-      var this$198 = this$64$1.White$1;
-      var p0$93 = this$64$1.and$1;
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$93, this$198.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$64$1.orExpr$1)
+      var this$206 = this$64$1.White$1;
+      var p0$71 = this$64$1.and$1;
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$71, this$206.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$64$1.orExpr$1)
     })
   })(this));
-  var name$25 = new $c_Lsourcecode_Name().init___T("andExpr");
-  this.andExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$25.value$2, p$26, this$199.implicitReprOps$1);
-  var this$205 = this.White$1;
-  var this$204 = $m_Lfastparse_noApi$();
-  var p$27 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$65$1) {
+  var name$24 = new $c_Lsourcecode_Name().init___T("andExpr");
+  this.andExpr$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$24.value$2, p$25, this$207.implicitReprOps$1);
+  var this$213 = this.White$1;
+  var this$212 = $m_Lfastparse_noApi$();
+  var p$26 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$65$1) {
     return (function() {
-      var this$202 = this$65$1.White$1;
-      var this$200 = this$65$1.White$1;
-      var p0$94 = this$65$1.ident$1;
-      var jsx$78 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$94, this$200.WL$1);
-      var jsx$77 = this$65$1.EQUAL$1;
-      var this$201 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$95 = jsx$78.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$77, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$201)));
-      var jsx$79 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$95, this$202.WL$1);
-      var jsx$76 = this$65$1.expr__p1__Lfastparse_core_Parser();
-      var this$203 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$79.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$76, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$203)))
+      var this$210 = this$65$1.White$1;
+      var this$208 = this$65$1.White$1;
+      var p0$72 = this$65$1.ident$1;
+      var jsx$85 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$72, this$208.WL$1);
+      var jsx$84 = this$65$1.EQUAL$1;
+      var this$209 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$73 = jsx$85.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$84, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$209)));
+      var jsx$86 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$73, this$210.WL$1);
+      var jsx$83 = this$65$1.expr__p1__Lfastparse_core_Parser();
+      var this$211 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$86.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$83, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$211)))
     })
   })(this));
-  var name$26 = new $c_Lsourcecode_Name().init___T("binding");
-  var p0$96 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$26.value$2, p$27, this$204.implicitReprOps$1);
-  this.binding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$96, this$205.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$66$1) {
+  var name$25 = new $c_Lsourcecode_Name().init___T("binding");
+  var p0$74 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$25.value$2, p$26, this$212.implicitReprOps$1);
+  this.binding$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$74, this$213.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$66$1) {
     return (function(x0$14$2) {
       var x0$14 = $as_T3(x0$14$2);
       if ((x0$14 !== null)) {
@@ -4234,21 +4239,21 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$209 = this.White$1;
-  var this$208 = $m_Lfastparse_noApi$();
-  var p$28 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$67$1) {
+  var this$217 = this.White$1;
+  var this$216 = $m_Lfastparse_noApi$();
+  var p$27 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$67$1) {
     return (function() {
-      var this$206 = this$67$1.White$1;
-      var p0$97 = this$67$1.expr__p1__Lfastparse_core_Parser();
-      var jsx$81 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$97, this$206.WL$1);
-      var jsx$80 = this$67$1.SEMISEMI$1;
-      var this$207 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$81.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$80, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$207)))
+      var this$214 = this$67$1.White$1;
+      var p0$75 = this$67$1.expr__p1__Lfastparse_core_Parser();
+      var jsx$88 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$75, this$214.WL$1);
+      var jsx$87 = this$67$1.SEMISEMI$1;
+      var this$215 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$88.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$87, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$215)))
     })
   })(this));
-  var name$27 = new $c_Lsourcecode_Name().init___T("topExpr");
-  var p0$98 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$27.value$2, p$28, this$208.implicitReprOps$1);
-  this.topExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$98, this$209.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$68$1) {
+  var name$26 = new $c_Lsourcecode_Name().init___T("topExpr");
+  var p0$76 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$26.value$2, p$27, this$216.implicitReprOps$1);
+  this.topExpr$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$76, this$217.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$68$1) {
     return (function(x0$15$2) {
       var x0$15 = $as_T2(x0$15$2);
       if ((x0$15 !== null)) {
@@ -4259,31 +4264,31 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$217 = this.White$1;
-  var this$216 = $m_Lfastparse_noApi$();
-  var p$29 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$69$1) {
+  var this$225 = this.White$1;
+  var this$224 = $m_Lfastparse_noApi$();
+  var p$28 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$69$1) {
     return (function() {
-      var this$214 = this$69$1.White$1;
-      var this$210 = this$69$1.White$1;
-      var p0$99 = this$69$1.LET$1;
-      var jsx$84 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$99, this$210.WL$1);
-      var this$211 = this$69$1.White$1;
-      var p0$100 = this$69$1.binding$1;
-      var qual$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$100, this$211.WL$1);
+      var this$222 = this$69$1.White$1;
+      var this$218 = this$69$1.White$1;
+      var p0$77 = this$69$1.LET$1;
+      var jsx$91 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$77, this$218.WL$1);
+      var this$219 = this$69$1.White$1;
+      var p0$78 = this$69$1.binding$1;
+      var qual$4 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$78, this$219.WL$1);
       var x$17 = this$69$1.AND$1;
-      var this$212 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$83 = qual$4.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$17, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$212));
-      var this$213 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$101 = jsx$84.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$83, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$213)));
-      var jsx$85 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$101, this$214.WL$1);
-      var jsx$82 = this$69$1.SEMISEMI$1;
-      var this$215 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$85.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$82, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$215)))
+      var this$220 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$90 = qual$4.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$17, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$220));
+      var this$221 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$79 = jsx$91.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$90, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$221)));
+      var jsx$92 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$79, this$222.WL$1);
+      var jsx$89 = this$69$1.SEMISEMI$1;
+      var this$223 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$92.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$89, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$223)))
     })
   })(this));
-  var name$28 = new $c_Lsourcecode_Name().init___T("topLet");
-  var p0$102 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$28.value$2, p$29, this$216.implicitReprOps$1);
-  this.topLet$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$102, this$217.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$70$1) {
+  var name$27 = new $c_Lsourcecode_Name().init___T("topLet");
+  var p0$80 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$27.value$2, p$28, this$224.implicitReprOps$1);
+  this.topLet$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$80, this$225.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$70$1) {
     return (function(x0$16$2) {
       var x0$16 = $as_T3(x0$16$2);
       if ((x0$16 !== null)) {
@@ -4294,46 +4299,46 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$231 = this.White$1;
-  var this$230 = $m_Lfastparse_noApi$();
-  var p$30 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$71$1) {
+  var this$239 = this.White$1;
+  var this$238 = $m_Lfastparse_noApi$();
+  var p$29 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$71$1) {
     return (function() {
+      var this$236 = this$71$1.White$1;
+      var this$234 = this$71$1.White$1;
+      var this$232 = this$71$1.White$1;
       var this$228 = this$71$1.White$1;
       var this$226 = this$71$1.White$1;
-      var this$224 = this$71$1.White$1;
-      var this$220 = this$71$1.White$1;
-      var this$218 = this$71$1.White$1;
-      var p0$103 = this$71$1.LET$1;
-      var jsx$91 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$103, this$218.WL$1);
-      var jsx$90 = this$71$1.ident$1;
-      var this$219 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$104 = jsx$91.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$90, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$219)));
-      var jsx$92 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$104, this$220.WL$1);
-      var this$221 = this$71$1.White$1;
-      var p0$105 = this$71$1.ident$1;
-      var qual$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$105, this$221.WL$1);
-      var x$21 = $m_Lfastparse_all$().Pass$1;
-      var this$222 = $m_Lfastparse_core_Implicits$Repeater$();
-      var jsx$89 = qual$5.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$21, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$222));
-      var this$223 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$106 = jsx$92.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$89, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$223)));
-      var jsx$93 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$106, this$224.WL$1);
-      var jsx$88 = this$71$1.EQUAL$1;
-      var this$225 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$107 = jsx$93.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$88, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$225)));
-      var jsx$94 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$107, this$226.WL$1);
-      var jsx$87 = this$71$1.expr__p1__Lfastparse_core_Parser();
+      var p0$81 = this$71$1.LET$1;
+      var jsx$98 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$81, this$226.WL$1);
+      var jsx$97 = this$71$1.ident$1;
       var this$227 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$108 = jsx$94.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$87, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$227)));
-      var jsx$95 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$108, this$228.WL$1);
-      var jsx$86 = this$71$1.SEMISEMI$1;
-      var this$229 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$95.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$86, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$229)))
+      var p0$82 = jsx$98.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$97, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$227)));
+      var jsx$99 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$82, this$228.WL$1);
+      var this$229 = this$71$1.White$1;
+      var p0$83 = this$71$1.ident$1;
+      var qual$5 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$83, this$229.WL$1);
+      var x$21 = $m_Lfastparse_all$().Pass$1;
+      var this$230 = $m_Lfastparse_core_Implicits$Repeater$();
+      var jsx$96 = qual$5.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$21, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$230));
+      var this$231 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$84 = jsx$99.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$96, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$231)));
+      var jsx$100 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$84, this$232.WL$1);
+      var jsx$95 = this$71$1.EQUAL$1;
+      var this$233 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$85 = jsx$100.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$95, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$233)));
+      var jsx$101 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$85, this$234.WL$1);
+      var jsx$94 = this$71$1.expr__p1__Lfastparse_core_Parser();
+      var this$235 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$86 = jsx$101.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$94, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$235)));
+      var jsx$102 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$86, this$236.WL$1);
+      var jsx$93 = this$71$1.SEMISEMI$1;
+      var this$237 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$102.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$93, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$237)))
     })
   })(this));
-  var name$29 = new $c_Lsourcecode_Name().init___T("topDecl");
-  var p0$109 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$29.value$2, p$30, this$230.implicitReprOps$1);
-  this.topDecl$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$109, this$231.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$72$1) {
+  var name$28 = new $c_Lsourcecode_Name().init___T("topDecl");
+  var p0$87 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$28.value$2, p$29, this$238.implicitReprOps$1);
+  this.topDecl$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$87, this$239.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$72$1) {
     return (function(x0$17$2) {
       var x0$17 = $as_T6(x0$17$2);
       if ((x0$17 !== null)) {
@@ -4348,64 +4353,64 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
             return new $c_Lmlscala_Ast$FunExp().init___T__Lmlscala_Ast$Expr(arg$4, exp$3)
           })
         })(this$72$1)))))]);
-        var this$233 = $m_sci_List$();
-        var cbf = this$233.ReusableCBFInstance$2;
+        var this$241 = $m_sci_List$();
+        var cbf = this$241.ReusableCBFInstance$2;
         return new $c_Lmlscala_Ast$MultiDecl().init___sc_Seq($as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs, cbf)))
       } else {
         throw new $c_s_MatchError().init___O(x0$17)
       }
     })
   })(this)));
-  var this$251 = this.White$1;
-  var this$250 = $m_Lfastparse_noApi$();
-  var p$31 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$73$1) {
+  var this$259 = this.White$1;
+  var this$258 = $m_Lfastparse_noApi$();
+  var p$30 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$73$1) {
     return (function() {
+      var this$256 = this$73$1.White$1;
+      var this$254 = this$73$1.White$1;
+      var this$252 = this$73$1.White$1;
+      var this$250 = this$73$1.White$1;
       var this$248 = this$73$1.White$1;
       var this$246 = this$73$1.White$1;
       var this$244 = this$73$1.White$1;
       var this$242 = this$73$1.White$1;
-      var this$240 = this$73$1.White$1;
-      var this$238 = this$73$1.White$1;
-      var this$236 = this$73$1.White$1;
-      var this$234 = this$73$1.White$1;
-      var p0$110 = this$73$1.LET$1;
-      var jsx$104 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$110, this$234.WL$1);
-      var jsx$103 = this$73$1.REC$1;
-      var this$235 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$111 = jsx$104.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$103, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$235)));
-      var jsx$105 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$111, this$236.WL$1);
-      var jsx$102 = this$73$1.ident$1;
-      var this$237 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$112 = jsx$105.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$102, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$237)));
-      var jsx$106 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$112, this$238.WL$1);
-      var jsx$101 = this$73$1.EQUAL$1;
-      var this$239 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$113 = jsx$106.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$101, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$239)));
-      var jsx$107 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$113, this$240.WL$1);
-      var jsx$100 = this$73$1.FUN$1;
-      var this$241 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$114 = jsx$107.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$100, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$241)));
-      var jsx$108 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$114, this$242.WL$1);
-      var jsx$99 = this$73$1.ident$1;
+      var p0$88 = this$73$1.LET$1;
+      var jsx$111 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$88, this$242.WL$1);
+      var jsx$110 = this$73$1.REC$1;
       var this$243 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$115 = jsx$108.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$99, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$243)));
-      var jsx$109 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$115, this$244.WL$1);
-      var jsx$98 = this$73$1.RARROW$1;
+      var p0$89 = jsx$111.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$110, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_LowestPriSequencer__Sequencer1__O(this$243)));
+      var jsx$112 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$89, this$244.WL$1);
+      var jsx$109 = this$73$1.ident$1;
       var this$245 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$116 = jsx$109.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$98, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer6__O(this$245)));
-      var jsx$110 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$116, this$246.WL$1);
-      var jsx$97 = this$73$1.expr__p1__Lfastparse_core_Parser();
+      var p0$90 = jsx$112.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$109, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer2__O(this$245)));
+      var jsx$113 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$90, this$246.WL$1);
+      var jsx$108 = this$73$1.EQUAL$1;
       var this$247 = $m_Lfastparse_core_Implicits$Sequencer$();
-      var p0$117 = jsx$110.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$97, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer7__O(this$247)));
-      var jsx$111 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$117, this$248.WL$1);
-      var jsx$96 = this$73$1.SEMISEMI$1;
+      var p0$91 = jsx$113.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$108, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer3__O(this$247)));
+      var jsx$114 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$91, this$248.WL$1);
+      var jsx$107 = this$73$1.FUN$1;
       var this$249 = $m_Lfastparse_core_Implicits$Sequencer$();
-      return jsx$111.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$96, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer8__O(this$249)))
+      var p0$92 = jsx$114.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$107, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer4__O(this$249)));
+      var jsx$115 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$92, this$250.WL$1);
+      var jsx$106 = this$73$1.ident$1;
+      var this$251 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$93 = jsx$115.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$106, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer5__O(this$251)));
+      var jsx$116 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$93, this$252.WL$1);
+      var jsx$105 = this$73$1.RARROW$1;
+      var this$253 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$94 = jsx$116.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$105, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer6__O(this$253)));
+      var jsx$117 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$94, this$254.WL$1);
+      var jsx$104 = this$73$1.expr__p1__Lfastparse_core_Parser();
+      var this$255 = $m_Lfastparse_core_Implicits$Sequencer$();
+      var p0$95 = jsx$117.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$104, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer7__O(this$255)));
+      var jsx$118 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$95, this$256.WL$1);
+      var jsx$103 = this$73$1.SEMISEMI$1;
+      var this$257 = $m_Lfastparse_core_Implicits$Sequencer$();
+      return jsx$118.$$tilde__Lfastparse_core_Parser__Lfastparse_core_Implicits$Sequencer__Lfastparse_core_Parser(jsx$103, $as_Lfastparse_core_Implicits$Sequencer($f_Lfastparse_core_SequencerGen__Sequencer8__O(this$257)))
     })
   })(this));
-  var name$30 = new $c_Lsourcecode_Name().init___T("recDecl");
-  var p0$118 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$30.value$2, p$31, this$250.implicitReprOps$1);
-  this.recDecl$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$118, this$251.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$74$1) {
+  var name$29 = new $c_Lsourcecode_Name().init___T("recDecl");
+  var p0$96 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$29.value$2, p$30, this$258.implicitReprOps$1);
+  this.recDecl$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$96, this$259.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$74$1) {
     return (function(x0$18$2) {
       var x0$18 = $as_T9(x0$18$2);
       if ((x0$18 !== null)) {
@@ -4418,35 +4423,35 @@ $c_Lmlscala_Parser$.prototype.init___ = (function() {
       }
     })
   })(this)));
-  var this$255 = $m_Lfastparse_noApi$();
-  var p$32 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$75$1) {
+  var this$263 = $m_Lfastparse_noApi$();
+  var p$31 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$75$1) {
     return (function() {
-      var this$254 = this$75$1.White$1;
-      var this$253 = this$75$1.White$1;
-      var this$252 = this$75$1.White$1;
-      var p0$119 = this$75$1.topExpr$1;
-      var p0$120 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$119, this$252.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.topLet$1);
-      var p0$121 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$120, this$253.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.topDecl$1);
-      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$121, this$254.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.recDecl$1)
+      var this$262 = this$75$1.White$1;
+      var this$261 = this$75$1.White$1;
+      var this$260 = this$75$1.White$1;
+      var p0$97 = this$75$1.topExpr$1;
+      var p0$98 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$97, this$260.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.topLet$1);
+      var p0$99 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$98, this$261.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.topDecl$1);
+      return new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$99, this$262.WL$1).$$bar__Lfastparse_core_Parser__Lfastparse_core_Parser(this$75$1.recDecl$1)
     })
   })(this));
-  var name$31 = new $c_Lsourcecode_Name().init___T("statement");
-  this.statement$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$31.value$2, p$32, this$255.implicitReprOps$1);
-  var this$259 = this.White$1;
-  var this$258 = $m_Lfastparse_noApi$();
-  var p$33 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$76$1) {
+  var name$30 = new $c_Lsourcecode_Name().init___T("statement");
+  this.statement$1 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$30.value$2, p$31, this$263.implicitReprOps$1);
+  var this$267 = this.White$1;
+  var this$266 = $m_Lfastparse_noApi$();
+  var p$32 = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$76$1) {
     return (function() {
-      var this$256 = this$76$1.White$1;
-      var p0$122 = this$76$1.statement$1;
-      var qual$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$122, this$256.WL$1);
+      var this$264 = this$76$1.White$1;
+      var p0$100 = this$76$1.statement$1;
+      var qual$6 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$100, this$264.WL$1);
       var x$25 = $m_Lfastparse_all$().Pass$1;
-      var this$257 = $m_Lfastparse_core_Implicits$Repeater$();
-      return qual$6.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$25, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$257))
+      var this$265 = $m_Lfastparse_core_Implicits$Repeater$();
+      return qual$6.rep__I__Lfastparse_core_Parser__I__I__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser(1, x$25, 2147483647, (-1), new $c_Lfastparse_core_Implicits$LowPriRepeater$GenericRepeater().init___Lfastparse_core_Implicits$LowPriRepeater(this$265))
     })
   })(this));
-  var name$32 = new $c_Lsourcecode_Name().init___T("program");
-  var p0$123 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$32.value$2, p$33, this$258.implicitReprOps$1);
-  this.program$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$123, this$259.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$77$1) {
+  var name$31 = new $c_Lsourcecode_Name().init___T("program");
+  var p0$101 = new $c_Lfastparse_parsers_Combinators$Rule().init___T__F0__Lfastparse_utils_ReprOps(name$31.value$2, p$32, this$266.implicitReprOps$1);
+  this.program$1 = new $c_Lfastparse_WhitespaceApi().init___Lfastparse_core_Parser__Lfastparse_core_Parser(p0$101, this$267.WL$1).map__F1__Lfastparse_core_Parser(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function(this$77$1) {
     return (function(res$2) {
       var res = $as_sc_Seq(res$2);
       return res.toList__sci_List()
@@ -7887,6 +7892,9 @@ $c_Lfastparse_core_ParserApiImpl.prototype.$$bar__Lfastparse_core_Parser__Lfastp
 $c_Lfastparse_core_ParserApiImpl.prototype.rep__Lfastparse_core_Implicits$Repeater__Lfastparse_core_Parser = (function(ev) {
   return new $c_Lfastparse_parsers_Combinators$Repeat().init___Lfastparse_core_Parser__I__I__Lfastparse_core_Parser__Lfastparse_core_Implicits$Repeater__Lfastparse_utils_ReprOps(this.self$2, 0, 2147483647, new $c_Lfastparse_parsers_Terminals$Pass().init___Lfastparse_utils_ReprOps(this.repr$2), ev, this.repr$2)
 });
+$c_Lfastparse_core_ParserApiImpl.prototype.filter__F1__Lfastparse_core_Parser = (function(predicate) {
+  return new $c_Lfastparse_parsers_Transformers$Filtered().init___Lfastparse_core_Parser__F1__Lfastparse_utils_ReprOps(this.self$2, predicate, this.repr$2)
+});
 $c_Lfastparse_core_ParserApiImpl.prototype.map__F1__Lfastparse_core_Parser = (function(f) {
   return new $c_Lfastparse_parsers_Transformers$Mapper().init___Lfastparse_core_Parser__F1__Lfastparse_utils_ReprOps(this.self$2, f, this.repr$2)
 });
@@ -7898,9 +7906,6 @@ $c_Lfastparse_core_ParserApiImpl.prototype.$$tilde__Lfastparse_core_Parser__Lfas
 });
 $c_Lfastparse_core_ParserApiImpl.prototype.$$bang__Lfastparse_core_Parser = (function() {
   return new $c_Lfastparse_parsers_Combinators$Capturing().init___Lfastparse_core_Parser__Lfastparse_utils_ReprOps(this.self$2, this.repr$2)
-});
-$c_Lfastparse_core_ParserApiImpl.prototype.unary$und$bang__Lfastparse_core_Parser = (function() {
-  return new $c_Lfastparse_parsers_Combinators$Not().init___Lfastparse_core_Parser__Lfastparse_utils_ReprOps(this.self$2, this.repr$2)
 });
 var $d_Lfastparse_core_ParserApiImpl = new $TypeData().initClass({
   Lfastparse_core_ParserApiImpl: 0
@@ -12549,6 +12554,11 @@ $c_sc_AbstractIterator.prototype.foreach__F1__V = (function(f) {
 $c_sc_AbstractIterator.prototype.foldLeft__O__F2__O = (function(z, op) {
   return $f_sc_TraversableOnce__foldLeft__O__F2__O(this, z, op)
 });
+$c_sc_AbstractIterator.prototype.toVector__sci_Vector = (function() {
+  $m_sci_Vector$();
+  var cbf = $m_sc_IndexedSeq$().ReusableCBF$6;
+  return $as_sci_Vector($f_sc_TraversableOnce__to__scg_CanBuildFrom__O(this, cbf))
+});
 $c_sc_AbstractIterator.prototype.size__I = (function() {
   return $f_sc_TraversableOnce__size__I(this)
 });
@@ -12565,6 +12575,11 @@ $c_sc_AbstractIterator.prototype.addString__scm_StringBuilder__T__T__T__scm_Stri
 });
 $c_sc_AbstractIterator.prototype.$$div$colon__O__F2__O = (function(z, op) {
   return $f_sc_TraversableOnce__foldLeft__O__F2__O(this, z, op)
+});
+$c_sc_AbstractIterator.prototype.toSet__sci_Set = (function() {
+  var this$1 = $m_sci_Set$();
+  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$1);
+  return $as_sci_Set($f_sc_TraversableOnce__to__scg_CanBuildFrom__O(this, cbf))
 });
 $c_sc_AbstractIterator.prototype.copyToArray__O__I__I__V = (function(xs, start, len) {
   $f_sc_Iterator__copyToArray__O__I__I__V(this, xs, start, len)
@@ -15121,6 +15136,50 @@ $c_sci_TrieIterator.prototype.isTrie__p2__O__Z = (function(x) {
 $c_sci_TrieIterator.prototype.initArrayStack__AAsci_Iterable = (function() {
   return $newArrayObject($d_sci_Iterable.getArrayOf().getArrayOf(), [6])
 });
+/** @constructor */
+function $c_sci_Vector$$anon$1() {
+  $c_sc_AbstractIterator.call(this);
+  this.i$2 = 0;
+  this.$$outer$2 = null
+}
+$c_sci_Vector$$anon$1.prototype = new $h_sc_AbstractIterator();
+$c_sci_Vector$$anon$1.prototype.constructor = $c_sci_Vector$$anon$1;
+/** @constructor */
+function $h_sci_Vector$$anon$1() {
+  /*<skip>*/
+}
+$h_sci_Vector$$anon$1.prototype = $c_sci_Vector$$anon$1.prototype;
+$c_sci_Vector$$anon$1.prototype.next__O = (function() {
+  if ((this.i$2 > 0)) {
+    this.i$2 = (((-1) + this.i$2) | 0);
+    return this.$$outer$2.apply__I__O(this.i$2)
+  } else {
+    return $m_sc_Iterator$().empty$1.next__O()
+  }
+});
+$c_sci_Vector$$anon$1.prototype.hasNext__Z = (function() {
+  return (this.i$2 > 0)
+});
+$c_sci_Vector$$anon$1.prototype.init___sci_Vector = (function($$outer) {
+  if (($$outer === null)) {
+    throw $m_sjsr_package$().unwrapJavaScriptException__jl_Throwable__O(null)
+  } else {
+    this.$$outer$2 = $$outer
+  };
+  this.i$2 = $$outer.length__I();
+  return this
+});
+var $d_sci_Vector$$anon$1 = new $TypeData().initClass({
+  sci_Vector$$anon$1: 0
+}, false, "scala.collection.immutable.Vector$$anon$1", {
+  sci_Vector$$anon$1: 1,
+  sc_AbstractIterator: 1,
+  O: 1,
+  sc_Iterator: 1,
+  sc_TraversableOnce: 1,
+  sc_GenTraversableOnce: 1
+});
+$c_sci_Vector$$anon$1.prototype.$classData = $d_sci_Vector$$anon$1;
 /** @constructor */
 function $c_scm_Builder$$anon$1() {
   $c_O.call(this);
@@ -21771,114 +21830,6 @@ var $d_Lfastparse_parsers_Combinators$NoTrace = new $TypeData().initClass({
 });
 $c_Lfastparse_parsers_Combinators$NoTrace.prototype.$classData = $d_Lfastparse_parsers_Combinators$NoTrace;
 /** @constructor */
-function $c_Lfastparse_parsers_Combinators$Not() {
-  $c_Lfastparse_core_Parser.call(this);
-  this.p$2 = null
-}
-$c_Lfastparse_parsers_Combinators$Not.prototype = new $h_Lfastparse_core_Parser();
-$c_Lfastparse_parsers_Combinators$Not.prototype.constructor = $c_Lfastparse_parsers_Combinators$Not;
-/** @constructor */
-function $h_Lfastparse_parsers_Combinators$Not() {
-  /*<skip>*/
-}
-$h_Lfastparse_parsers_Combinators$Not.prototype = $c_Lfastparse_parsers_Combinators$Not.prototype;
-$c_Lfastparse_parsers_Combinators$Not.prototype.parseRec__Lfastparse_core_ParseCtx__I__s_Product = (function(cfg, index) {
-  var oldNoCut = cfg.isNoCut$1;
-  cfg.isNoCut$1 = true;
-  var res0 = this.p$2.parseRec__Lfastparse_core_ParseCtx__I__Lfastparse_core_Mutable(cfg, index);
-  cfg.isNoCut$1 = oldNoCut;
-  if ($is_Lfastparse_core_Mutable$Success(res0)) {
-    var x2 = $as_Lfastparse_core_Mutable$Success(res0);
-    var f = cfg.failure$1;
-    var index$1 = x2.index$1;
-    var res = $f_Lfastparse_core_ParserResults__fail__Lfastparse_core_Mutable$Failure__I__sci_Set__Z__Lfastparse_core_Mutable$Failure(this, f, index$1, null, false)
-  } else {
-    if ((!$is_Lfastparse_core_Mutable$Failure(res0))) {
-      throw new $c_s_MatchError().init___O(res0)
-    };
-    var s = cfg.success$1;
-    var traceParsers = $m_sci_Set$EmptySet$();
-    var res = $f_Lfastparse_core_ParserResults__success__Lfastparse_core_Mutable$Success__O__I__sci_Set__Z__Lfastparse_core_Mutable$Success(this, s, (void 0), index, traceParsers, false)
-  };
-  return res
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.productPrefix__T = (function() {
-  return "Not"
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.productArity__I = (function() {
-  return 1
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.equals__O__Z = (function(x$1) {
-  if ((this === x$1)) {
-    return true
-  } else if ($is_Lfastparse_parsers_Combinators$Not(x$1)) {
-    var Not$1 = $as_Lfastparse_parsers_Combinators$Not(x$1);
-    var x = this.p$2;
-    var x$2 = Not$1.p$2;
-    return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
-  } else {
-    return false
-  }
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.productElement__I__O = (function(x$1) {
-  switch (x$1) {
-    case 0: {
-      return this.p$2;
-      break
-    }
-    default: {
-      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
-    }
-  }
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.toString__T = (function() {
-  return new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["!(", ")"])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.p$2]))
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.init___Lfastparse_core_Parser__Lfastparse_utils_ReprOps = (function(p, repr) {
-  this.p$2 = p;
-  $c_Lfastparse_core_Parser.prototype.init___Lfastparse_utils_ReprOps.call(this, repr);
-  return this
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.hashCode__I = (function() {
-  var this$2 = $m_s_util_hashing_MurmurHash3$();
-  return this$2.productHash__s_Product__I__I(this, (-889275714))
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.productIterator__sc_Iterator = (function() {
-  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.parseRec__Lfastparse_core_ParseCtx__I__Lfastparse_core_Mutable = (function(cfg, index) {
-  return $as_Lfastparse_core_Mutable(this.parseRec__Lfastparse_core_ParseCtx__I__s_Product(cfg, index))
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.opPred__I = (function() {
-  return $m_Lfastparse_core_Precedence$().PrefixOp$1
-});
-function $is_Lfastparse_parsers_Combinators$Not(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lfastparse_parsers_Combinators$Not)))
-}
-function $as_Lfastparse_parsers_Combinators$Not(obj) {
-  return (($is_Lfastparse_parsers_Combinators$Not(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "fastparse.parsers.Combinators$Not"))
-}
-function $isArrayOf_Lfastparse_parsers_Combinators$Not(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lfastparse_parsers_Combinators$Not)))
-}
-function $asArrayOf_Lfastparse_parsers_Combinators$Not(obj, depth) {
-  return (($isArrayOf_Lfastparse_parsers_Combinators$Not(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lfastparse.parsers.Combinators$Not;", depth))
-}
-var $d_Lfastparse_parsers_Combinators$Not = new $TypeData().initClass({
-  Lfastparse_parsers_Combinators$Not: 0
-}, false, "fastparse.parsers.Combinators$Not", {
-  Lfastparse_parsers_Combinators$Not: 1,
-  Lfastparse_core_Parser: 1,
-  O: 1,
-  Lfastparse_core_ParserResults: 1,
-  Lfastparse_core_Precedence: 1,
-  s_Product: 1,
-  s_Equals: 1,
-  s_Serializable: 1,
-  Ljava_io_Serializable: 1
-});
-$c_Lfastparse_parsers_Combinators$Not.prototype.$classData = $d_Lfastparse_parsers_Combinators$Not;
-/** @constructor */
 function $c_Lfastparse_parsers_Combinators$Repeat() {
   $c_Lfastparse_core_Parser.call(this);
   this.p$2 = null;
@@ -23285,6 +23236,120 @@ var $d_Lfastparse_parsers_Terminals$Start = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_Lfastparse_parsers_Terminals$Start.prototype.$classData = $d_Lfastparse_parsers_Terminals$Start;
+/** @constructor */
+function $c_Lfastparse_parsers_Transformers$Filtered() {
+  $c_Lfastparse_core_Parser.call(this);
+  this.p$2 = null;
+  this.predicate$2 = null
+}
+$c_Lfastparse_parsers_Transformers$Filtered.prototype = new $h_Lfastparse_core_Parser();
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.constructor = $c_Lfastparse_parsers_Transformers$Filtered;
+/** @constructor */
+function $h_Lfastparse_parsers_Transformers$Filtered() {
+  /*<skip>*/
+}
+$h_Lfastparse_parsers_Transformers$Filtered.prototype = $c_Lfastparse_parsers_Transformers$Filtered.prototype;
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.productPrefix__T = (function() {
+  return "Filtered"
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.init___Lfastparse_core_Parser__F1__Lfastparse_utils_ReprOps = (function(p, predicate, repr) {
+  this.p$2 = p;
+  this.predicate$2 = predicate;
+  $c_Lfastparse_core_Parser.prototype.init___Lfastparse_utils_ReprOps.call(this, repr);
+  return this
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Lfastparse_parsers_Transformers$Filtered(x$1)) {
+    var Filtered$1 = $as_Lfastparse_parsers_Transformers$Filtered(x$1);
+    var x = this.p$2;
+    var x$2 = Filtered$1.p$2;
+    if (((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))) {
+      var x$3 = this.predicate$2;
+      var x$4 = Filtered$1.predicate$2;
+      return ((x$3 === null) ? (x$4 === null) : x$3.equals__O__Z(x$4))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.p$2;
+      break
+    }
+    case 1: {
+      return this.predicate$2;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.toString__T = (function() {
+  return new $c_s_StringContext().init___sc_Seq(new $c_sjs_js_WrappedArray().init___sjs_js_Array(["", ".filter(", ")"])).s__sc_Seq__T(new $c_sjs_js_WrappedArray().init___sjs_js_Array([this.p$2, this.predicate$2]))
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__I(this, (-889275714))
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.parseRec__Lfastparse_core_ParseCtx__I__Lfastparse_core_Mutable = (function(cfg, index) {
+  var x1 = this.p$2.parseRec__Lfastparse_core_ParseCtx__I__Lfastparse_core_Mutable(cfg, index);
+  if ($is_Lfastparse_core_Mutable$Failure(x1)) {
+    var x2 = $as_Lfastparse_core_Mutable$Failure(x1);
+    var x$8 = cfg.logDepth$1;
+    return $f_Lfastparse_core_ParserResults__failMore__Lfastparse_core_Mutable$Failure__I__I__sci_Set__Z__Lfastparse_core_Mutable$Failure(this, x2, index, x$8, null, false)
+  } else if ($is_Lfastparse_core_Mutable$Success(x1)) {
+    var x3 = $as_Lfastparse_core_Mutable$Success(x1);
+    if ($uZ(this.predicate$2.apply__O__O(x3.value$1))) {
+      return x3
+    } else {
+      var f = cfg.failure$1;
+      var traceParsers = x3.traceParsers$1;
+      var cut = x3.cut$1;
+      return $f_Lfastparse_core_ParserResults__fail__Lfastparse_core_Mutable$Failure__I__sci_Set__Z__Lfastparse_core_Mutable$Failure(this, f, index, traceParsers, cut)
+    }
+  } else {
+    throw new $c_s_MatchError().init___O(x1)
+  }
+});
+function $is_Lfastparse_parsers_Transformers$Filtered(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lfastparse_parsers_Transformers$Filtered)))
+}
+function $as_Lfastparse_parsers_Transformers$Filtered(obj) {
+  return (($is_Lfastparse_parsers_Transformers$Filtered(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "fastparse.parsers.Transformers$Filtered"))
+}
+function $isArrayOf_Lfastparse_parsers_Transformers$Filtered(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lfastparse_parsers_Transformers$Filtered)))
+}
+function $asArrayOf_Lfastparse_parsers_Transformers$Filtered(obj, depth) {
+  return (($isArrayOf_Lfastparse_parsers_Transformers$Filtered(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lfastparse.parsers.Transformers$Filtered;", depth))
+}
+var $d_Lfastparse_parsers_Transformers$Filtered = new $TypeData().initClass({
+  Lfastparse_parsers_Transformers$Filtered: 0
+}, false, "fastparse.parsers.Transformers$Filtered", {
+  Lfastparse_parsers_Transformers$Filtered: 1,
+  Lfastparse_core_Parser: 1,
+  O: 1,
+  Lfastparse_core_ParserResults: 1,
+  Lfastparse_core_Precedence: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lfastparse_parsers_Transformers$Filtered.prototype.$classData = $d_Lfastparse_parsers_Transformers$Filtered;
 /** @constructor */
 function $c_Lfastparse_parsers_Transformers$Mapper() {
   $c_Lfastparse_core_Parser.call(this);
@@ -25626,6 +25691,11 @@ $c_sc_AbstractTraversable.prototype.withFilter__F1__scg_FilterMonadic = (functio
 $c_sc_AbstractTraversable.prototype.foldLeft__O__F2__O = (function(z, op) {
   return $f_sc_TraversableOnce__foldLeft__O__F2__O(this, z, op)
 });
+$c_sc_AbstractTraversable.prototype.toVector__sci_Vector = (function() {
+  $m_sci_Vector$();
+  var cbf = $m_sc_IndexedSeq$().ReusableCBF$6;
+  return $as_sci_Vector($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this, cbf))
+});
 $c_sc_AbstractTraversable.prototype.toBuffer__scm_Buffer = (function() {
   var this$1 = $m_scm_ArrayBuffer$();
   var cbf = this$1.ReusableCBFInstance$2;
@@ -25633,6 +25703,9 @@ $c_sc_AbstractTraversable.prototype.toBuffer__scm_Buffer = (function() {
 });
 $c_sc_AbstractTraversable.prototype.mkString__T = (function() {
   return this.mkString__T__T("")
+});
+$c_sc_AbstractTraversable.prototype.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O = (function(that, bf) {
+  return $f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this, that, bf)
 });
 $c_sc_AbstractTraversable.prototype.sizeHintIfCheap__I = (function() {
   return (-1)
@@ -25642,6 +25715,11 @@ $c_sc_AbstractTraversable.prototype.tail__O = (function() {
 });
 $c_sc_AbstractTraversable.prototype.addString__scm_StringBuilder__T__T__T__scm_StringBuilder = (function(b, start, sep, end) {
   return $f_sc_TraversableOnce__addString__scm_StringBuilder__T__T__T__scm_StringBuilder(this, b, start, sep, end)
+});
+$c_sc_AbstractTraversable.prototype.toSet__sci_Set = (function() {
+  var this$1 = $m_sci_Set$();
+  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$1);
+  return $as_sci_Set($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this, cbf))
 });
 $c_sc_AbstractTraversable.prototype.repr__O = (function() {
   return this
@@ -25722,6 +25800,12 @@ function $f_sc_SeqLike__reverse__O($thiz) {
     b.$$plus$eq__O__scm_Builder(arg1);
     these = $as_sci_List(these.tail__O())
   };
+  return b.result__O()
+}
+function $f_sc_SeqLike__$$plus$colon__O__scg_CanBuildFrom__O($thiz, elem, bf) {
+  var b = bf.apply__O__scm_Builder($thiz.repr__O());
+  b.$$plus$eq__O__scm_Builder(elem);
+  b.$$plus$plus$eq__sc_TraversableOnce__scg_Growable($thiz.thisCollection__sc_Seq());
   return b.result__O()
 }
 function $is_sc_SeqLike(obj) {
@@ -26409,6 +26493,11 @@ $c_sci_StringOps.prototype.indexWhere__F1__I__I = (function(p, from) {
 $c_sci_StringOps.prototype.slice__I__I__O = (function(from, until) {
   return $m_sci_StringOps$().slice$extension__T__I__I__T(this.repr$1, from, until)
 });
+$c_sci_StringOps.prototype.toVector__sci_Vector = (function() {
+  $m_sci_Vector$();
+  var cbf = $m_sc_IndexedSeq$().ReusableCBF$6;
+  return $as_sci_Vector($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this, cbf))
+});
 $c_sci_StringOps.prototype.toBuffer__scm_Buffer = (function() {
   return $f_sc_IndexedSeqLike__toBuffer__scm_Buffer(this)
 });
@@ -26423,6 +26512,9 @@ $c_sci_StringOps.prototype.iterator__sc_Iterator = (function() {
 $c_sci_StringOps.prototype.length__I = (function() {
   var $$this = this.repr$1;
   return $uI($$this.length)
+});
+$c_sci_StringOps.prototype.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O = (function(that, bf) {
+  return $f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this, that, bf)
 });
 $c_sci_StringOps.prototype.sizeHintIfCheap__I = (function() {
   var $$this = this.repr$1;
@@ -26450,6 +26542,11 @@ $c_sci_StringOps.prototype.addString__scm_StringBuilder__T__T__T__scm_StringBuil
 });
 $c_sci_StringOps.prototype.repr__O = (function() {
   return this.repr$1
+});
+$c_sci_StringOps.prototype.toSet__sci_Set = (function() {
+  var this$1 = $m_sci_Set$();
+  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$1);
+  return $as_sci_Set($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this, cbf))
 });
 $c_sci_StringOps.prototype.$$div$colon__O__F2__O = (function(z, op) {
   var start = 0;
@@ -26834,6 +26931,9 @@ $c_sci_ListSet.prototype.$$plus$plus__sc_GenTraversableOnce__sci_ListSet = (func
     })
   })(this)))))
 });
+$c_sci_ListSet.prototype.toSet__sci_Set = (function() {
+  return this
+});
 $c_sci_ListSet.prototype.$$minus__O__sci_ListSet = (function(elem) {
   return this
 });
@@ -26907,6 +27007,9 @@ $c_sci_Set$EmptySet$.prototype.empty__sc_Set = (function() {
 });
 $c_sci_Set$EmptySet$.prototype.contains__O__Z = (function(elem) {
   return false
+});
+$c_sci_Set$EmptySet$.prototype.toSet__sci_Set = (function() {
+  return this
 });
 $c_sci_Set$EmptySet$.prototype.union__sc_GenSet__O = (function(that) {
   return $f_sc_SetLike__$$plus$plus__sc_GenTraversableOnce__sc_Set(this, that)
@@ -27021,6 +27124,9 @@ $c_sci_Set$Set1.prototype.contains__O__Z = (function(elem) {
 });
 $c_sci_Set$Set1.prototype.tail__O = (function() {
   return $m_sci_Set$EmptySet$()
+});
+$c_sci_Set$Set1.prototype.toSet__sci_Set = (function() {
+  return this
 });
 $c_sci_Set$Set1.prototype.union__sc_GenSet__O = (function(that) {
   return $f_sc_SetLike__$$plus$plus__sc_GenTraversableOnce__sc_Set(this, that)
@@ -27137,6 +27243,9 @@ $c_sci_Set$Set2.prototype.contains__O__Z = (function(elem) {
 });
 $c_sci_Set$Set2.prototype.tail__O = (function() {
   return this.tail__sci_Set()
+});
+$c_sci_Set$Set2.prototype.toSet__sci_Set = (function() {
+  return this
 });
 $c_sci_Set$Set2.prototype.union__sc_GenSet__O = (function(that) {
   return $f_sc_SetLike__$$plus$plus__sc_GenTraversableOnce__sc_Set(this, that)
@@ -27256,6 +27365,9 @@ $c_sci_Set$Set3.prototype.contains__O__Z = (function(elem) {
 });
 $c_sci_Set$Set3.prototype.tail__O = (function() {
   return this.tail__sci_Set()
+});
+$c_sci_Set$Set3.prototype.toSet__sci_Set = (function() {
+  return this
 });
 $c_sci_Set$Set3.prototype.union__sc_GenSet__O = (function(that) {
   return $f_sc_SetLike__$$plus$plus__sc_GenTraversableOnce__sc_Set(this, that)
@@ -27377,6 +27489,9 @@ $c_sci_Set$Set4.prototype.init___O__O__O__O = (function(elem1, elem2, elem3, ele
   this.elem2$4 = elem2;
   this.elem3$4 = elem3;
   this.elem4$4 = elem4;
+  return this
+});
+$c_sci_Set$Set4.prototype.toSet__sci_Set = (function() {
   return this
 });
 $c_sci_Set$Set4.prototype.union__sc_GenSet__O = (function(that) {
@@ -27527,6 +27642,9 @@ $c_sci_HashSet.prototype.tail__O = (function() {
 });
 $c_sci_HashSet.prototype.tail__sci_HashSet = (function() {
   return this.$$minus__O__sci_HashSet(this.head__O())
+});
+$c_sci_HashSet.prototype.toSet__sci_Set = (function() {
+  return this
 });
 $c_sci_HashSet.prototype.union__sc_GenSet__O = (function(that) {
   return this.union__sc_GenSet__sci_HashSet(that)
@@ -29863,6 +29981,25 @@ $c_sci_Stream.prototype.indexWhere__F1__I__I = (function(p, from) {
 $c_sci_Stream.prototype.iterator__sc_Iterator = (function() {
   return new $c_sci_StreamIterator().init___sci_Stream(this)
 });
+$c_sci_Stream.prototype.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O = (function(that, bf) {
+  if ($is_sci_Stream$StreamBuilder(bf.apply__O__scm_Builder(this))) {
+    if (this.isEmpty__Z()) {
+      var x$1 = that.toStream__sci_Stream()
+    } else {
+      var hd = this.head__O();
+      var tl = new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function($this, that$1) {
+        return (function() {
+          var x = $as_sci_Stream($this.tail__O()).$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(that$1, ($m_sci_Stream$(), new $c_sci_Stream$StreamCanBuildFrom().init___()));
+          return $as_sci_Stream(x)
+        })
+      })(this, that));
+      var x$1 = new $c_sci_Stream$Cons().init___O__F0(hd, tl)
+    };
+    return x$1
+  } else {
+    return $f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this, that, bf)
+  }
+});
 $c_sci_Stream.prototype.length__I = (function() {
   var len = 0;
   var left = this;
@@ -31254,6 +31391,9 @@ $c_sci_Vector.prototype.tail__sci_Vector = (function() {
   };
   return this.drop__I__sci_Vector(1)
 });
+$c_sci_Vector.prototype.toVector__sci_Vector = (function() {
+  return this
+});
 $c_sci_Vector.prototype.appendBack__O__sci_Vector = (function(value) {
   if ((this.endIndex$4 !== this.startIndex$4)) {
     var blockIndex = ((-32) & this.endIndex$4);
@@ -31358,11 +31498,49 @@ $c_sci_Vector.prototype.preClean__p4__I__V = (function(depth) {
     }
   }
 });
+$c_sci_Vector.prototype.$$plus$colon__O__scg_CanBuildFrom__O = (function(elem, bf) {
+  return ((((bf === ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)) || (bf === $m_sci_Seq$().ReusableCBFInstance$2)) || (bf === $m_sc_Seq$().ReusableCBFInstance$2)) ? this.appendFront__O__sci_Vector(elem) : $f_sc_SeqLike__$$plus$colon__O__scg_CanBuildFrom__O(this, elem, bf))
+});
 $c_sci_Vector.prototype.iterator__sc_Iterator = (function() {
   return this.iterator__sci_VectorIterator()
 });
 $c_sci_Vector.prototype.display1$und$eq__AO__V = (function(x$1) {
   this.display1$4 = x$1
+});
+$c_sci_Vector.prototype.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O = (function(that, bf) {
+  if ((((bf === ($m_sci_IndexedSeq$(), $m_sc_IndexedSeq$().ReusableCBF$6)) || (bf === $m_sci_Seq$().ReusableCBFInstance$2)) || (bf === $m_sc_Seq$().ReusableCBFInstance$2))) {
+    if (that.isEmpty__Z()) {
+      return this
+    } else {
+      var again = ((!that.isTraversableAgain__Z()) ? that.toVector__sci_Vector() : that.seq__sc_TraversableOnce());
+      var x1 = again.size__I();
+      switch (x1) {
+        default: {
+          if (((x1 <= 2) || (x1 < ((this.length__I() >>> 5) | 0)))) {
+            var v = new $c_sr_ObjectRef().init___O(this);
+            again.foreach__F1__V(new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this, v$1) {
+              return (function(x$2) {
+                v$1.elem$1 = $as_sci_Vector($as_sci_Vector(v$1.elem$1).$$colon$plus__O__scg_CanBuildFrom__O(x$2, ($m_sci_Vector$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+              })
+            })(this, v)));
+            return $as_sci_Vector(v.elem$1)
+          } else if (((this.length__I() < ((x1 >>> 5) | 0)) && $is_sci_Vector(again))) {
+            var v$2 = $as_sci_Vector(again);
+            var ri = new $c_sci_Vector$$anon$1().init___sci_Vector(this);
+            while (ri.hasNext__Z()) {
+              var x$1 = ri.next__O();
+              v$2 = $as_sci_Vector(v$2.$$plus$colon__O__scg_CanBuildFrom__O(x$1, ($m_sci_Vector$(), $m_sc_IndexedSeq$().ReusableCBF$6)))
+            };
+            return v$2
+          } else {
+            return $f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this, again, bf)
+          }
+        }
+      }
+    }
+  } else {
+    return $f_sc_TraversableLike__$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(this, that.seq__sc_TraversableOnce(), bf)
+  }
 });
 $c_sci_Vector.prototype.length__I = (function() {
   return ((this.endIndex$4 - this.startIndex$4) | 0)
@@ -31459,6 +31637,77 @@ $c_sci_Vector.prototype.dropFront0__p4__I__sci_Vector = (function(cutIndex) {
 });
 $c_sci_Vector.prototype.display0$und$eq__AO__V = (function(x$1) {
   this.display0$4 = x$1
+});
+$c_sci_Vector.prototype.appendFront__O__sci_Vector = (function(value) {
+  if ((this.endIndex$4 !== this.startIndex$4)) {
+    var blockIndex = ((-32) & (((-1) + this.startIndex$4) | 0));
+    var lo = (31 & (((-1) + this.startIndex$4) | 0));
+    if ((this.startIndex$4 !== ((32 + blockIndex) | 0))) {
+      var s = new $c_sci_Vector().init___I__I__I((((-1) + this.startIndex$4) | 0), this.endIndex$4, blockIndex);
+      var depth = this.depth$4;
+      $f_sci_VectorPointer__initFrom__sci_VectorPointer__I__V(s, this, depth);
+      s.dirty$4 = this.dirty$4;
+      s.gotoPosWritable__p4__I__I__I__V(this.focus$4, blockIndex, (this.focus$4 ^ blockIndex));
+      s.display0$4.set(lo, value);
+      return s
+    } else {
+      var freeSpace = (((1 << $imul(5, this.depth$4)) - this.endIndex$4) | 0);
+      var shift = (freeSpace & (~(((-1) + (1 << $imul(5, (((-1) + this.depth$4) | 0)))) | 0)));
+      var shiftBlocks = ((freeSpace >>> $imul(5, (((-1) + this.depth$4) | 0))) | 0);
+      if ((shift !== 0)) {
+        if ((this.depth$4 > 1)) {
+          var newBlockIndex = ((blockIndex + shift) | 0);
+          var newFocus = ((this.focus$4 + shift) | 0);
+          var s$2 = new $c_sci_Vector().init___I__I__I((((((-1) + this.startIndex$4) | 0) + shift) | 0), ((this.endIndex$4 + shift) | 0), newBlockIndex);
+          var depth$1 = this.depth$4;
+          $f_sci_VectorPointer__initFrom__sci_VectorPointer__I__V(s$2, this, depth$1);
+          s$2.dirty$4 = this.dirty$4;
+          s$2.shiftTopLevel__p4__I__I__V(0, shiftBlocks);
+          s$2.gotoFreshPosWritable__p4__I__I__I__V(newFocus, newBlockIndex, (newFocus ^ newBlockIndex));
+          s$2.display0$4.set(lo, value);
+          return s$2
+        } else {
+          var newBlockIndex$2 = ((32 + blockIndex) | 0);
+          var newFocus$2 = this.focus$4;
+          var s$3 = new $c_sci_Vector().init___I__I__I((((((-1) + this.startIndex$4) | 0) + shift) | 0), ((this.endIndex$4 + shift) | 0), newBlockIndex$2);
+          var depth$2 = this.depth$4;
+          $f_sci_VectorPointer__initFrom__sci_VectorPointer__I__V(s$3, this, depth$2);
+          s$3.dirty$4 = this.dirty$4;
+          s$3.shiftTopLevel__p4__I__I__V(0, shiftBlocks);
+          s$3.gotoPosWritable__p4__I__I__I__V(newFocus$2, newBlockIndex$2, (newFocus$2 ^ newBlockIndex$2));
+          s$3.display0$4.set((((-1) + shift) | 0), value);
+          return s$3
+        }
+      } else if ((blockIndex < 0)) {
+        var move = (((1 << $imul(5, ((1 + this.depth$4) | 0))) - (1 << $imul(5, this.depth$4))) | 0);
+        var newBlockIndex$3 = ((blockIndex + move) | 0);
+        var newFocus$3 = ((this.focus$4 + move) | 0);
+        var s$4 = new $c_sci_Vector().init___I__I__I((((((-1) + this.startIndex$4) | 0) + move) | 0), ((this.endIndex$4 + move) | 0), newBlockIndex$3);
+        var depth$3 = this.depth$4;
+        $f_sci_VectorPointer__initFrom__sci_VectorPointer__I__V(s$4, this, depth$3);
+        s$4.dirty$4 = this.dirty$4;
+        s$4.gotoFreshPosWritable__p4__I__I__I__V(newFocus$3, newBlockIndex$3, (newFocus$3 ^ newBlockIndex$3));
+        s$4.display0$4.set(lo, value);
+        return s$4
+      } else {
+        var newFocus$4 = this.focus$4;
+        var s$5 = new $c_sci_Vector().init___I__I__I((((-1) + this.startIndex$4) | 0), this.endIndex$4, blockIndex);
+        var depth$4 = this.depth$4;
+        $f_sci_VectorPointer__initFrom__sci_VectorPointer__I__V(s$5, this, depth$4);
+        s$5.dirty$4 = this.dirty$4;
+        s$5.gotoFreshPosWritable__p4__I__I__I__V(newFocus$4, blockIndex, (newFocus$4 ^ blockIndex));
+        s$5.display0$4.set(lo, value);
+        return s$5
+      }
+    }
+  } else {
+    var elems = $newArrayObject($d_O.getArrayOf(), [32]);
+    elems.set(31, value);
+    var s$6 = new $c_sci_Vector().init___I__I__I(31, 32, 0);
+    s$6.depth$4 = 1;
+    s$6.display0$4 = elems;
+    return s$6
+  }
 });
 $c_sci_Vector.prototype.drop__I__sci_Vector = (function(n) {
   if ((n <= 0)) {
@@ -32201,6 +32450,12 @@ $c_scm_ListBuffer.prototype.$$plus$eq__O__scm_ListBuffer = (function(x) {
 });
 $c_scm_ListBuffer.prototype.$$minus$eq__O__scm_Buffer = (function(x) {
   return this.$$minus$eq__O__scm_ListBuffer(x)
+});
+$c_scm_ListBuffer.prototype.toSet__sci_Set = (function() {
+  var this$1 = this.scala$collection$mutable$ListBuffer$$start$6;
+  var this$2 = $m_sci_Set$();
+  var cbf = new $c_scg_GenSetFactory$$anon$1().init___scg_GenSetFactory(this$2);
+  return $as_sci_Set($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this$1, cbf))
 });
 $c_scm_ListBuffer.prototype.$$div$colon__O__F2__O = (function(z, op) {
   var this$1 = this.scala$collection$mutable$ListBuffer$$start$6;
@@ -33048,6 +33303,6 @@ var $d_scm_ArrayBuffer = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_scm_ArrayBuffer.prototype.$classData = $d_scm_ArrayBuffer;
-$e.ML = $m_Lmlscala_ML$();
+$e.ML = $m_Lmlscala_Interpreter$();
 }).call(this);
 //# sourceMappingURL=mlscala-fastopt.js.map
