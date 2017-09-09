@@ -82,11 +82,11 @@ object Typer {
     e match {
       case Var(id) => tyenv.get(Var(id)) match {
         case Some(typeScheme) =>
-          // val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
-          //   Substs(acc.substs.updated(tyvar, TyVar.fresh))
-          // }
-          Right(TypeResult(Substs.empty, typeScheme.ty))
-          // Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
+          val s: Substs = typeScheme.tyvars.foldLeft(Substs.empty) { (acc, tyvar) =>
+            Substs(acc.substs.updated(tyvar, TyVar.fresh))
+          }
+          // Right(TypeResult(Substs.empty, typeScheme.ty))
+          Right(TypeResult(Substs.empty, typeScheme.ty.substitute(s)))
         case None     => Left(new VariableNotBoundException("Variable not bound: " + id))
       }
       case ILit(_) => Right(TypeResult(Substs.empty, TyInt))
