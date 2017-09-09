@@ -36,11 +36,28 @@ object Parser {
   private val MULT = "*".!
   private val LPAREN = "(".!
   private val RPAREN = ")".!
-  private val reserved: P[String] = P(
-    IF | THEN | ELSE | LET | REC | IN | FUN | DFUN | AND | TRUE | FALSE | RARROW | SEMISEMI | BAND | BOR | EQUAL | LESS | PLUS | MINUS | MULT | LPAREN | RPAREN)
 
-  // TODO: prefixにreserved words が含まれている文字列もパースできるように
-  private val ident: P[String]  = P(!reserved ~ CharsWhileIn('a' to 'z')).!
+  private val reservedWords = Set(
+    "if",
+    "then",
+    "else",
+    "let",
+    "rec",
+    "in",
+    "fun",
+    "dfun",
+    "and",
+    "true",
+    "false"
+  )
+
+  private val allowedHeadChars: Set[Char] = (('a' to 'z') ++ ('A' to 'Z')).toSet
+  private val ident: P[String]  =
+    P(CharsWhileIn(Seq('_') ++ ('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9'))).!.filter {
+      matched =>
+        matched.headOption.exists { head => allowedHeadChars.contains(head) } && // prefixはアルファベットのみ
+        !reservedWords.contains(matched) // reserved words は使えない
+    }
   private val variable: P[Expr] = P(ident.map(v => Var(v)))
   private val number: P[Expr]   = P(CharsWhileIn('0' to '9').!.map(_.toInt).map(v => ILit(v)))
   private val truev: P[Expr]    = P(TRUE).map(_ => BLit(true))

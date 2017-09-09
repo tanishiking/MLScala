@@ -10,12 +10,15 @@ class ParserSpec extends FunSpec with Matchers {
         it ("can parse variable name") {
           Parser.statement.parse("a;;").get.value shouldBe TopExpr(Var("a"))
           Parser.statement.parse("test;;").get.value shouldBe TopExpr(Var("test"))
-          // Parser.statement.parse("test_piyo;;").get.value shouldBe TopExpr(Var("test_piyo"))
-          // Parser.statement.parse("t100;;").get.value shouldBe TopExpr(Var("t100"))
+          Parser.statement.parse("test_piyo;;").get.value shouldBe TopExpr(Var("test_piyo"))
+          Parser.statement.parse("Test_piyo;;").get.value shouldBe TopExpr(Var("Test_piyo"))
+          Parser.statement.parse("t100;;").get.value shouldBe TopExpr(Var("t100"))
         }
 
-        ignore("can parse variable name that contains reserved") {
+        it("can parse variable name that contains reserved") {
           Parser.statement.parse("inc;;").get.value shouldBe TopExpr(Var("inc"))
+          Parser.statement.parse("recv;;").get.value shouldBe TopExpr(Var("recv"))
+          Parser.statement.parse("lets;;").get.value shouldBe TopExpr(Var("lets"))
         }
 
         it("can parse boolean expr") {
