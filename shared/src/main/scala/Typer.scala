@@ -165,7 +165,6 @@ object Typer {
     ls.foldRight(Right(Nil): Either[A, List[B]]) {(l, acc) => for (xs <- acc.right; x <- l.right) yield x :: xs}
 
   def typeStmt(tyenv: TyEnv, stmt: Stmt): Either[Exception, (TyEnv, Type)] = {
-    println(stmt)
     stmt match {
       case TopExpr(e) => typeExpr(tyenv, e).right.map { case TypeResult(substs, ty) => (tyenv, ty) }
       case MultiDecl(decls) => seqU(decls.map(d => typeExpr(tyenv, d.e))).right.flatMap { typeResults =>
