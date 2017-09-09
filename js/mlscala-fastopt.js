@@ -1265,12 +1265,6 @@ function $isArrayOf_Ljava_io_Closeable(obj, depth) {
 function $asArrayOf_Ljava_io_Closeable(obj, depth) {
   return (($isArrayOf_Ljava_io_Closeable(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Ljava.io.Closeable;", depth))
 }
-function $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme($thiz) {
-  var this$1 = $thiz.freeVariables__sci_Set();
-  var this$2 = $m_sci_List$();
-  var cbf = this$2.ReusableCBFInstance$2;
-  return new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type($as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(this$1, cbf)), $thiz)
-}
 function $is_Lmlscala_Type$Type(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lmlscala_Type$Type)))
 }
@@ -4638,8 +4632,21 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     if ($is_s_Some(x1$2)) {
       var x2$2 = $as_s_Some(x1$2);
       var typeScheme = $as_Lmlscala_Type$TyScheme(x2$2.value$2);
+      var this$3 = typeScheme.tyvars$1;
+      var z = new $c_Lmlscala_Type$Substs().init___sci_ListMap($m_sci_ListMap$EmptyListMap$());
+      var acc = z;
+      var these = this$3;
+      while ((!these.isEmpty__Z())) {
+        var arg1 = acc;
+        var arg2 = these.head__O();
+        var acc$1 = $as_Lmlscala_Type$Substs(arg1);
+        var tyvar = $as_T(arg2);
+        acc = new $c_Lmlscala_Type$Substs().init___sci_ListMap(acc$1.substs$1.updated__O__O__sci_ListMap(tyvar, new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T())));
+        these = $as_sc_LinearSeqOptimized(these.tail__O())
+      };
+      var s = $as_Lmlscala_Type$Substs(acc);
       $m_s_package$();
-      var value = new $c_Lmlscala_Typer$TypeResult().init___Lmlscala_Type$Substs__Lmlscala_Type$Type(new $c_Lmlscala_Type$Substs().init___sci_ListMap($m_sci_ListMap$EmptyListMap$()), typeScheme.ty$1);
+      var value = new $c_Lmlscala_Typer$TypeResult().init___Lmlscala_Type$Substs__Lmlscala_Type$Type(new $c_Lmlscala_Type$Substs().init___sci_ListMap($m_sci_ListMap$EmptyListMap$()), typeScheme.ty$1.substitute__Lmlscala_Type$Substs__Lmlscala_Type$Type(s));
       return new $c_s_util_Right().init___O(value)
     } else {
       var x = $m_s_None$();
@@ -4664,23 +4671,23 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var op = x7.op$2;
     var e1 = x7.e1$2;
     var e2 = x7.e2$2;
-    var this$11 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1);
-    var this$12 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$11);
-    var x1 = this$12.e$1;
+    var this$16 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1);
+    var this$17 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$16);
+    var x1 = this$17.e$1;
     if ($is_s_util_Right(x1)) {
       var x2$1 = $as_s_util_Right(x1);
       var b = x2$1.value$2;
       var res1 = $as_Lmlscala_Typer$TypeResult(b);
-      var this$13 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e2);
-      var this$14 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$13);
-      var x1$1 = this$14.e$1;
+      var this$18 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e2);
+      var this$19 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$18);
+      var x1$1 = this$19.e$1;
       if ($is_s_util_Right(x1$1)) {
         var x2$3 = $as_s_util_Right(x1$1);
         var b$1 = x2$3.value$2;
         var res2 = $as_Lmlscala_Typer$TypeResult(b$1);
-        var this$15 = this.typeBinOp__p1__Lmlscala_Ast$BinaryOp__Lmlscala_Type$Type__Lmlscala_Type$Type__s_util_Either(op, res1.typ$1, res2.typ$1);
-        var this$16 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$15);
-        var x1$3 = this$16.e$1;
+        var this$20 = this.typeBinOp__p1__Lmlscala_Ast$BinaryOp__Lmlscala_Type$Type__Lmlscala_Type$Type__s_util_Either(op, res1.typ$1, res2.typ$1);
+        var this$21 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$20);
+        var x1$3 = this$21.e$1;
         if ($is_s_util_Right(x1$3)) {
           var x2$4 = $as_s_util_Right(x1$3);
           var b$2 = x2$4.value$2;
@@ -4688,14 +4695,14 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
           var x$3 = new $c_T2().init___O__O(res1.typ$1, res2.typ$1);
           var jsx$4 = res1.substs$1.toEquationSet__sci_List();
           var jsx$3 = res2.substs$1.toEquationSet__sci_List();
-          var this$17 = $m_sci_List$();
-          var jsx$2 = $as_sci_List(jsx$4.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$3, this$17.ReusableCBFInstance$2));
+          var this$22 = $m_sci_List$();
+          var jsx$2 = $as_sci_List(jsx$4.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$3, this$22.ReusableCBFInstance$2));
           var jsx$1 = res3.substs$1.toEquationSet__sci_List();
-          var this$18 = $m_sci_List$();
-          var this$19 = $as_sci_List(jsx$2.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$18.ReusableCBFInstance$2));
-          var this$20 = this.unify__p1__sci_List__s_util_Either(new $c_sci_$colon$colon().init___O__sci_List(x$3, this$19));
-          var this$21 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$20);
-          var x1$4 = this$21.e$1;
+          var this$23 = $m_sci_List$();
+          var this$24 = $as_sci_List(jsx$2.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$1, this$23.ReusableCBFInstance$2));
+          var this$25 = this.unify__p1__sci_List__s_util_Either(new $c_sci_$colon$colon().init___O__sci_List(x$3, this$24));
+          var this$26 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$25);
+          var x1$4 = this$26.e$1;
           if ($is_s_util_Right(x1$4)) {
             var x2$5 = $as_s_util_Right(x1$4);
             var b$3 = x2$5.value$2;
@@ -4705,22 +4712,22 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
             if ((!$is_s_util_Left(x1$4))) {
               throw new $c_s_MatchError().init___O(x1$4)
             };
-            return this$21.e$1
+            return this$26.e$1
           }
         } else {
           if ((!$is_s_util_Left(x1$3))) {
             throw new $c_s_MatchError().init___O(x1$3)
           };
-          return this$16.e$1
+          return this$21.e$1
         }
       } else {
         if ((!$is_s_util_Left(x1$1))) {
           throw new $c_s_MatchError().init___O(x1$1)
         };
-        return this$14.e$1
+        return this$19.e$1
       }
     } else if ($is_s_util_Left(x1)) {
-      return this$12.e$1
+      return this$17.e$1
     } else {
       throw new $c_s_MatchError().init___O(x1)
     }
@@ -4731,43 +4738,43 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var e2$2 = x8.ef$2;
     var rc12 = false;
     var x2$3$1 = null;
-    var this$22 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, cond);
-    var this$23 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$22);
-    var x1$5 = this$23.e$1;
+    var this$27 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, cond);
+    var this$28 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$27);
+    var x1$5 = this$28.e$1;
     if ($is_s_util_Right(x1$5)) {
       var x2$6 = $as_s_util_Right(x1$5);
       var b$4 = x2$6.value$2;
       var typeCond = $as_Lmlscala_Typer$TypeResult(b$4);
-      var this$24 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1$2);
-      var this$25 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$24);
-      var x1$6 = this$25.e$1;
+      var this$29 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1$2);
+      var this$30 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$29);
+      var x1$6 = this$30.e$1;
       if ($is_s_util_Right(x1$6)) {
         var x2$7 = $as_s_util_Right(x1$6);
         var b$5 = x2$7.value$2;
         var typeThen = $as_Lmlscala_Typer$TypeResult(b$5);
-        var this$26 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e2$2);
-        var this$27 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$26);
-        var x1$7 = this$27.e$1;
+        var this$31 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e2$2);
+        var this$32 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$31);
+        var x1$7 = this$32.e$1;
         if ($is_s_util_Right(x1$7)) {
           var x2$8 = $as_s_util_Right(x1$7);
           var b$6 = x2$8.value$2;
           var typeElse = $as_Lmlscala_Typer$TypeResult(b$6);
           $m_sci_List$();
           var xs = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_T2().init___O__O(typeThen.typ$1, typeElse.typ$1)]);
-          var this$29 = $m_sci_List$();
-          var cbf = this$29.ReusableCBFInstance$2;
+          var this$34 = $m_sci_List$();
+          var cbf = this$34.ReusableCBFInstance$2;
           var jsx$10 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs, cbf));
           var jsx$9 = typeCond.substs$1.toEquationSet__sci_List();
-          var this$30 = $m_sci_List$();
-          var jsx$8 = $as_sci_List(jsx$10.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$9, this$30.ReusableCBFInstance$2));
+          var this$35 = $m_sci_List$();
+          var jsx$8 = $as_sci_List(jsx$10.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$9, this$35.ReusableCBFInstance$2));
           var jsx$7 = typeThen.substs$1.toEquationSet__sci_List();
-          var this$31 = $m_sci_List$();
-          var jsx$6 = $as_sci_List(jsx$8.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$7, this$31.ReusableCBFInstance$2));
+          var this$36 = $m_sci_List$();
+          var jsx$6 = $as_sci_List(jsx$8.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$7, this$36.ReusableCBFInstance$2));
           var jsx$5 = typeElse.substs$1.toEquationSet__sci_List();
-          var this$32 = $m_sci_List$();
-          var this$33 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$6.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$5, this$32.ReusableCBFInstance$2)));
-          var this$34 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$33);
-          var x1$8 = this$34.e$1;
+          var this$37 = $m_sci_List$();
+          var this$38 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$6.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$5, this$37.ReusableCBFInstance$2)));
+          var this$39 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$38);
+          var x1$8 = this$39.e$1;
           if ($is_s_util_Right(x1$8)) {
             var x2$9 = $as_s_util_Right(x1$8);
             var b$7 = x2$9.value$2;
@@ -4777,25 +4784,25 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
             if ((!$is_s_util_Left(x1$8))) {
               throw new $c_s_MatchError().init___O(x1$8)
             };
-            var x1$3$1 = this$34.e$1
+            var x1$3$1 = this$39.e$1
           }
         } else {
           if ((!$is_s_util_Left(x1$7))) {
             throw new $c_s_MatchError().init___O(x1$7)
           };
-          var x1$3$1 = this$27.e$1
+          var x1$3$1 = this$32.e$1
         }
       } else {
         if ((!$is_s_util_Left(x1$6))) {
           throw new $c_s_MatchError().init___O(x1$6)
         };
-        var x1$3$1 = this$25.e$1
+        var x1$3$1 = this$30.e$1
       }
     } else {
       if ((!$is_s_util_Left(x1$5))) {
         throw new $c_s_MatchError().init___O(x1$5)
       };
-      var x1$3$1 = this$23.e$1
+      var x1$3$1 = this$28.e$1
     };
     if ($is_s_util_Right(x1$3$1)) {
       rc12 = true;
@@ -4834,26 +4841,26 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var id$2 = x9$2.id$2;
     var e1$3 = x9$2.e$2;
     var e2$3 = x9$2.body$2;
-    var this$38 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1$3);
-    var this$39 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$38);
-    var x1$9 = this$39.e$1;
+    var this$43 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, e1$3);
+    var this$44 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$43);
+    var x1$9 = this$44.e$1;
     if ($is_s_util_Right(x1$9)) {
       var x2$10 = $as_s_util_Right(x1$9);
       var b$8 = x2$10.value$2;
       var typeLet = $as_Lmlscala_Typer$TypeResult(b$8);
-      var this$40 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(id$2), this.closure__p1__Lmlscala_Type$Type__sci_Map__Lmlscala_Type$Substs__Lmlscala_Type$TyScheme(typeLet.typ$1, tyenv, typeLet.substs$1)), e2$3);
-      var this$41 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$40);
-      var x1$10 = this$41.e$1;
+      var this$45 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(id$2), this.closure__p1__Lmlscala_Type$Type__sci_Map__Lmlscala_Type$Substs__Lmlscala_Type$TyScheme(typeLet.typ$1, tyenv, typeLet.substs$1)), e2$3);
+      var this$46 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$45);
+      var x1$10 = this$46.e$1;
       if ($is_s_util_Right(x1$10)) {
         var x2$11 = $as_s_util_Right(x1$10);
         var b$9 = x2$11.value$2;
         var typeBody = $as_Lmlscala_Typer$TypeResult(b$9);
         var jsx$12 = typeLet.substs$1.toEquationSet__sci_List();
         var jsx$11 = typeBody.substs$1.toEquationSet__sci_List();
-        var this$42 = $m_sci_List$();
-        var this$43 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$12.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$11, this$42.ReusableCBFInstance$2)));
-        var this$44 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$43);
-        var x1$11 = this$44.e$1;
+        var this$47 = $m_sci_List$();
+        var this$48 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$12.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$11, this$47.ReusableCBFInstance$2)));
+        var this$49 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$48);
+        var x1$11 = this$49.e$1;
         if ($is_s_util_Right(x1$11)) {
           var x2$12 = $as_s_util_Right(x1$11);
           var b$10 = x2$12.value$2;
@@ -4863,16 +4870,16 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
           if ((!$is_s_util_Left(x1$11))) {
             throw new $c_s_MatchError().init___O(x1$11)
           };
-          return this$44.e$1
+          return this$49.e$1
         }
       } else {
         if ((!$is_s_util_Left(x1$10))) {
           throw new $c_s_MatchError().init___O(x1$10)
         };
-        return this$41.e$1
+        return this$46.e$1
       }
     } else if ($is_s_util_Left(x1$9)) {
-      return this$39.e$1
+      return this$44.e$1
     } else {
       throw new $c_s_MatchError().init___O(x1$9)
     }
@@ -4884,17 +4891,17 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var domainType = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
     var rangeType = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
     var jsx$13 = new $c_Lmlscala_Ast$Var().init___T(id$3);
-    var this$49 = new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType, rangeType);
-    var this$50 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(jsx$13, $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(this$49)).updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(func.arg$2), $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(domainType)), func);
-    var this$51 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$50);
-    var x1$12 = this$51.e$1;
+    var this$54 = new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType, rangeType);
+    var this$57 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(jsx$13, new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), this$54)).updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(func.arg$2), new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), domainType)), func);
+    var this$58 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$57);
+    var x1$12 = this$58.e$1;
     if ($is_s_util_Right(x1$12)) {
       var x2$13 = $as_s_util_Right(x1$12);
       var b$11 = x2$13.value$2;
       var typeFunc = $as_Lmlscala_Typer$TypeResult(b$11);
-      var this$52 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(id$3), this.closure__p1__Lmlscala_Type$Type__sci_Map__Lmlscala_Type$Substs__Lmlscala_Type$TyScheme(typeFunc.typ$1, tyenv, typeFunc.substs$1)), body);
-      var this$53 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$52);
-      var x1$13 = this$53.e$1;
+      var this$59 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(id$3), this.closure__p1__Lmlscala_Type$Type__sci_Map__Lmlscala_Type$Substs__Lmlscala_Type$TyScheme(typeFunc.typ$1, tyenv, typeFunc.substs$1)), body);
+      var this$60 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$59);
+      var x1$13 = this$60.e$1;
       if ($is_s_util_Right(x1$13)) {
         var x2$14 = $as_s_util_Right(x1$13);
         var b$12 = x2$14.value$2;
@@ -4902,11 +4909,11 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
         var x$4 = new $c_T2().init___O__O(new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType, rangeType), typeFunc.typ$1);
         var jsx$15 = typeFunc.substs$1.toEquationSet__sci_List();
         var jsx$14 = typeBody$1.substs$1.toEquationSet__sci_List();
-        var this$54 = $m_sci_List$();
-        var this$55 = $as_sci_List(jsx$15.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$14, this$54.ReusableCBFInstance$2));
-        var this$56 = this.unify__p1__sci_List__s_util_Either(new $c_sci_$colon$colon().init___O__sci_List(x$4, this$55));
-        var this$57 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$56);
-        var x1$14 = this$57.e$1;
+        var this$61 = $m_sci_List$();
+        var this$62 = $as_sci_List(jsx$15.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$14, this$61.ReusableCBFInstance$2));
+        var this$63 = this.unify__p1__sci_List__s_util_Either(new $c_sci_$colon$colon().init___O__sci_List(x$4, this$62));
+        var this$64 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$63);
+        var x1$14 = this$64.e$1;
         if ($is_s_util_Right(x1$14)) {
           var x2$15 = $as_s_util_Right(x1$14);
           var b$13 = x2$15.value$2;
@@ -4916,16 +4923,16 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
           if ((!$is_s_util_Left(x1$14))) {
             throw new $c_s_MatchError().init___O(x1$14)
           };
-          return this$57.e$1
+          return this$64.e$1
         }
       } else {
         if ((!$is_s_util_Left(x1$13))) {
           throw new $c_s_MatchError().init___O(x1$13)
         };
-        return this$53.e$1
+        return this$60.e$1
       }
     } else if ($is_s_util_Left(x1$12)) {
-      return this$51.e$1
+      return this$58.e$1
     } else {
       throw new $c_s_MatchError().init___O(x1$12)
     }
@@ -4934,9 +4941,9 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var arg = x11.arg$2;
     var body$2 = x11.body$2;
     var domainType$2 = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
-    var this$60 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(arg), $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(domainType$2)), body$2);
-    var this$61 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$60);
-    var x1$15 = this$61.e$1;
+    var this$68 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(arg), new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), domainType$2)), body$2);
+    var this$69 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$68);
+    var x1$15 = this$69.e$1;
     if ($is_s_util_Right(x1$15)) {
       var x2$16 = $as_s_util_Right(x1$15);
       var b$14 = x2$16.value$2;
@@ -4950,7 +4957,7 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
       var value$6 = new $c_Lmlscala_Typer$TypeResult().init___Lmlscala_Type$Substs__Lmlscala_Type$Type(sub, new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType$2.substitute__Lmlscala_Type$Substs__Lmlscala_Type$Type(sub), rangeType$1));
       return new $c_s_util_Right().init___O(value$6)
     } else if ($is_s_util_Left(x1$15)) {
-      return this$61.e$1
+      return this$69.e$1
     } else {
       throw new $c_s_MatchError().init___O(x1$15)
     }
@@ -4959,33 +4966,33 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
     var fun = x12.fun$2;
     var arg$2 = x12.arg$2;
     var rangeType$2 = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
-    var this$65 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, fun);
-    var this$66 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$65);
-    var x1$16 = this$66.e$1;
+    var this$73 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, fun);
+    var this$74 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$73);
+    var x1$16 = this$74.e$1;
     if ($is_s_util_Right(x1$16)) {
       var x2$17 = $as_s_util_Right(x1$16);
       var b$15 = x2$17.value$2;
       var typeFun = $as_Lmlscala_Typer$TypeResult(b$15);
-      var this$67 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, arg$2);
-      var this$68 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$67);
-      var x1$17 = this$68.e$1;
+      var this$75 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv, arg$2);
+      var this$76 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$75);
+      var x1$17 = this$76.e$1;
       if ($is_s_util_Right(x1$17)) {
         var x2$18 = $as_s_util_Right(x1$17);
         var b$16 = x2$18.value$2;
         var typeArg = $as_Lmlscala_Typer$TypeResult(b$16);
         $m_sci_List$();
         var xs$1 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_T2().init___O__O(new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(typeArg.typ$1, rangeType$2), typeFun.typ$1)]);
-        var this$70 = $m_sci_List$();
-        var cbf$1 = this$70.ReusableCBFInstance$2;
+        var this$78 = $m_sci_List$();
+        var cbf$1 = this$78.ReusableCBFInstance$2;
         var jsx$19 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$1, cbf$1));
         var jsx$18 = typeFun.substs$1.toEquationSet__sci_List();
-        var this$71 = $m_sci_List$();
-        var jsx$17 = $as_sci_List(jsx$19.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$18, this$71.ReusableCBFInstance$2));
+        var this$79 = $m_sci_List$();
+        var jsx$17 = $as_sci_List(jsx$19.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$18, this$79.ReusableCBFInstance$2));
         var jsx$16 = typeArg.substs$1.toEquationSet__sci_List();
-        var this$72 = $m_sci_List$();
-        var this$73 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$17.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$16, this$72.ReusableCBFInstance$2)));
-        var this$74 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$73);
-        var x1$18 = this$74.e$1;
+        var this$80 = $m_sci_List$();
+        var this$81 = this.unify__p1__sci_List__s_util_Either($as_sci_List(jsx$17.$$plus$plus__sc_GenTraversableOnce__scg_CanBuildFrom__O(jsx$16, this$80.ReusableCBFInstance$2)));
+        var this$82 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$81);
+        var x1$18 = this$82.e$1;
         if ($is_s_util_Right(x1$18)) {
           var x2$19 = $as_s_util_Right(x1$18);
           var b$17 = x2$19.value$2;
@@ -4995,16 +5002,16 @@ $c_Lmlscala_Typer$.prototype.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Ei
           if ((!$is_s_util_Left(x1$18))) {
             throw new $c_s_MatchError().init___O(x1$18)
           };
-          return this$74.e$1
+          return this$82.e$1
         }
       } else {
         if ((!$is_s_util_Left(x1$17))) {
           throw new $c_s_MatchError().init___O(x1$17)
         };
-        return this$68.e$1
+        return this$76.e$1
       }
     } else if ($is_s_util_Left(x1$16)) {
-      return this$66.e$1
+      return this$74.e$1
     } else {
       throw new $c_s_MatchError().init___O(x1$16)
     }
@@ -5261,8 +5268,8 @@ $c_Lmlscala_Typer$.prototype.unifyTyVar$1__p1__T__Lmlscala_Type$Type__sci_List__
     throw new $c_s_MatchError().init___O(x1)
   }
 });
-$c_Lmlscala_Typer$.prototype.freeVarialbes$1__p1__sci_Map__Lmlscala_Type$Substs__sci_Set = (function(tyenv$2, subst$1) {
-  var this$2 = this.freeVarTyEnv$1__p1__sci_Map__sci_Set(tyenv$2);
+$c_Lmlscala_Typer$.prototype.freeVarialbes$1__p1__sci_Map__Lmlscala_Type$Substs__sci_Set = (function(tyenv$1, subst$1) {
+  var this$2 = this.freeVarTyEnv$1__p1__sci_Map__sci_Set(tyenv$1);
   var f = new $c_sjsr_AnonFunction1().init___sjs_js_Function1((function($this, subst$1$1) {
     return (function(typevariable$2) {
       var typevariable = $as_T(typevariable$2);
@@ -5336,7 +5343,7 @@ $c_Lmlscala_Typer$.prototype.typeStmt__sci_Map__Lmlscala_Ast$Stmt__s_util_Either
           var t = $as_T2(t$2);
           var jsx$5 = new $c_Lmlscala_Ast$Var().init___T($as_T(t.$$und2__O()));
           var this$8 = $as_Lmlscala_Typer$TypeResult(t.$$und1__O()).typ$1;
-          return curEnv.updated__O__O__sci_Map(jsx$5, $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(this$8))
+          return curEnv.updated__O__O__sci_Map(jsx$5, new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), this$8))
         })
       })(this))), $as_Lmlscala_Typer$TypeResult(typeResults.last__O()).typ$1);
       return new $c_s_util_Right().init___O(value)
@@ -5353,17 +5360,17 @@ $c_Lmlscala_Typer$.prototype.typeStmt__sci_Map__Lmlscala_Ast$Stmt__s_util_Either
     var domainType = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
     var rangeType = new $c_Lmlscala_Type$TyVar().init___T($m_ju_UUID$().randomUUID__ju_UUID().toString__T());
     var jsx$6 = new $c_Lmlscala_Ast$Var().init___T(id);
-    var this$14 = new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType, rangeType);
-    var this$15 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(jsx$6, $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(this$14)).updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(arg), $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(domainType)), body);
-    var this$16 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$15);
-    var x1$2 = this$16.e$1;
+    var this$15 = new $c_Lmlscala_Type$TyFun().init___Lmlscala_Type$Type__Lmlscala_Type$Type(domainType, rangeType);
+    var this$18 = this.typeExpr__p1__sci_Map__Lmlscala_Ast$Expr__s_util_Either(tyenv.updated__O__O__sci_Map(jsx$6, new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), this$15)).updated__O__O__sci_Map(new $c_Lmlscala_Ast$Var().init___T(arg), new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), domainType)), body);
+    var this$19 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$18);
+    var x1$2 = this$19.e$1;
     if ($is_s_util_Right(x1$2)) {
       var x2$3 = $as_s_util_Right(x1$2);
       var b$2 = x2$3.value$2;
       var typeBody = $as_Lmlscala_Typer$TypeResult(b$2);
-      var this$17 = this.unify__p1__sci_List__s_util_Either(typeBody.substs$1.toEquationSet__sci_List());
-      var this$18 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$17);
-      var x1$3 = this$18.e$1;
+      var this$20 = this.unify__p1__sci_List__s_util_Either(typeBody.substs$1.toEquationSet__sci_List());
+      var this$21 = new $c_s_util_Either$RightProjection().init___s_util_Either(this$20);
+      var x1$3 = this$21.e$1;
       if ($is_s_util_Right(x1$3)) {
         var x2$4 = $as_s_util_Right(x1$3);
         var b$3 = x2$4.value$2;
@@ -5373,21 +5380,21 @@ $c_Lmlscala_Typer$.prototype.typeStmt__sci_Map__Lmlscala_Ast$Stmt__s_util_Either
         if ((!$is_s_util_Left(x1$3))) {
           throw new $c_s_MatchError().init___O(x1$3)
         };
-        var x1$2$1 = this$18.e$1
+        var x1$2$1 = this$21.e$1
       }
     } else {
       if ((!$is_s_util_Left(x1$2))) {
         throw new $c_s_MatchError().init___O(x1$2)
       };
-      var x1$2$1 = this$16.e$1
+      var x1$2$1 = this$19.e$1
     };
     if ($is_s_util_Right(x1$2$1)) {
       var x2$2$1 = $as_s_util_Right(x1$2$1);
       var typeResult = $as_Lmlscala_Typer$TypeResult(x2$2$1.value$2);
       $m_s_package$();
       var jsx$7 = new $c_Lmlscala_Ast$Var().init___T(id);
-      var this$19 = typeResult.typ$1;
-      var value$1 = new $c_T2().init___O__O(tyenv.updated__O__O__sci_Map(jsx$7, $f_Lmlscala_Type$Type__typeScheme__Lmlscala_Type$TyScheme(this$19)), typeResult.typ$1);
+      var this$22 = typeResult.typ$1;
+      var value$1 = new $c_T2().init___O__O(tyenv.updated__O__O__sci_Map(jsx$7, new $c_Lmlscala_Type$TyScheme().init___sci_List__Lmlscala_Type$Type(($m_sci_List$(), $m_sci_Nil$()), this$22)), typeResult.typ$1);
       return new $c_s_util_Right().init___O(value$1)
     } else if ($is_s_util_Left(x1$2$1)) {
       var x3$2 = $as_s_util_Left(x1$2$1);
